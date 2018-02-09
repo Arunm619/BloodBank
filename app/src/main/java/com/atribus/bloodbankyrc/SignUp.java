@@ -2,10 +2,10 @@ package com.atribus.bloodbankyrc;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class SignUp extends AppCompatActivity {
+
     private static final int RC_SIGN_IN = 1;
     private SignInButton signInButton;
     private GoogleApiClient mGoogleApiClient;
@@ -44,6 +45,7 @@ public class SignUp extends AppCompatActivity {
         signInButton = findViewById(R.id.btn_signin);
         lt_signup = findViewById(R.id.lt_signin);
 
+
         dialog = new ProgressDialog(SignUp.this);
         // dialog.setTitle("Google Sign-In");
         dialog.setMessage("Validating Credentials...");
@@ -60,7 +62,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(SignUp.this, Register.class));
+                    startActivity(new Intent(SignUp.this, Home.class));
                     finish();
                 }
             }
@@ -152,4 +154,7 @@ public class SignUp extends AppCompatActivity {
                     }
                 });
     }
+
+
+
 }

@@ -10,6 +10,25 @@
     <string name="register">Register</string>
     <string name="addr">Address</string>
     <string name="chooseblood">Choose Blood type</string>
+
+
     <string name="donorguideliines">http://indianbloodbank.com/donors-guidelines.html</string>
+
+
+    <!--Firebase Database References-->
+    <string name="db_users_field">Users</string>
+    <string name="BDprefix">BD</string>
+    <string name="title_activity_home">Home</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_location_permission">Location Permissiom</string>
+    <string name="text_location_permission">This app requires location permission</string>
+    <string name="settings">Settings</string>
+    <string name="permission_denied_explanation">We need your loc</string>
+    <string name="permission_rationale">We need location bro</string>
+
 
 </resources>

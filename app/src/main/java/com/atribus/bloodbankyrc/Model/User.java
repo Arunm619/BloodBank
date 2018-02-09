@@ -8,14 +8,17 @@ import java.util.Date;
 
 public class User {
 
-    String name;
-    int age;
-    Date dateofbirth;
-    Date dateofregistration;
-    String bloodgroup;
-    String address;
-    Long lattitude,longitude;
-    Long mobilenumber;
+    private String name;
+    private int age;
+    private String email;
+    private String dateofbirth;
+    private String dateofregistration;
+    private String bloodgroup;
+    private String address;
+    private Double lattitude, longitude;
+    private Long mobilenumber;
+    private String UUID;
+
 
     public User() {
     }
@@ -36,19 +39,19 @@ public class User {
         this.age = age;
     }
 
-    public Date getDateofbirth() {
+    public String getDateofbirth() {
         return dateofbirth;
     }
 
-    public void setDateofbirth(Date dateofbirth) {
+    public void setDateofbirth(String dateofbirth) {
         this.dateofbirth = dateofbirth;
     }
 
-    public Date getDateofregistration() {
+    public String getDateofregistration() {
         return dateofregistration;
     }
 
-    public void setDateofregistration(Date dateofregistration) {
+    public void setDateofregistration(String dateofregistration) {
         this.dateofregistration = dateofregistration;
     }
 
@@ -68,19 +71,19 @@ public class User {
         this.address = address;
     }
 
-    public Long getLattitude() {
+    public Double getLattitude() {
         return lattitude;
     }
 
-    public void setLattitude(Long lattitude) {
+    public void setLattitude(Double lattitude) {
         this.lattitude = lattitude;
     }
 
-    public Long getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -92,18 +95,19 @@ public class User {
         this.mobilenumber = mobilenumber;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", dateofbirth=" + dateofbirth +
-                ", dateofregistration=" + dateofregistration +
-                ", bloodgroup='" + bloodgroup + '\'' +
-                ", address='" + address + '\'' +
-                ", lattitude=" + lattitude +
-                ", longitude=" + longitude +
-                ", mobilenumber=" + mobilenumber +
-                '}';
+    public String getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

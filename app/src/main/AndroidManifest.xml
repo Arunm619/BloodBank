@@ -21,10 +21,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity
-            android:name=".Home"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AdminMain" />
+        <activity android:name=".UserActivity" />
+        <activity android:name=".Settings" />
+        <activity android:name=".EditProfile" />
+        <activity android:name=".AppInfo" />
+        <activity android:name=".AdminAddPost"></activity>
+        <activity android:name=".PostDetailed"></activity>
     </application>
 
 </manifest>

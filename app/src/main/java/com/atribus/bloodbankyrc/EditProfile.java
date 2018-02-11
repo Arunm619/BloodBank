@@ -8,10 +8,10 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -43,44 +43,37 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class Register extends AppCompatActivity {
+public class EditProfile extends AppCompatActivity {
 
-    SharedPreferences.Editor editor;
-
-    LinearLayout ll;
     MaterialEditText et_name, et_mobilenumber, et_dob, et_bloodgroup, et_address, et_gender;
-    Button btn_register;
-    Date mybirthday;
-    Double mlat = 0.0, mlon = 0.0;
 
+    String name, mobilenumber, dob, bloodgroup, address, gender;
+    LinearLayout ll;
+    Button btn_update;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference UsersNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Users");
     DatabaseReference BloodNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Blood");
-
-    String name, mobilenumber, dob, bloodgroup, address, gender;
-
     FirebaseUser currentUser;
 
-    private FusedLocationProviderClient mFusedLocationClient;
-    protected Location mLastLocation;
-    private int REQUEST_PERMISSIONS_REQUEST_CODE = 101;
+    String MY_PREFS_NAME = "MYDB";
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
-    @SuppressLint("CommitPrefEdits")
+    Date mybirthday;
+    private double mlat = 0.0, mlon = 0.0;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private Location mLastLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_edit_profile);
 
-        //getting firebase auth instance
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        getSupportActionBar().setTitle("Update Profile");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-        String MY_PREFS_NAME = "MYDB";
-        editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-
+        getSupportActionBar().setHomeButtonEnabled(true);
         ll = findViewById(R.id.ll);
         et_name = findViewById(R.id.et_name);
         et_address = findViewById(R.id.et_address);
@@ -88,16 +81,48 @@ public class Register extends AppCompatActivity {
         et_mobilenumber = findViewById(R.id.et_mobilenumber);
         et_dob = findViewById(R.id.et_dob);
         et_gender = findViewById(R.id.et_gender);
-        btn_register = findViewById(R.id.btn_register);
+        btn_update = findViewById(R.id.btn_update);
 
-        //setting mobile number from firebase user
-        et_mobilenumber.setText(currentUser.getPhoneNumber());
+        //getting firebase auth instance
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
+        prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        editor = prefs.edit();
+
+
+        Gson gson = new Gson();
+        String json = prefs.getString("UserObj", "");
+
+        User obj = gson.fromJson(json, User.class);
+        if (obj != null) {
+            mobilenumber = String.valueOf(obj.getMobilenumber());
+            name = obj.getName();
+            dob = obj.getDateofbirth();
+            bloodgroup = obj.getBloodgroup();
+            address = obj.getAddress();
+            gender = obj.getGender();
+
+            et_name.setText(name);
+            et_address.setText(address);
+            et_bloodgroup.setText(bloodgroup);
+            et_mobilenumber.setText(mobilenumber);
+            et_dob.setText(dob);
+            et_gender.setText(gender);
+
+
+            //  Toast.makeText(getActivity(), "Mobile :" + mobilenumber, Toast.LENGTH_SHORT).show();
+        }
 
         dobsetter();
         bloodgroupsetter();
         gendersetter();
 
-        btn_register.setOnClickListener(new View.OnClickListener() {
+        btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -108,6 +133,8 @@ public class Register extends AppCompatActivity {
             }
         });
 
+
+        //setting mobile number from firebase user
 
     }
 
@@ -177,7 +204,7 @@ public class Register extends AppCompatActivity {
                 int mMonth = mcurrentDate.get(Calendar.MONTH);
                 int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog mDatePicker = new DatePickerDialog(Register.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog mDatePicker = new DatePickerDialog(EditProfile.this, new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                         mybirthday = new GregorianCalendar(selectedyear, selectedmonth, selectedday).getTime();
@@ -256,11 +283,16 @@ public class Register extends AppCompatActivity {
 
         editor.apply();
 
-        Toast.makeText(this, "Successfully Stored", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT).show();
 
-        startActivity(new Intent(Register.this, UserActivity.class));
+        // startActivity(new Intent(EditProfile.this, UserActivity.class));
+        //finish();
+
+    }
+
+    @Override
+    public void onBackPressed() {
         finish();
-
     }
 
 
@@ -342,7 +374,7 @@ public class Register extends AppCompatActivity {
 
                 //material dialog to show all the blood groups
 
-                new MaterialDialog.Builder(Register.this)
+                new MaterialDialog.Builder(EditProfile.this)
                         .title(R.string.chooseblood)
                         .items(R.array.bloodtypes)
                         .itemsCallback(new MaterialDialog.ListCallback() {
@@ -367,7 +399,7 @@ public class Register extends AppCompatActivity {
 
                 //material dialog to show all the blood groups
 
-                new MaterialDialog.Builder(Register.this)
+                new MaterialDialog.Builder(EditProfile.this)
                         .title(R.string.choosegender)
                         .items(R.array.gender)
                         .itemsCallback(new MaterialDialog.ListCallback() {
@@ -382,45 +414,6 @@ public class Register extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
-        getLastLocation();
-
-    }
-
-    @SuppressLint("MissingPermission")
-    private void getLastLocation() {
-        mFusedLocationClient.getLastLocation()
-                .addOnCompleteListener(this, new OnCompleteListener <Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task <Location> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            mLastLocation = task.getResult();
-                            mlat = mLastLocation.getLatitude();
-                            mlon = mLastLocation.getLongitude();
-                            Toast.makeText(Register.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            Toast.makeText(Register.this, "Failed to track location", Toast.LENGTH_SHORT).show();
-
-
-                        }
-                    }
-                });
-    }
-
-
-    private void showSnackbar(final int mainTextStringId, final int actionStringId,
-                              View.OnClickListener listener) {
-        Snackbar.make(findViewById(android.R.id.content),
-                getString(mainTextStringId),
-                Snackbar.LENGTH_INDEFINITE)
-                .setAction(getString(actionStringId), listener).show();
     }
 
 
@@ -448,4 +441,36 @@ public class Register extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+        getLastLocation();
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener <Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task <Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            mLastLocation = task.getResult();
+                            mlat = mLastLocation.getLatitude();
+                            mlon = mLastLocation.getLongitude();
+                            Toast.makeText(EditProfile.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(EditProfile.this, "Failed to track location", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    }
+                });
+    }
+
+
 }

@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    >
+
+
+    <TextView
+        android:id="@+id/appnametitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="19dp"
+        android:gravity="center"
+        android:padding="5dp"
+
+        android:text="@string/app_name"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+
+        android:layout_above="@id/tvlicense"
+
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/mobile" />
+
+
+    <TextView
+        android:id="@+id/tvlicense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_above="@id/btn_privacypolicy"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+        android:text="Licenses"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_termsandconditions"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/btn_privacypolicy"
+        android:layout_centerInParent="true"
+
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="@string/t_amp_amp_c"
+        android:textColor="@android:color/white" />
+
+
+    <Button
+        android:id="@+id/btn_privacypolicy"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+
+        android:gravity="center"
+
+        android:text="Privacy Policy"
+
+        android:textColor="@android:color/white" />
+
+
+    <TextView
+
+        android:id="@+id/arun"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/btn_termsandconditions"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+        android:text="@string/copyrights_u00a9"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:textColor="#808080" />
+
+</RelativeLayout>

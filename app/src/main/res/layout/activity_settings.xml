@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.atribus.bloodbankyrc.Home"
-    tools:showIn="@layout/app_bar_home">
+    tools:context="com.atribus.bloodbankyrc.Settings">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
 </RelativeLayout>

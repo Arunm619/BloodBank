@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+
+    android:padding="2dp">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvname"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="@string/samplename"
+                android:textColor="#222"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvbloodgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvname"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="@string/blood_group"
+                android:textColor="#666"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/tvdistanceaway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvname"
+                android:layout_toRightOf="@id/tvbloodgroup"
+                android:maxLines="3"
+                android:gravity="end"
+                android:padding="8dp"
+                android:layout_alignParentRight="true"
+                android:text="@string/distanceaway"
+                android:textColor="#666"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/tvbloodgroup"
+                android:layout_alignParentEnd="true" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

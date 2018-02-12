@@ -11,7 +11,7 @@ import com.atribus.bloodbankyrc.R;
  */
 
 public class DonateHolder {
-    public TextView tvdescription;
+    public TextView tvdescription,tvneardistance;
 
     public ImageView img;
 //    public TextView tvtitle;
@@ -22,6 +22,7 @@ public class DonateHolder {
 
         img = itemView.findViewById(R.id.imgview);
         tvdescription = itemView.findViewById(R.id.tvmessage);
+        tvneardistance=itemView.findViewById(R.id.tvneardistance);
         // btn_learn = itemView.findViewById(R.id.btn_learn);
 
     }

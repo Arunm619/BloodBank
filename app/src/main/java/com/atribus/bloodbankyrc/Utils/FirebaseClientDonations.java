@@ -1,6 +1,7 @@
 package com.atribus.bloodbankyrc.Utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,9 +14,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by root on 11/2/18.
@@ -29,6 +33,11 @@ public class FirebaseClientDonations {
     DonationAdapter donationAdapter;
     DatabaseReference db;
     String order;
+    String userblood;
+
+    String MY_PREFS_NAME = "MYDB";
+    SharedPreferences prefs;
+
 
     public FirebaseClientDonations(Context c, String DB_URL, ListView listView, String order) {
         this.c = c;
@@ -38,28 +47,19 @@ public class FirebaseClientDonations {
 
 
         db = FirebaseDatabase.getInstance().getReferenceFromUrl(DB_URL);
+
+        prefs = c.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+        userblood = prefs.getString("blood", "else");
+
     }
 
     public void refreshdata() {
-        db.addChildEventListener(new ChildEventListener() {
+        db.addValueEventListener(new ValueEventListener() {
+
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 getupdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                getupdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
@@ -69,25 +69,44 @@ public class FirebaseClientDonations {
         });
     }
 
-    public void getupdates(DataSnapshot dataSnapshot) {
+    private void getupdates(DataSnapshot dataSnapshot) {
+
+        requestArrayList.clear();
 
 
-        Request d = dataSnapshot.getValue(Request.class);
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-        requestArrayList.add(d);
+            Request d = ds.getValue(Request.class);
 
 
-        if (requestArrayList.size() > 0) {
+            Rules rules = new Rules();
 
-            if (order.equals("reverse"))
-                Collections.reverse(requestArrayList);
-            donationAdapter = new DonationAdapter(c, requestArrayList);
-            listView.setAdapter(donationAdapter);
-            Utility.setDynamicHeight(listView);
 
-        } else {
-            Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
+            if (rules.rules(userblood, d.getRequiredbloodgroup()))
+            {Toast.makeText(c, "UserBlood : "+userblood
+                        +
+                        "\n" +
+                                "Required blood gorup : "+d.getRequiredbloodgroup()
+                        , Toast.LENGTH_SHORT).show();
+                requestArrayList.add(d);}
+
+
+            if (requestArrayList.size() > 0) {
+
+                if (order.equals("reverse"))
+                    Collections.reverse(requestArrayList);
+                donationAdapter = new DonationAdapter(c, requestArrayList);
+                listView.setAdapter(donationAdapter);
+
+                donationAdapter.notifyDataSetChanged();
+                Utility.setDynamicHeight(listView);
+
+            } else {
+                Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
+            }
+
         }
-    }
 
+
+    }
 }

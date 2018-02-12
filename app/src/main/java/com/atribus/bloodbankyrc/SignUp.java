@@ -148,6 +148,9 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
 
                 signIn();
+                dialog.show();
+
+
             }
         });
 
@@ -187,7 +190,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
                     .checkLocationSettings(googleApiClient, builder.build());
             result.setResultCallback(new ResultCallback <LocationSettingsResult>() {
                 @Override
-                public void onResult(LocationSettingsResult result) {
+                public void onResult(@NonNull LocationSettingsResult result) {
                     final Status status = result.getStatus();
                     final LocationSettingsStates state = result
                             .getLocationSettingsStates();
@@ -246,7 +249,6 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
         if (requestCode == RC_SIGN_IN) {
             Task <GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                dialog.show();
 
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -291,7 +293,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
     }
 
     public static boolean isLocationEnabled(Context context) {
-        int locationMode = 0;
+        int locationMode;
         String locationProviders;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

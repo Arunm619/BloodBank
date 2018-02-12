@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import static android.content.Context.MODE_PRIVATE;
-
-
 public class DonateBlood extends Fragment {
 
     private final String DB_URL = "https://bloodbank-3c1dd.firebaseio.com/Request/";
@@ -58,7 +57,7 @@ public class DonateBlood extends Fragment {
 
         String userblood = prefs.getString("blood", "else");
 
-        String temp =DB_URL+userblood;
+        String temp =DB_URL;
 
 
         //user is O+ blood

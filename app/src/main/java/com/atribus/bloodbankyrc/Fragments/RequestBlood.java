@@ -143,7 +143,7 @@ public class RequestBlood extends Fragment {
 
     private void deletetherequest(Request request) {
 
-        requestNode.child(request.getRequiredbloodgroup()).child(String.valueOf(request.getMobilenumber())).removeValue();
+        requestNode/*.child(request.getRequiredbloodgroup())*/.child(String.valueOf(request.getMobilenumber())).removeValue();
         editor.remove("ReqObj");
         editor.apply();
         openeditscreen();
@@ -196,7 +196,7 @@ public class RequestBlood extends Fragment {
 
 
         //request node -> blood group -> id --Mobilenumber -> Data Request
-        requestNode.child(request.getRequiredbloodgroup()).child(String.valueOf(request.getMobilenumber())).setValue(request);
+        requestNode/*.child(request.getRequiredbloodgroup())*/.child(String.valueOf(request.getMobilenumber())).setValue(request);
         Toast.makeText(getActivity(), "Successfully requested. Please wait while our donors call you.", Toast.LENGTH_SHORT).show();
         setrequestedscreenon(request);
 

@@ -2,11 +2,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context="com.atribus.bloodbankyrc.Fragments.HelperFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--Donated Details-->
+    <RelativeLayout
+        android:id="@+id/RLDonatedDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        >
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="08dp"
+            android:id="@+id/cv_donatedblood"
+            android:visibility="visible"
+            card_view:cardCornerRadius="2dp"
+            card_view:contentPadding="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/donatedbloodrecentlytv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/donatedbloodrecently"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textStyle="bold" />
+
+
+
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/yeah"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/donatedbloodrecentlytv"/>
+               </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
 </FrameLayout>

@@ -148,6 +148,9 @@
 
     <string name="copyrights_u00a9">copyrights ©</string>
     <string name="t_amp_amp_c"><![CDATA[t&c]]></string>
+    <string name="_5_kms">5 kms</string>
+    <string name="donatedbloodrecently">Donated Blood ?</string>
+    <string name="yeah">Yeah</string>
 
 
 </resources>

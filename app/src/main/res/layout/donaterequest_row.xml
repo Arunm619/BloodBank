@@ -19,7 +19,7 @@
                 android:id="@+id/imgview"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_menu_camera" />
+                android:src="@drawable/ic_person" />
 
             <TextView
                 android:id="@+id/tvmessage"
@@ -32,7 +32,15 @@
                 android:text="@string/summary_about" />
 
 
-
+            <TextView
+                android:id="@+id/tvneardistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/tvmessage"
+                android:text="@string/_5_kms"
+                android:textStyle="bold" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

@@ -51,10 +51,13 @@ dependencies {
     compile 'com.nabinbhandari.android:permissions:3.5'
     //recycler view
     implementation 'com.android.support:recyclerview-v7:26.1.0'
+    //count down timer
+    compile 'com.github.iwgang:countdownview:2.1.6'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+
 
 
 

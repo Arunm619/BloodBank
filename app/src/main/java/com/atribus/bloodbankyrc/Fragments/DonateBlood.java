@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class DonateBlood extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference Requestsnode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Request");
-
+CardView cvempty;
     public DonateBlood() {
         // Required empty public constructor
     }
@@ -50,7 +51,7 @@ public class DonateBlood extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_donate_blood, container, false);
-
+        cvempty=v.findViewById(R.id.cvempty);
         Donatebloodfeed = v.findViewById(R.id.lvDonatebloodfeed);
         prefs = this.getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         editor = prefs.edit();
@@ -68,7 +69,7 @@ public class DonateBlood extends Fragment {
         //O+
 
 
-        firebaseClientDonations = new FirebaseClientDonations(getActivity(), temp, Donatebloodfeed, "reverse");
+        firebaseClientDonations = new FirebaseClientDonations(getActivity(), temp, Donatebloodfeed, "reverse",cvempty);
         firebaseClientDonations.refreshdata();
 
 

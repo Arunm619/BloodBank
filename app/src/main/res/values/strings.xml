@@ -151,6 +151,15 @@
     <string name="_5_kms">5 kms</string>
     <string name="donatedbloodrecently">Donated Blood ?</string>
     <string name="yeah">Yeah</string>
+    <string name="Donation">Donation</string>
+    <string name="Hospital">Hospital name</string>
+    <string name="dateofdonation">Donated Date</string>
+    <string name="keylastdonateddate">lastdonateddate</string>
+    <string name="admin">Admin</string>
+    <string name="Nooftimesdonated">No of times Donates</string>
+    <string name="share">Share</string>
+    <string name="NoDonations">No Requests Available.</string>
+    <string name="NoPosts">No posts Found</string>
 
 
 </resources>

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Adapters.ViewpagerAdapter;
 import com.atribus.bloodbankyrc.Fragments.DonateBlood;
@@ -33,8 +34,9 @@ public class UserActivity extends AppCompatActivity {
     FloatingActionButton fab;
     private static final int PAGE_HOME = 0;
     private static final int PAGE_DONATE = 1;
-    private static final int PAGE_FACTS = 2;
-    private static final int PAGE_REQUEST = 3;
+
+    private static final int PAGE_REQUEST = 2;
+    private static final int PAGE_FACTS = 3;
 
     private int[] tabIcons = {
             R.drawable.ic_address,
@@ -77,19 +79,38 @@ public class UserActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-       // setuptabicons();
+        // setuptabicons();
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                if (position == PAGE_REQUEST) {
-                    // hide fab
-                    fab.setVisibility(View.GONE);
+                switch (position) {
 
-                } else {
-                    // show FAB
-                    fab.setVisibility(View.VISIBLE);
+                    case PAGE_HOME:
+                        fab.setVisibility(View.VISIBLE);
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                viewPager.setCurrentItem(PAGE_REQUEST,true);
+                            }
+                        });
+                        break;
+                    case PAGE_REQUEST:
+                        fab.setVisibility(View.GONE);
+                        break;
 
+                    case PAGE_DONATE:
+                        fab.setVisibility(View.GONE);
+                        break;
+                    case PAGE_FACTS:
+                        fab.setVisibility(View.GONE);
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(UserActivity.this, "SHow details", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 }
+
             }
 
         });

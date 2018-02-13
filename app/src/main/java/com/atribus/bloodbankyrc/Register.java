@@ -70,6 +70,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().setTitle("Register New Profile");
 
         //getting firebase auth instance
         FirebaseAuth mAuth = FirebaseAuth.getInstance();

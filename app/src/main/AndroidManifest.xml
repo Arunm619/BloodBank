@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SignUp">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +27,11 @@
         <activity android:name=".Settings" />
         <activity android:name=".EditProfile" />
         <activity android:name=".AppInfo" />
-        <activity android:name=".AdminAddPost"></activity>
-        <activity android:name=".PostDetailed"></activity>
+        <activity android:name=".AdminAddPost">
+
+        </activity>
+        <activity android:name=".PostDetailed" />
+        <activity android:name=".RecentBloodDonationsActivity"></activity>
     </application>
 
 </manifest>

@@ -32,6 +32,8 @@ dependencies {
     implementation 'com.android.support:support-compat:26.1.0'
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.google.firebase:firebase-storage:11.8.0'
+    //firebase messaging
+    compile 'com.google.firebase:firebase-messaging:11.8.0'
     compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'
     compile 'com.google.android.gms:play-services-maps:11.8.0'
@@ -53,10 +55,13 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     //count down timer
     compile 'com.github.iwgang:countdownview:2.1.6'
+    //notification maker
+    compile 'com.github.halysongoncalves:pugnotification:1.8.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+
 
 
 

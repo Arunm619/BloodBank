@@ -1,13 +1,13 @@
 package com.atribus.bloodbankyrc;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.AppBarLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +31,9 @@ public class UserActivity extends AppCompatActivity {
     String MY_PREFS_NAME = "MYDB";
     SharedPreferences prefs;
 
+    String dataTitle, dataMessage;
+
+
     FloatingActionButton fab;
     private static final int PAGE_HOME = 0;
     private static final int PAGE_DONATE = 1;
@@ -52,6 +55,25 @@ public class UserActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Blood Bank");
         getSupportActionBar().setElevation(0);
         prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+        // Handle possible data accompanying notification message.
+        if (getIntent().getExtras() != null) {
+            viewPager.setCurrentItem(PAGE_DONATE);
+
+            Toast.makeText(this, "sibaji", Toast.LENGTH_SHORT).show();
+            for (String key : getIntent().getExtras().keySet()) {
+                if (key.equals("title")) {
+                    dataTitle = (String) getIntent().getExtras().get(key);
+                }
+                if (key.equals("message")) {
+                    dataMessage = (String) getIntent().getExtras().get(key);
+                }
+            }
+
+            showAlertDialog();
+
+        }
+
 
         Gson gson = new Gson();
         String json = prefs.getString("UserObj", "");
@@ -90,7 +112,7 @@ public class UserActivity extends AppCompatActivity {
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                viewPager.setCurrentItem(PAGE_REQUEST,true);
+                                viewPager.setCurrentItem(PAGE_REQUEST, true);
                             }
                         });
                         break;
@@ -116,6 +138,16 @@ public class UserActivity extends AppCompatActivity {
         });
 
     }
+
+    private void showAlertDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Message");
+        builder.setMessage("Required Blood Group: " + dataTitle + "\n" + "Contact Number: " + dataMessage);
+        builder.setPositiveButton("OK", null);
+        builder.show();
+    }
+
 
     private void setuptabicons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);

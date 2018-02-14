@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -81,7 +82,8 @@ public class Register extends AppCompatActivity {
         editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-
+        FirebaseMessaging.getInstance().subscribeToTopic("notifications");
+       // Toast.makeText(this, "Registered to Notifications...", Toast.LENGTH_SHORT).show();
         ll = findViewById(R.id.ll);
         et_name = findViewById(R.id.et_name);
         et_address = findViewById(R.id.et_address);
@@ -324,7 +326,7 @@ public class Register extends AppCompatActivity {
 
     private boolean validateage(Date date) {
 
-        return getAge(date) <= 18;
+        return getAge(date) < 18;
     }
 
     private boolean validatedate(Date date) {

@@ -2,11 +2,9 @@ package com.atribus.bloodbankyrc.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -22,10 +20,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.atribus.bloodbankyrc.Model.Message;
 import com.atribus.bloodbankyrc.Model.Request;
 import com.atribus.bloodbankyrc.Model.User;
 import com.atribus.bloodbankyrc.R;
-import com.atribus.bloodbankyrc.Register;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -67,12 +65,26 @@ public class RequestBlood extends Fragment {
     String mobilenumber;
     TextView tvname, tvmobile, tvlocation, tvmessage, tvbloodgroup, tvbloodunits;
 
+    FirebaseDatabase databasenotifications;
+    DatabaseReference myRef;
+
+
+  //  private FusedLocationProviderClient mFusedLocationClient;
+   // protected Location mLastLocation;
+    Context c;
+
+
     @SuppressLint("CommitPrefEdits")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        databasenotifications = FirebaseDatabase.getInstance();
+        myRef = databasenotifications.getReference("messages");
+        c = container.getContext();
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_request_blood, container, false);
+      //  mFusedLocationClient = LocationServices.getFusedLocationProviderClient(c);
 
 
         // String MY_PREFS_NAME = "MYDB";
@@ -82,6 +94,7 @@ public class RequestBlood extends Fragment {
         // editor.clear();
 
         getmobilenumberfromUserObj();
+       // getLastLocation();
 
         database = FirebaseDatabase.getInstance();
         requestNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Request");
@@ -167,7 +180,7 @@ public class RequestBlood extends Fragment {
         User obj = gson.fromJson(json, User.class);
         if (obj != null) {
             mobilenumber = String.valueOf(obj.getMobilenumber());
-          //  Toast.makeText(getActivity(), "Mobile :" + mobilenumber, Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(getActivity(), "Mobile :" + mobilenumber, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -199,6 +212,10 @@ public class RequestBlood extends Fragment {
         requestNode/*.child(request.getRequiredbloodgroup())*/.child(String.valueOf(request.getMobilenumber())).setValue(request);
         Toast.makeText(getActivity(), "Successfully requested. Please wait while our donors call you.", Toast.LENGTH_SHORT).show();
         setrequestedscreenon(request);
+
+        //sending notifcations to all the users
+        //title , message
+        myRef.push().setValue(new Message(bloodgroup, mobilenumber));
 
 
         //storing offline copy of ReqObj in sharedpred under MYDB
@@ -273,7 +290,7 @@ public class RequestBlood extends Fragment {
         name = et_name.getText().toString().trim();
         mobilenumber = et_mobilenumber.getText().toString().trim();
         location = et_location.getText().toString().trim();
-        getlatlongfromplacename(location);
+         getlatlongfromplacename(location);
         message = et_message.getText().toString().trim();
 
         if (TextUtils.isEmpty(bloodgroup)) {
@@ -286,6 +303,14 @@ public class RequestBlood extends Fragment {
         if (TextUtils.isEmpty(bloodunits)) {
             snackbar = Snackbar
                     .make(v, "Please enter blood units ", Snackbar.LENGTH_LONG);
+
+            snackbar.show();
+            return -1;
+        }
+
+        if (Integer.parseInt(bloodunits) == 0 || Integer.parseInt(bloodunits) > 9) {
+            snackbar = Snackbar
+                    .make(v, "Enter valid units", Snackbar.LENGTH_LONG);
 
             snackbar.show();
             return -1;
@@ -331,6 +356,8 @@ public class RequestBlood extends Fragment {
         }
 
         if (xlat == 0.0 && xlon == 0.0) {
+           // getlatlongfromplacename(location);
+
             snackbar = Snackbar
                     .make(v, "Unable to detect location,be more specific. \n" +
                             "Appolo hospitals chennai, Malar Fortis chennai.", Snackbar.LENGTH_LONG);
@@ -377,7 +404,7 @@ public class RequestBlood extends Fragment {
         xlon = 0.0;
         if (Geocoder.isPresent()) {
             try {
-                ;
+
                 Geocoder gc = new Geocoder(getActivity());
                 List <Address> addresses = gc.getFromLocationName(location, 5); // get the found Address Objects
 
@@ -395,4 +422,39 @@ public class RequestBlood extends Fragment {
         }
 
     }
+
+   /* private void getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(getActivity(), new OnCompleteListener <Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task <Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            mLastLocation = task.getResult();
+                            xlat = mLastLocation.getLatitude();
+                            xlon = mLastLocation.getLongitude();
+                            Toast.makeText(getActivity(), "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            //Toast.makeText(getActivity(), "Failed to track location", Toast.LENGTH_SHORT).show();
+
+                            xlat = 0.0;
+                            xlon = 0.0;
+                            getlatlongfromplacename(location);
+                        }
+                    }
+                });
+    }
+
+*/
 }

@@ -10,13 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.atribus.bloodbankyrc.Model.post;
 import com.atribus.bloodbankyrc.PostDetailed;
 import com.atribus.bloodbankyrc.R;
 import com.atribus.bloodbankyrc.Utils.FirebaseClient;
-import com.google.firebase.database.DatabaseReference;
 import com.google.gson.Gson;
 
 
@@ -25,22 +24,31 @@ public class HomeFragment extends Fragment {
     private static final String DB_URL = "https://bloodbank-3c1dd.firebaseio.com/PostDetails";
 
     ListView Homefeed;
+    ProgressBar prgbar_home;
     private FirebaseClient firebaseClient;
 
     public HomeFragment() {
         // Required empty public constructor
     }
+
     CardView cvempty;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        cvempty=v.findViewById(R.id.cvempty);
 
         Homefeed = v.findViewById(R.id.lvHomefeed);
 
-        firebaseClient = new FirebaseClient(getActivity(), DB_URL, Homefeed, "reverse",cvempty);
+        //cardview of empty is not shown at first
+        cvempty = v.findViewById(R.id.cvempty);
+        cvempty.setVisibility(View.INVISIBLE);
+
+        //progress bar is loading...
+        prgbar_home = v.findViewById(R.id.prgbar_home);
+        prgbar_home.setVisibility(View.VISIBLE);
+
+        firebaseClient = new FirebaseClient(getActivity(), DB_URL, Homefeed, "reverse", cvempty,prgbar_home);
         firebaseClient.refreshdata();
 
         Homefeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -49,7 +57,7 @@ public class HomeFragment extends Fragment {
                 post post = (post) adapterView.getItemAtPosition(i);
                 Gson gson = new Gson();
                 String objstring = gson.toJson(post);
-                Intent intent = new Intent(getContext(),PostDetailed.class);
+                Intent intent = new Intent(getContext(), PostDetailed.class);
                 intent.putExtra("obj", objstring);
                 //  getActivity().finish();
                 startActivity(intent);

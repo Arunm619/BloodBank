@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Adapters.CustomAdapter;
@@ -24,39 +25,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.view.View.GONE;
 
 /**
  * Created by root on 11/2/18.
  */
 
 public class FirebaseClientDonations {
-    Context c;
-    String DB_URL;
-    ListView listView;
-    ArrayList <Request> requestArrayList = new ArrayList <>();
-    DonationAdapter donationAdapter;
-    DatabaseReference db;
-    CardView cv_empty;
-    String order;
-    String userblood;
-    String Currmobilenumber;
-    String MY_PREFS_NAME = "MYDB";
-    SharedPreferences prefs;
+    private Context c;
+    private ListView listView;
+    private ArrayList <Request> requestArrayList = new ArrayList <>();
+    private DatabaseReference db;
+    private CardView cv_empty;
+    private String order;
+    private String userblood;
+    private String Currmobilenumber;
+    private ProgressBar pb;
 
-    Rules rules = new Rules();
+    private Rules rules = new Rules();
 
 
-    public FirebaseClientDonations(Context c, String DB_URL, ListView listView, String order, CardView cv_empty) {
+    public FirebaseClientDonations(Context c, String DB_URL, ListView listView, String order, CardView cv_empty, ProgressBar pb) {
         this.c = c;
-        this.DB_URL = DB_URL;
         this.listView = listView;
         this.order = order;
         this.cv_empty = cv_empty;
+        this.pb = pb;
 
 
         db = FirebaseDatabase.getInstance().getReferenceFromUrl(DB_URL);
 
-        prefs = c.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String MY_PREFS_NAME = "MYDB";
+        SharedPreferences prefs = c.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 
         userblood = prefs.getString("blood", "else");
         Gson gson = new Gson();
@@ -84,7 +84,7 @@ public class FirebaseClientDonations {
         });
     }
 
-    private void getupdates(DataSnapshot dataSnapshot) {
+ /*   private void getupdates(DataSnapshot dataSnapshot) {
 
         requestArrayList.clear();
 
@@ -93,24 +93,71 @@ public class FirebaseClientDonations {
 
             Request d = ds.getValue(Request.class);
 
-            Toast.makeText(c, "Request from number :" + d.getMobilenumber()
-                    +
-                    "\n Current User number: " + Currmobilenumber, Toast.LENGTH_SHORT).show();
+            if (rules.rules(userblood, d.getRequiredbloodgroup())) {
+
+                if (!String.valueOf(d.getMobilenumber()).equals(Currmobilenumber)) {
+                    requestArrayList.add(d);
+
+                }
+            }
+
+        }
+
+
+        if (requestArrayList.size() > 0) {
+
+
+            if (order.equals("reverse"))
+                Collections.reverse(requestArrayList);
+            DonationAdapter donationAdapter = new DonationAdapter(c, requestArrayList);
+
+
+            pb.setVisibility(View.GONE);
+            cv_empty.setVisibility(View.GONE);
+            donationAdapter.notifyDataSetChanged();
+            Utility.setDynamicHeight(listView);
+
+        } else {
+
+            pb.setVisibility(View.GONE);
+            //listView.setVisibility(GONE);
+
+            Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
+            cv_empty.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
+}*/
+
+
+    private void getupdates(DataSnapshot dataSnapshot) {
+
+
+        requestArrayList.clear();
+
+
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+            Request d = ds.getValue(Request.class);
+
 
             if (rules.rules(userblood, d.getRequiredbloodgroup())) {
 
                 if (!String.valueOf(d.getMobilenumber()).equals(Currmobilenumber))
                     requestArrayList.add(d);
-                cv_empty.setVisibility(View.GONE);
+
+
             }
-
-
+            cv_empty.setVisibility(View.GONE);
+        }
             if (requestArrayList.size() > 0) {
-
+                pb.setVisibility(View.GONE);
 
                 if (order.equals("reverse"))
                     Collections.reverse(requestArrayList);
-                donationAdapter = new DonationAdapter(c, requestArrayList);
+                DonationAdapter donationAdapter = new DonationAdapter(c, requestArrayList);
                 listView.setAdapter(donationAdapter);
 
                 donationAdapter.notifyDataSetChanged();
@@ -118,13 +165,12 @@ public class FirebaseClientDonations {
 
             } else {
 
-
-                Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
+                pb.setVisibility(View.GONE);
+             //   Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
                 cv_empty.setVisibility(View.VISIBLE);
             }
 
         }
 
-
     }
-}
+

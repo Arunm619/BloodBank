@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Model.Request;
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import static android.content.Context.MODE_PRIVATE;
+
 public class DonateBlood extends Fragment {
 
     private final String DB_URL = "https://bloodbank-3c1dd.firebaseio.com/Request/";
@@ -40,7 +42,9 @@ public class DonateBlood extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference Requestsnode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Request");
-CardView cvempty;
+    CardView cvempty;
+    ProgressBar prgbar_donations;
+
     public DonateBlood() {
         // Required empty public constructor
     }
@@ -51,14 +55,23 @@ CardView cvempty;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_donate_blood, container, false);
-        cvempty=v.findViewById(R.id.cvempty);
+
         Donatebloodfeed = v.findViewById(R.id.lvDonatebloodfeed);
+
+        //cardview of empty is not shown at first
+        cvempty = v.findViewById(R.id.cvempty);
+        cvempty.setVisibility(View.GONE);
+
+        //progress bar is loading...
+        prgbar_donations = v.findViewById(R.id.prgbar_donations);
+        prgbar_donations.setVisibility(View.VISIBLE);
+
         prefs = this.getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         editor = prefs.edit();
 
         String userblood = prefs.getString("blood", "else");
 
-        String temp =DB_URL;
+        String temp = DB_URL;
 
 
         //user is O+ blood
@@ -69,7 +82,7 @@ CardView cvempty;
         //O+
 
 
-        firebaseClientDonations = new FirebaseClientDonations(getActivity(), temp, Donatebloodfeed, "reverse",cvempty);
+        firebaseClientDonations = new FirebaseClientDonations(getActivity(), temp, Donatebloodfeed, "reverse", cvempty,prgbar_donations);
         firebaseClientDonations.refreshdata();
 
 

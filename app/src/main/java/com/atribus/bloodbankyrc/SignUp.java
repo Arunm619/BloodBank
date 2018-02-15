@@ -1,10 +1,12 @@
 package com.atribus.bloodbankyrc;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,12 +60,18 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
     private GoogleApiClient mGoogleApiClient;
     private GoogleApiClient googleApiClient;
 
+    public static final String DISPLAY_ONCE_PREFS = "display_only_once_spfile";
+
+    public static final String DISPLAY_ONCE_KEY = "display_only_once_spkey";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
 
         signInButton = findViewById(R.id.btn_signin);
         lt_signup = findViewById(R.id.lt_signin);
@@ -72,6 +80,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
         dialog = new ProgressDialog(SignUp.this);
         // dialog.setTitle("Google Sign-In");
         dialog.setMessage("Validating Credentials...");
+
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -161,6 +170,17 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
             // Toast.makeText(this, ""+personEmail, Toast.LENGTH_SHORT).show();
         }
 
+
+
+
+        if (introductionCompletedPreviously()) {
+            return;
+        } else {
+            final SharedPreferences sp = getSharedPreferences(DISPLAY_ONCE_PREFS, MODE_PRIVATE);
+            @SuppressLint("CommitPrefEdits") final SharedPreferences.Editor pendingEdits = sp.edit().putBoolean(DISPLAY_ONCE_KEY, true);
+            startActivity(new Intent(this, IntroSlider.class));
+            finish();
+        }
     }
 
     private void turngpson() {
@@ -220,6 +240,11 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
     }
 
+
+    private boolean introductionCompletedPreviously() {
+        SharedPreferences sp = getSharedPreferences(DISPLAY_ONCE_PREFS, MODE_PRIVATE);
+        return sp.getBoolean(DISPLAY_ONCE_KEY, false);
+    }
 
     @Override
     protected void onStart() {

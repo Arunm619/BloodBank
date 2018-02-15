@@ -21,11 +21,6 @@
             android:resource="@color/colorAccent" />
 
         <activity android:name=".SignUp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity android:name=".Register" />
@@ -41,7 +36,13 @@
 
         <service android:name=".Utils.FCMService" />
 
-        <activity android:name=".IntroSlider">
+        <activity android:name=".IntroSlider"></activity>
+        <activity android:name=".ADMIN">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
     </application>

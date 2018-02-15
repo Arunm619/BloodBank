@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +28,7 @@ import java.io.IOException;
 public class AdminAddPost extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     EditText et_desc, et_title, et_con;
-   // DatabaseReference db;
+    // DatabaseReference db;
     //   private static final String DB_URL = "https://bloodbank-3c1dd.firebaseio.com/PostDetails";
 
 
@@ -82,13 +83,18 @@ public class AdminAddPost extends AppCompatActivity {
     }
 
     private void startposting() {
-        ProgressDialog pd = new ProgressDialog(AdminAddPost.this);
-        pd.setMessage("Uploading");
-        pd.show();
+        final ProgressDialog pd = new ProgressDialog(AdminAddPost.this);
         title = et_title.getText().toString().trim();
         content = et_con.getText().toString().trim();
         description = et_desc.getText().toString().trim();
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content) || TextUtils.isEmpty(description)) {
+            Toast.makeText(this, "Enter All the fields. Dont forget to choose Image.", Toast.LENGTH_SHORT).show();
 
+            return;
+        }
+
+        pd.setMessage("Uploading");
+        pd.show();
 
         final String id = PostsNode.push().getKey();
         mStorageRef.child("post_images").child(id).putFile(uri).addOnSuccessListener(new OnSuccessListener <UploadTask.TaskSnapshot>() {
@@ -97,12 +103,12 @@ public class AdminAddPost extends AppCompatActivity {
                 Uri downoaduri = taskSnapshot.getDownloadUrl();
                 PostsNode.child(id).setValue(new post(title, content, description, downoaduri.toString()));
                 Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                pd.dismiss();
+                finish();
 
             }
         });
-        pd.dismiss();
-       // finish();
-        startActivity(new Intent(AdminAddPost.this, AdminMain.class));
+        // startActivity(new Intent(AdminAddPost.this, AdminMain.class));
     }
 
     @Override
@@ -134,6 +140,6 @@ public class AdminAddPost extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        startActivity(new Intent(this, AdminMain.class));
+        //  startActivity(new Intent(this, AdminMain.class));
     }
 }

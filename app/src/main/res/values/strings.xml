@@ -161,6 +161,9 @@
     <string name="NoDonations">No Requests Available.</string>
     <string name="NoPosts">No posts Found</string>
     <string name="recentDonation">Recent Donation on</string>
+    <string name="search_for_people">Search For People</string>
+    <string name="admin_panel">ADMIN PANEL</string>
+    <string name="AddaPost">Add a post</string>
 
 
 </resources>

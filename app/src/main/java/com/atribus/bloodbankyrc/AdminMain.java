@@ -1,17 +1,14 @@
 package com.atribus.bloodbankyrc;
 
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.nfc.Tag;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -29,13 +26,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class AdminMain extends AppCompatActivity {
     MaterialEditText et_bloodgroup, et_location;
@@ -59,6 +53,7 @@ public class AdminMain extends AppCompatActivity {
         setContentView(R.layout.activity_admin_main);
         nearbyDonors = new ArrayList <>();
 
+
         et_bloodgroup = findViewById(R.id.et_bloodgroup);
         et_location = findViewById(R.id.et_location);
         btn_search = findViewById(R.id.btn_search);
@@ -74,6 +69,7 @@ public class AdminMain extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         recyclerView.setAdapter(rAdapter);
+
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +88,17 @@ public class AdminMain extends AppCompatActivity {
         requiredbloodgroup = et_bloodgroup.getText().toString().trim();
 
         location = et_location.getText().toString().trim();
+
+        if (requiredbloodgroup.length() == 0) {
+            Toast.makeText(this, "Choose Blood Type", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (location.length() == 0) {
+            Toast.makeText(this, "Enter location Eg. Hospital name, location", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         //get lat long from location Double lat , long
         //the value is returned in xlat and xlon
@@ -116,22 +123,32 @@ public class AdminMain extends AppCompatActivity {
                     //calculates the distance from xlat,xlon to currlat,curlon
                     Distance = finddistance(currlat, currlong);
                     //Toast.makeText(AdminMain.this, Distance+"", Toast.LENGTH_SHORT).show();
-                    UserDistanceDetails details = new UserDistanceDetails(user, Distance);
-                    Log.d(TaG, "Distance for User " + user.getName() + " " + Distance);
-                    nearbyDonors.add(details);
-                    Log.d(TaG, "Array list count" + nearbyDonors.size());
 
+                    if (user.getBloodgroup().equals(requiredbloodgroup)) {
+                        UserDistanceDetails details = new UserDistanceDetails(user, Distance);
+                        nearbyDonors.add(details);
+
+                    }
                 }
 
                 Collections.sort(nearbyDonors, new Comparator <UserDistanceDetails>() {
                     @Override
                     public int compare(UserDistanceDetails u1, UserDistanceDetails u2) {
                         return Float.compare(u1.getDistance(), u2.getDistance());
+
                     }
 
 
                 });
+
                 rAdapter.notifyDataSetChanged();
+
+                if (nearbyDonors.size() == 0) {
+                    Toast.makeText(AdminMain.this, "No users Found.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AdminMain.this, nearbyDonors.size() + " users Found.", Toast.LENGTH_SHORT).show();
+
+                }
 
 
                 //finishes searching the total userlist

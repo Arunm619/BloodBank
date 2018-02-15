@@ -2,15 +2,12 @@ package com.atribus.bloodbankyrc.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +19,6 @@ import android.widget.Toast;
 import com.atribus.bloodbankyrc.Model.BloodDonations;
 import com.atribus.bloodbankyrc.R;
 import com.atribus.bloodbankyrc.RecentBloodDonationsActivity;
-import com.atribus.bloodbankyrc.Register;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 import cn.iwgang.countdownview.CountdownView;
 
@@ -89,13 +86,13 @@ public class HelperFragment extends Fragment {
         btn_donatedbloodq = v.findViewById(R.id.btn_donatedbloodq);
         btnshowdetails = v.findViewById(R.id.btnshowdetails);
         cdvtimer = v.findViewById(R.id.cv_countdownViewTest4);
-
+        cdvtimer.setVisibility(View.GONE);
 
         prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         editor = prefs.edit();
 
         String dateoflastdonation = prefs.getString(getString(R.string.keylastdonateddate), null);
-
+        // Toast.makeText(getActivity(), "STORED :" + dateoflastdonation, Toast.LENGTH_SHORT).show();
         btn_donatedbloodq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,12 +107,14 @@ public class HelperFragment extends Fragment {
                 startActivity(new Intent(getActivity(), RecentBloodDonationsActivity.class));
             }
         });
-        if (dateoflastdonation != null) {
+        if (dateoflastdonation != null && dateoflastdonation.length() != 0) {
             cv_countdowntonextdonation.setVisibility(View.VISIBLE);
             cv_donatedbloodquestion.setVisibility(View.GONE);
             cv_formdonationdetails.setVisibility(View.GONE);
-            tv_daysuntilnextdonation.setText(dateoflastdonation);
-            //calculatedays(dateoflastdonation);
+
+
+            calculatedays(dateoflastdonation);
+            tv_daysuntilnextdonation.setText(String.format("%s %s", getString(R.string.recentDonation), dateoflastdonation));
 
 
         } else {
@@ -148,24 +147,66 @@ public class HelperFragment extends Fragment {
     }
 
     private void calculatedays(String dateoflastdonation) {
+
+
         Date donationdate = parsedate(dateoflastdonation);
+
         Date today = new Date();
 
         //today-6 weeks = donation date
 
         //Date today=new Date();
         //42 days 6 weeks
-        long ltime = donationdate.getTime();
+
+        // Date today=new Date();
+        long ltime;
+        ltime = donationdate.getTime() + 42 * 24 * 60 * 60 * 1000;
         Date fullyrecovereddate = new Date(ltime);
-        if (today.before(fullyrecovereddate)) {
+        // Toast.makeText(getActivity(), "RECOVERED"+fullyrecovereddate.toString(), Toast.LENGTH_SHORT).show();
+
+
+        long daysleft = getDateDiff(fullyrecovereddate, today, TimeUnit.DAYS);
+
+        if (daysleft > 0) {
+            Toast.makeText(getActivity(), "Days left :" + daysleft, Toast.LENGTH_SHORT).show();
+
+        } else {
             cv_donatedbloodquestion.setVisibility(View.VISIBLE);
             cv_formdonationdetails.setVisibility(View.GONE);
             cv_countdowntonextdonation.setVisibility(View.GONE);
-        } else {
-            long answer = fullyrecovereddate.getTime() - new Date().getTime();
-            cdvtimer.start(answer);
 
         }
+
+
+    }
+
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
+
+    private int computediffdays(Date today, Date fullyrecovereddate) {
+        int a = today.compareTo(fullyrecovereddate);
+
+        Calendar todaycal = Calendar.getInstance();
+        todaycal.setTime(today);
+        Calendar fullyreccal = Calendar.getInstance();
+        fullyreccal.setTime(fullyrecovereddate);
+
+
+        //long ans[] = new long[2];
+        if (a != 0) {
+            long msDiff = fullyreccal.getTimeInMillis() - todaycal.getTimeInMillis();
+            Long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
+
+            return daysDiff.intValue();
+        } else {
+            //today is your birthday
+            return 0;
+
+        }
+
 
     }
 

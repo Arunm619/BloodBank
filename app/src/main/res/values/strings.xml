@@ -160,6 +160,7 @@
     <string name="share">Share</string>
     <string name="NoDonations">No Requests Available.</string>
     <string name="NoPosts">No posts Found</string>
+    <string name="recentDonation">Recent Donation on</string>
 
 
 </resources>

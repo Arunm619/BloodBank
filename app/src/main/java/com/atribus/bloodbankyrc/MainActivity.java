@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Handle possible data accompanying notification message.
 
-       
+
         if (getIntent().getExtras() != null) {
 
 
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("messages");
 
-        title = (EditText) findViewById(R.id.title);
-        message = (EditText) findViewById(R.id.message);
+        title = findViewById(R.id.title);
+        message = findViewById(R.id.message);
 
     }
 
@@ -68,5 +68,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view) {
-       }
+    }
 }

@@ -1,14 +1,10 @@
 package com.atribus.bloodbankyrc;
 
-import android.*;
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -48,7 +43,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-
 
 import java.util.ArrayList;
 
@@ -164,7 +158,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
             String personId = acct.getId();
             Uri personPhoto = acct.getPhotoUrl();
 
-           // Toast.makeText(this, ""+personEmail, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, ""+personEmail, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -317,18 +311,18 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "Yay", Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(this, "Yay", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        Toast.makeText(this, "sus", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "sus", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show();
+        //      Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show();
 
     }
 

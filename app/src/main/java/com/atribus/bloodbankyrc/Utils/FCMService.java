@@ -1,23 +1,26 @@
 package com.atribus.bloodbankyrc.Utils;
 
-import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.MainActivity;
 import com.atribus.bloodbankyrc.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import br.com.goncalves.pugnotification.notification.PugNotification;
-
 /**
  * Created by root on 14/2/18.
  */
 public class FCMService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
-   // SharedPreferences prefs;
+    // SharedPreferences prefs;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -30,7 +33,7 @@ public class FCMService extends FirebaseMessagingService {
         String notificationTitle = null, notificationBody = null;
         String dataTitle = null, dataMessage = null;
 
-       // prefs = getApplicationContext().getSharedPreferences("MYDB", MODE_PRIVATE);
+        // prefs = getApplicationContext().getSharedPreferences("MYDB", MODE_PRIVATE);
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
@@ -40,6 +43,7 @@ public class FCMService extends FirebaseMessagingService {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("message"));
             dataTitle = remoteMessage.getData().get("title");
             dataMessage = remoteMessage.getData().get("message");
+            Toast.makeText(this, "Message" + dataMessage + dataTitle, Toast.LENGTH_SHORT).show();
         }
 
         // Check if message contains a notification payload.
@@ -63,7 +67,7 @@ public class FCMService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-    /*    Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this, "hey")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Hello! Its urgent!")
@@ -75,24 +79,23 @@ public class FCMService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+
         if (notificationManager != null) {
-            notificationManager.notify(0 *//* ID of notification *//*, notificationBuilder.build());
+            notificationManager.notify(0, notificationBuilder.build());
         }
 
 
-    */
-
-        PugNotification.with(this)
-                .load()
-                .title("Time to save some lives!")
-                .message("We need youQ")
-                .bigTextStyle("a")
-
-                .smallIcon(R.drawable.pugnotification_ic_launcher)
-                .largeIcon(R.drawable.pugnotification_ic_launcher)
-                .flags(Notification.DEFAULT_ALL)
-                .simple()
-
-                .build();
+//        PugNotification.with(this)
+//                .load()
+//                .title("Time to save some lives!")
+//                .message("We need youQ")
+//                .bigTextStyle("a")
+//
+//                .smallIcon(R.drawable.pugnotification_ic_launcher)
+//                .largeIcon(R.drawable.pugnotification_ic_launcher)
+//                .flags(Notification.DEFAULT_ALL)
+//                .simple()
+//
+//                .build();
     }
 }

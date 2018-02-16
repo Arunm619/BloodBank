@@ -20,7 +20,13 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".SignUp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Register" />
         <activity android:name=".AdminMain" />
         <activity android:name=".UserActivity" />
@@ -35,14 +41,9 @@
         <service android:name=".Utils.FCMService" />
 
         <activity android:name=".IntroSlider" />
-        <activity android:name=".ADMIN">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".AdminCheckDetails"></activity>
+        <activity android:name=".ADMIN"></activity>
+        <activity android:name=".AdminCheckDetails" />
+        <activity android:name=".NoInternet"></activity>
     </application>
 
 </manifest>

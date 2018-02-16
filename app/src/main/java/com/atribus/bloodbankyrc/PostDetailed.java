@@ -1,14 +1,12 @@
 package com.atribus.bloodbankyrc;
 
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.atribus.bloodbankyrc.Model.post;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -36,7 +34,7 @@ public class PostDetailed extends AppCompatActivity {
         tvmdesc = findViewById(R.id.mdesc);
         tvmtitle = findViewById(R.id.mtitle);
         iv = findViewById(R.id.imgview);
-        btn_share = findViewById(R.id.share);
+      //  btn_share = findViewById(R.id.share);
 
 
         if (data != null) {
@@ -54,12 +52,12 @@ public class PostDetailed extends AppCompatActivity {
 
             drawimg(pi);
         }
-        btn_share.setOnClickListener(new View.OnClickListener() {
+       /* btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //  sharelink();
             }
-        });
+        });*/
 
     }
 

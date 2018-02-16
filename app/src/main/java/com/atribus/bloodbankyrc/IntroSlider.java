@@ -55,7 +55,8 @@ public class IntroSlider extends IntroActivity {
         final ArrayList <Fragment> pages = new ArrayList <>();
 
 
-        List <String> x = new ArrayList <>(Arrays.asList("Blood Donations App", "Instant Availablity", "Notification"));
+        List <String> x = new ArrayList <>(Arrays.asList("Blood Donations App",
+                "Instant Availablity", "Notification"));
 
 
         List <String> y = new ArrayList <>(Arrays.asList("Save Life",

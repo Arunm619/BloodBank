@@ -1,31 +1,25 @@
 package com.atribus.bloodbankyrc.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.atribus.bloodbankyrc.Model.Request;
-import com.atribus.bloodbankyrc.Model.post;
-import com.atribus.bloodbankyrc.PostDetailed;
 import com.atribus.bloodbankyrc.R;
-import com.atribus.bloodbankyrc.Utils.FirebaseClient;
 import com.atribus.bloodbankyrc.Utils.FirebaseClientDonations;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -82,23 +76,61 @@ public class DonateBlood extends Fragment {
         //O+
 
 
-        firebaseClientDonations = new FirebaseClientDonations(getActivity(), temp, Donatebloodfeed, "reverse", cvempty,prgbar_donations);
+        firebaseClientDonations = new FirebaseClientDonations(getActivity(), temp, Donatebloodfeed, "reverse", cvempty, prgbar_donations);
         firebaseClientDonations.refreshdata();
 
 
         Donatebloodfeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView <?> adapterView, View view, int i, long l) {
-                Request post = (Request) adapterView.getItemAtPosition(i);
-                Gson gson = new Gson();
-                String objstring = gson.toJson(post);
-                Toast.makeText(getActivity(), objstring, Toast.LENGTH_SHORT).show();
+                Request request = (Request) adapterView.getItemAtPosition(i);
+//                Gson gson = new Gson();
+//                String objstring = gson.toJson(post);
+//                Toast.makeText(getActivity(), objstring, Toast.LENGTH_SHORT).show();
                 //                Intent intent = new Intent(getContext(),PostDetailed.class);
 //                intent.putExtra("obj", objstring);
 //                //  getActivity().finish();
 //                startActivity(intent);
 
                 //Toast.makeText(getActivity(), objstring, Toast.LENGTH_SHORT).show();
+
+
+                //String[] Title = {"Name", "Phone", "College", "Dept"};
+                String[] Details = {"Name : " + request.getName()
+                        , "Phone : " + request.getMobilenumber(),
+                        "Hospital Name   : " + request.getLocation(),
+                        "Message  : " + request.getMessage()};
+
+
+                new MaterialDialog.Builder(getActivity())
+                        .title("Details of " + request.getName())
+                        .items(Details)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+
+                                switch (which) {
+                                    case 1:
+                                        Toast.makeText(getActivity(), "" + dialog.getItems().get(which).toString(), Toast.LENGTH_SHORT).show();
+
+                                        String textPhone = dialog.getItems().get(which).toString();
+                                        String splits[] = textPhone.split(":");
+                                        String phoneNumber = splits[1].trim();
+
+                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+                                        startActivity(intent);
+                                        break;
+
+                                    default:
+                                        Toast.makeText(getActivity(), dialog.getItems().get(which).toString(), Toast.LENGTH_SHORT).show();
+
+
+                                }
+
+                            }
+                        })
+                        .show();
+
 
             }
         });

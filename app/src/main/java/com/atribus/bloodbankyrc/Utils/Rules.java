@@ -27,7 +27,7 @@ public class Rules {
 
     }
 
-    public boolean rules(String userblood, String requiredblood) {
+    boolean rules(String userblood, String requiredblood) {
         switch (userblood) {
             case "O-":
                 if (Arrays.asList(Onegative).contains(requiredblood))

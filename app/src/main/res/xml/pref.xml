@@ -8,19 +8,24 @@
         <Preference
             android:key="@string/Keyaccountdetails"
             android:selectable="true"
-            android:summary="Account Details">
+            android:summary="Edit Profile"
+            android:title="Account Settings">
 
         </Preference>
-
 
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="About">
+    <PreferenceCategory android:title="YRC">
 
         <Preference
             android:selectable="false"
-            android:summary="@string/summary_about" />
+            android:summary="@string/summary_about"
+            android:title="About YRC" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Help">
 
 
         <Preference
@@ -28,11 +33,17 @@
             android:summary="@string/contactusdesc"
             android:title="@string/contactustitle" />
 
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/about">
+
         <Preference android:title="@string/privacy_policy">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/url_privacy" />
         </Preference>
+
 
         <Preference
             android:key="@string/key_appinfo"
@@ -42,6 +53,14 @@
                 android:data="@string/url_faq" />
         </Preference>
 
+        <Preference
+
+            android:summary="1.0"
+            android:title="App Version">
+            </Preference>
+
 
     </PreferenceCategory>
+
+
 </PreferenceScreen>

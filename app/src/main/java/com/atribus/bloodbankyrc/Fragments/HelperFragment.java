@@ -62,7 +62,7 @@ public class HelperFragment extends Fragment {
 
     DatabaseReference DonationsNode;
     MaterialEditText et_hospitalname, et_location, et_dodonation;
-    Button btn_submit, btnshowdetails;
+    Button btn_submit, btnshowdetails, btndonatedetails;
     Button btn_donatedbloodq;
     CardView cv_donatedbloodquestion, cv_formdonationdetails, cv_countdowntonextdonation;
     TextView tv_daysuntilnextdonation;
@@ -73,7 +73,10 @@ public class HelperFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_helper, container, false);
+
+
         ll = v.findViewById(R.id.RLDonatedDetails);
+
         et_dodonation = v.findViewById(R.id.et_dateofdonation);
         et_hospitalname = v.findViewById(R.id.et_Hospitalname);
         et_location = v.findViewById(R.id.et_location);
@@ -81,18 +84,23 @@ public class HelperFragment extends Fragment {
         cv_countdowntonextdonation = v.findViewById(R.id.cv_countdowntonextdonation);
         cv_formdonationdetails = v.findViewById(R.id.cvformdonationdetails);
         cv_donatedbloodquestion = v.findViewById(R.id.cv_donatedblood);
+
         tv_daysuntilnextdonation = v.findViewById(R.id.daysuntilnextdonation);
+
         btn_submit = v.findViewById(R.id.btnsubmit);
         btn_donatedbloodq = v.findViewById(R.id.btn_donatedbloodq);
         btnshowdetails = v.findViewById(R.id.btnshowdetails);
+        btndonatedetails = v.findViewById(R.id.btndonatedetails);
+
         cdvtimer = v.findViewById(R.id.cv_countdownViewTest4);
         cdvtimer.setVisibility(View.GONE);
 
         prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         editor = prefs.edit();
 
-        String dateoflastdonation = prefs.getString(getString(R.string.keylastdonateddate), null);
+        final String[] dateoflastdonation = {prefs.getString(getString(R.string.keylastdonateddate), null)};
         // Toast.makeText(getActivity(), "STORED :" + dateoflastdonation, Toast.LENGTH_SHORT).show();
+
         btn_donatedbloodq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,14 +115,24 @@ public class HelperFragment extends Fragment {
                 startActivity(new Intent(getActivity(), RecentBloodDonationsActivity.class));
             }
         });
-        if (dateoflastdonation != null && dateoflastdonation.length() != 0) {
+
+        btndonatedetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateoflastdonation[0] = prefs.getString(getString(R.string.keylastdonateddate), null);
+
+                Snackbar.make(getActivity().findViewById(android.R.id.content),
+                        "Yeah! You can donate blood after " + addfortytwodays(dateoflastdonation[0]), Snackbar.LENGTH_LONG).show();
+            }
+        });
+        if (dateoflastdonation[0] != null && dateoflastdonation[0].length() != 0) {
             cv_countdowntonextdonation.setVisibility(View.VISIBLE);
             cv_donatedbloodquestion.setVisibility(View.GONE);
             cv_formdonationdetails.setVisibility(View.GONE);
 
 
-            calculatedays(dateoflastdonation);
-            tv_daysuntilnextdonation.setText(String.format("%s %s", getString(R.string.recentDonation), dateoflastdonation));
+            calculatedays(dateoflastdonation[0]);
+            tv_daysuntilnextdonation.setText(String.format("%s %s", getString(R.string.recentDonation), dateoflastdonation[0]));
 
 
         } else {
@@ -146,29 +164,40 @@ public class HelperFragment extends Fragment {
         return v;
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private String addfortytwodays(String dateoflastdonation) {
+
+        Date donateddate = parsedate(dateoflastdonation);
+
+        Calendar c = new GregorianCalendar();
+        c.setTime(donateddate);
+        c.add(Calendar.DATE, 42);
+        Date d = c.getTime();
+
+
+        DateFormat df;
+        df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(d);
+
+    }
+
     private void calculatedays(String dateoflastdonation) {
 
 
         Date donationdate = parsedate(dateoflastdonation);
 
-        Date today = new Date();
 
-        //today-6 weeks = donation date
+        Date donateddate = parsedate(dateoflastdonation);
 
-        //Date today=new Date();
-        //42 days 6 weeks
+        Calendar c = new GregorianCalendar();
+        c.setTime(donateddate);
+        c.add(Calendar.DATE, 42);
+        Date d = c.getTime();
 
-        // Date today=new Date();
-        long ltime;
-        ltime = donationdate.getTime() + 42 * 24 * 60 * 60 * 1000;
-        Date fullyrecovereddate = new Date(ltime);
-        // Toast.makeText(getActivity(), "RECOVERED"+fullyrecovereddate.toString(), Toast.LENGTH_SHORT).show();
+        int days = donateddate.compareTo(d);
 
-
-        long daysleft = getDateDiff(fullyrecovereddate, today, TimeUnit.DAYS);
-
-        if (daysleft > 0) {
-            Toast.makeText(getActivity(), "Days left :" + daysleft, Toast.LENGTH_SHORT).show();
+        if (days > 0) {
+            //Toast.makeText(getActivity(), "Days left :" + daysleft, Toast.LENGTH_SHORT).show();
 
         } else {
             cv_donatedbloodquestion.setVisibility(View.VISIBLE);
@@ -176,7 +205,6 @@ public class HelperFragment extends Fragment {
             cv_countdowntonextdonation.setVisibility(View.GONE);
 
         }
-
 
     }
 
@@ -240,10 +268,11 @@ public class HelperFragment extends Fragment {
 
         editor.putString(getString(R.string.keylastdonateddate), date);
         editor.commit();
-
+        tv_daysuntilnextdonation.setText("Date " + date);
         Toast.makeText(getActivity(), "DATE :" + date, Toast.LENGTH_SHORT).show();
         cv_formdonationdetails.setVisibility(View.GONE);
         cv_countdowntonextdonation.setVisibility(View.VISIBLE);
+
 
     }
 

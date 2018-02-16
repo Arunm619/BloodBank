@@ -45,62 +45,6 @@
 
     <!-- Strings related to Settings -->
 
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
-
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
 
     <!-- Setting Preferences Strings-->
     <string name="app_version">1.0</string>
@@ -115,8 +59,7 @@
 
 
     <string name="choose_email_client">Choose Email Client</string>
-    <string name="summary_about">The Indian Red Cross Society (IRCS) is a voluntary humanitarian organization to protect human life and health based in India. It is part of the International Red Cross and Red Crescent Movement, and so shares the Fundamental
-        Principles of the International Red Cross and Red Crescent Movement.</string>
+    <string name="summary_about">The Indian Red Cross Society (IRCS) is a voluntary humanitarian organization to protect human life.</string>
 
 
     <string name="keycontactus">Contact Us</string>
@@ -172,6 +115,9 @@
     <string name="dbfieldmobilenumber">mobilenumber</string>
     <string name="call">call</string>
     <string name="sendmessage">Message</string>
+    <string name="about">About</string>
+    <string name="try_again">TRY AGAIN</string>
+    <string name="nointernetmessage">No Internet Check your Connection and Try Again</string>
 
 
 </resources>

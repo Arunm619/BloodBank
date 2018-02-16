@@ -3,19 +3,10 @@ package com.atribus.bloodbankyrc;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
+import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MenuItem;
 
 public class Settings extends AppCompatPreferenceActivity {
@@ -101,7 +92,7 @@ public class Settings extends AppCompatPreferenceActivity {
         }
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"yrcAdmin@gmail.com"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"arun.m.sudharsan@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
         intent.putExtra(Intent.EXTRA_TEXT, body);
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.choose_email_client)));

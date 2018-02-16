@@ -270,7 +270,7 @@ public class Register extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     private Date parsedate(String birthday) {
         DateFormat df;
-        df = new SimpleDateFormat("MM/dd/yyyy");
+        df = new SimpleDateFormat("dd/MM/yyyy");
         Date Date = null;
         try {
             Date = df.parse(birthday);
@@ -283,7 +283,7 @@ public class Register extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     private String parseDatetostring(Date date) {
         SimpleDateFormat simpleDate;
-        simpleDate = new SimpleDateFormat("MM/dd/yyyy");
+        simpleDate = new SimpleDateFormat("dd/MM/yyyy");
 
         return simpleDate.format(date);
     }
@@ -406,10 +406,10 @@ public class Register extends AppCompatActivity {
                             mLastLocation = task.getResult();
                             mlat = mLastLocation.getLatitude();
                             mlon = mLastLocation.getLongitude();
-                            Toast.makeText(Register.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(Register.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
 
                         } else {
-                            Toast.makeText(Register.this, "Failed to track location", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Register.this, "Failed to track location", Toast.LENGTH_SHORT).show();
 
 
                         }

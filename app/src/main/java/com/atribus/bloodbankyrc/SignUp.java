@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -71,9 +75,8 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
         setContentView(R.layout.activity_sign_up);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
-
-        signInButton = findViewById(R.id.btn_signin);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+         signInButton = findViewById(R.id.btn_signin);
         lt_signup = findViewById(R.id.lt_signin);
 
 
@@ -93,7 +96,29 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+
+
                 if (firebaseAuth.getCurrentUser() != null) {
+                    ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                    NetworkInfo info = null;
+                    if (manager != null) {
+                        info = manager.getActiveNetworkInfo();
+                    }
+
+                    if (info == null) {
+                        Intent intent = new Intent(SignUp.this, NoInternet.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+return;
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Stable Internet is Available.", Toast.LENGTH_SHORT).show();
+                    }
+
                     startActivity(new Intent(SignUp.this, UserActivity.class));
                     finish();
                 }
@@ -169,8 +194,6 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
             // Toast.makeText(this, ""+personEmail, Toast.LENGTH_SHORT).show();
         }
-
-
 
 
         if (introductionCompletedPreviously()) {
@@ -249,6 +272,26 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
     @Override
     protected void onStart() {
         super.onStart();
+     /*   ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo info = null;
+        if (manager != null) {
+            info = manager.getActiveNetworkInfo();
+        }
+
+        if (info == null) {
+            Intent intent = new Intent(SignUp.this, NoInternet.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+return;
+
+        }
+        else
+        {
+            Toast.makeText(this, "Stable Internet is Available.", Toast.LENGTH_SHORT).show();
+        }
+
+*/
         mAuth.addAuthStateListener(mAuthStateListener);
     }
 
@@ -348,6 +391,10 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         //      Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void isOnline() {
 
     }
 

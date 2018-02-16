@@ -68,7 +68,8 @@ public class AdminAddPost extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                        PICK_IMAGE_REQUEST);
 
             }
         });
@@ -87,9 +88,15 @@ public class AdminAddPost extends AppCompatActivity {
         title = et_title.getText().toString().trim();
         content = et_con.getText().toString().trim();
         description = et_desc.getText().toString().trim();
+
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content) || TextUtils.isEmpty(description)) {
             Toast.makeText(this, "Enter All the fields. Dont forget to choose Image.", Toast.LENGTH_SHORT).show();
 
+            return;
+        }
+
+        if (uri == null) {
+            Toast.makeText(this, "Please Select Image", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -102,7 +109,7 @@ public class AdminAddPost extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downoaduri = taskSnapshot.getDownloadUrl();
                 PostsNode.child(id).setValue(new post(title, content, description, downoaduri.toString()));
-                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Successfully uploaded.", Toast.LENGTH_SHORT).show();
                 pd.dismiss();
                 finish();
 
@@ -118,12 +125,13 @@ public class AdminAddPost extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             uri = data.getData();
+            //  Toast.makeText(this, uri.toString(), Toast.LENGTH_SHORT).show();
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
 
-                ImageView imageView = (ImageView) findViewById(R.id.choosepic);
+                ImageView imageView = findViewById(R.id.choosepic);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();

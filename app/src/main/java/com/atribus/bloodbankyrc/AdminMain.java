@@ -51,6 +51,11 @@ public class AdminMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
+
+        getSupportActionBar().setTitle("Search Users");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         nearbyDonors = new ArrayList <>();
 
 
@@ -82,6 +87,17 @@ public class AdminMain extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        //  startActivity(new Intent(this, AdminMain.class));
     }
 
     private void searchusers() {

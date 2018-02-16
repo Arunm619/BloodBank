@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.atribus.bloodbankyrc.AdminCheckDetails">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">    <!--Admin panel Search-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_adminpanelsearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="08dp"
+        android:layout_marginLeft="08dp"
+        android:layout_marginRight="08dp"
+        android:layout_marginTop="40dp"
+        android:visibility="gone"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="10dp">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:id="@+id/tvadminpanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/admin_panel"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_mobilenumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvadminpanel"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/mobile_number"
+                android:inputType="number"
+                app:met_floatingLabel="highlight"
+                app:met_iconLeft="@drawable/ic_phone"
+                app:met_iconPadding="0dp"
+                app:met_maxCharacters="10" />
+
+
+            <Button
+                android:id="@+id/btn_search"
+
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_mobilenumber"
+                android:layout_centerHorizontal="true"
+
+                android:text="@string/submit" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <!--cv_adminpanel Result-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_adminpanelResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cv_adminpanelsearch"
+        android:layout_gravity="center"
+        android:layout_marginBottom="08dp"
+        android:layout_marginLeft="08dp"
+        android:layout_marginRight="08dp"
+        android:layout_marginTop="40dp"
+        android:visibility="visible"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="10dp">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/PersonDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/personal_details"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
+
+            <!--LL name-->
+            <LinearLayout
+                android:id="@+id/llname"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/PersonDetails"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/Nametv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Name"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Test"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                    />
+
+            </LinearLayout>
+
+            <!-- LL Mobile number-->
+            <LinearLayout
+                android:id="@+id/llmobilenumber"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llname"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/Mobiletv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Contact Number"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvmobile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1234567890"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                    />
+
+            </LinearLayout>
+
+            <!-- LL Blood -->
+            <LinearLayout
+                android:id="@+id/llblood"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llmobilenumber"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/bloodtv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Blood Group"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvblood"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="O+"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+
+            </LinearLayout>
+
+            <!-- LL Location -->
+            <LinearLayout
+
+                android:id="@+id/lllocation"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llblood"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/locationtv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Location"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvlocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Malar Fortis"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                    />
+
+            </LinearLayout>
+
+            <!-- LL Age -->
+            <LinearLayout
+                android:id="@+id/llage"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lllocation"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/agetv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Age"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                    />
+
+            </LinearLayout>
+
+            <!-- LL GENDER -->
+            <LinearLayout
+                android:id="@+id/llgender"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llage"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/gendertv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/Gender"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvgender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Male"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                    />
+
+            </LinearLayout>
+
+            <!-- LL DOB -->
+            <LinearLayout
+                android:id="@+id/lldob"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llgender"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/dobtv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/date_of_birth"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvdob"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10/8/10"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                    />
+
+            </LinearLayout>
+            <!--LL BUTTONS-->
+            <LinearLayout
+                android:id="@+id/llbtns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lldob"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btn_sendmsg"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1"
+                    android:text="@string/sendmessage" />
+
+                <Button
+                    android:id="@+id/btn_call"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1"
+                    android:text="@string/call" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
+
+</ScrollView>
+
+</RelativeLayout>

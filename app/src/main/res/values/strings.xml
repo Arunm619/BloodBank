@@ -164,6 +164,14 @@
     <string name="search_for_people">Search For People</string>
     <string name="admin_panel">ADMIN PANEL</string>
     <string name="AddaPost">Add a post</string>
+    <string name="posttitle">Enter Post Title</string>
+    <string name="postdesc">Enter Post Description</string>
+    <string name="postcontent">Enter post content</string>
+    <string name="upload">Upload</string>
+    <string name="checkdetails">User Details</string>
+    <string name="dbfieldmobilenumber">mobilenumber</string>
+    <string name="call">call</string>
+    <string name="sendmessage">Message</string>
 
 
 </resources>

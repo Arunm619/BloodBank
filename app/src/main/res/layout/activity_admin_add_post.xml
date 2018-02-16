@@ -10,24 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="10dp"
         tools:ignore="UselessParent">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Post Title"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/posttitle"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/posttitle"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Post Description"
+            android:gravity="center"
+            android:text="@string/postdesc"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textStyle="bold" />
 
@@ -35,13 +40,15 @@
             android:id="@+id/postdescription"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
 
             />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Enter post content"
+            android:gravity="center"
+            android:text="@string/postcontent"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textStyle="bold" />
 
@@ -49,6 +56,7 @@
             android:id="@+id/postcontent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
 
             android:inputType="textEmailAddress|textMultiLine"
             android:lines="20"
@@ -58,17 +66,21 @@
 
         <ImageButton
             android:id="@+id/choosepic"
-
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/placeholder"
-            android:text="choose pic" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/placeholder" />
 
         <Button
             android:id="@+id/submit"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="submit" />
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/upload" />
 
     </LinearLayout>
 

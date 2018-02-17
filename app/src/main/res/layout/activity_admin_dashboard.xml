@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.atribus.bloodbankyrc.AdminPackage.AdminDashboard">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <!--Blood Group Details Details-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_bloodgroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="08dp"
+                android:layout_marginLeft="08dp"
+                android:layout_marginRight="08dp"
+                android:layout_marginTop="40dp"
+                android:visibility="visible"
+                card_view:cardCornerRadius="2dp"
+                card_view:contentPadding="10dp">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/bloodgroupstv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/blood_groups"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                        android:textStyle="bold" />
+
+                    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/tableviewforbloodgroups"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/bloodgroupstv"
+                        android:stretchColumns="1">
+
+                        <!--AB POSITIVE-->
+                        <TableRow>
+
+                            <TextView
+                                android:layout_column="1"
+                                android:padding="3dp"
+                                android:text="AB+"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/tvCountforABpositive"
+                                android:gravity="right"
+                                android:padding="3dip"
+                                android:text="0" />
+                        </TableRow>
+
+                        <!--AB NEGATIVE-->
+                        <TableRow>
+
+                            <TextView
+                                android:layout_column="1"
+
+                                android:padding="3dp"
+                                android:text="AB-"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/tvCountforABnegative"
+                                android:gravity="right"
+                                android:padding="3dip"
+                                android:text="0" />
+                        </TableRow>
+
+
+                        <!--B POSITIVE-->
+                        <TableRow>
+
+                            <TextView
+                                android:layout_column="1"
+                                android:padding="3dp"
+                                android:text="B+"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/tvCountforBpositive"
+                                android:gravity="right"
+                                android:padding="3dip"
+                                android:text="0" />
+                        </TableRow>
+
+                        <!--B NEGATIVE-->
+                        <TableRow>
+
+                            <TextView
+                                android:layout_column="1"
+
+                                android:padding="3dp"
+                                android:text="B-"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/tvCountforBnegative"
+                                android:gravity="right"
+                                android:padding="3dip"
+                                android:text="0" />
+                        </TableRow>
+
+
+                        <!--A POSITIVE-->
+                        <TableRow>
+
+                            <TextView
+                                android:layout_column="1"
+                                android:padding="3dp"
+                                android:text="A+"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/tvCountforApositive"
+                                android:gravity="right"
+                                android:padding="3dip"
+                                android:text="0" />
+                        </TableRow>
+
+                        <!--A NEGATIVE-->
+                        <TableRow>
+
+                            <TextView
+                                android:layout_column="1"
+
+                                android:padding="3dp"
+                                android:text="A-"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/tvCountforAnegative"
+                                android:gravity="right"
+                                android:padding="3dip"
+                                android:text="0" />
+                        </TableRow>
+
+
+                        <!--O POSITIVE-->
+                        <TableRow>
+
+                            <TextView
+                                android:layout_column="1"
+                                android:padding="3dp"
+                                android:text="O+"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/tvCountforOpositive"
+                                android:gravity="right"
+                                android:padding="3dip"
+                                android:text="0" />
+                        </TableRow>
+
+                        <!--O NEGATIVE-->
+                        <TableRow>
+
+                            <TextView
+                                android:layout_column="1"
+
+                                android:padding="3dp"
+                                android:text="O-"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/tvCountforOnegative"
+                                android:gravity="right"
+                                android:padding="3dip"
+                                android:text="0" />
+                        </TableRow>
+
+
+                    </TableLayout>
+
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--User Details-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_userdetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_bloodgroup"
+                android:layout_gravity="center"
+                android:layout_marginBottom="08dp"
+                android:layout_marginLeft="08dp"
+                android:layout_marginRight="08dp"
+                android:layout_marginTop="20dp"
+                android:visibility="visible"
+                card_view:cardCornerRadius="2dp"
+                card_view:contentPadding="10dp">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/tvUserDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/Userdetails"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+                    <!--Active User count-->
+                    <LinearLayout
+                        android:id="@+id/llUserdetails"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvUserDetails"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/totalnumberofuserstv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/totalnumberofusers"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textStyle="bold"
+
+
+                            />
+
+                        <TextView
+                            android:id="@+id/tvtotalnumberofusers"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="0"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                            />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <!--Post Details-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_postdetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_userdetails"
+                android:layout_gravity="center"
+                android:layout_marginBottom="08dp"
+                android:layout_marginLeft="08dp"
+                android:layout_marginRight="08dp"
+                android:layout_marginTop="20dp"
+                android:visibility="visible"
+                card_view:cardCornerRadius="2dp"
+                card_view:contentPadding="10dp">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/tvPostdetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/postdetails"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+                    <LinearLayout
+                        android:id="@+id/llpostdetails"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvPostdetails"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/totalnumberofpoststv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/total_posts_count"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textStyle="bold"
+
+
+                            />
+
+                        <TextView
+                            android:id="@+id/tvtotalnumberofposts"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="0"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                            />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--Request Details-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_requestdetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_postdetails"
+                android:layout_gravity="center"
+                android:layout_marginBottom="08dp"
+                android:layout_marginLeft="08dp"
+                android:layout_marginRight="08dp"
+                android:layout_marginTop="20dp"
+                android:visibility="visible"
+                card_view:cardCornerRadius="2dp"
+                card_view:contentPadding="10dp">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/tvRequestDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/requestsdetails"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+                    <LinearLayout
+                        android:id="@+id/llRequestCountPending"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvRequestDetails"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/totalnumberofrequestspendingtv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/pending_request_count"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textStyle="bold"
+
+
+                            />
+
+                        <TextView
+                            android:id="@+id/tvtotalnumberofrequestspending"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="0"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llRequestCountSuccess"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/llRequestCountPending"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/totalnumberofrequestssuccesstv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/Successful_request_count"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textStyle="bold"
+
+
+                            />
+
+                        <TextView
+                            android:id="@+id/tvtotalnumberofrequestssuccess"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="0"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+                            />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

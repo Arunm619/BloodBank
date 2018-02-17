@@ -61,7 +61,7 @@ public class RequestBlood extends Fragment implements
     private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466));
 
     FirebaseDatabase database;
-    DatabaseReference requestNode;
+    DatabaseReference requestNode, successfulrequest;
 
     String MY_PREFS_NAME = "MYDB";
     SharedPreferences prefs;
@@ -83,7 +83,7 @@ public class RequestBlood extends Fragment implements
     Double xlat = 0.0, xlon = 0.0;
 
     RelativeLayout rlbloodrequest, rlbloodrequested;
-    Button btnedit, btncancel;
+    Button btnedit, btncancel, btnSuccess;
     String mobilenumber;
     TextView tvname, tvmobile, tvlocation, tvmessage, tvbloodgroup, tvbloodunits;
 
@@ -120,7 +120,7 @@ public class RequestBlood extends Fragment implements
 
         database = FirebaseDatabase.getInstance();
         requestNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Request");
-
+        successfulrequest = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/SuccessRequest");
 
         //autocomplete
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -158,6 +158,7 @@ public class RequestBlood extends Fragment implements
         btn_request = v.findViewById(R.id.btn_request);
         btncancel = v.findViewById(R.id.btnCancelreq);
         btnedit = v.findViewById(R.id.btnEdit);
+        btnSuccess = v.findViewById(R.id.btnSuccess);
 
         Gson g = new Gson();
         String objasstring = prefs.getString("ReqObj", "");
@@ -314,6 +315,29 @@ public class RequestBlood extends Fragment implements
             }
         });
 
+        btnSuccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //delete the node from RequestsPending
+
+                  new MaterialDialog.Builder(getActivity())
+                        .title(R.string.Gottheblood)
+                        .content(R.string.gottheblooddesc)
+                        .positiveText(R.string.agree)
+                        .negativeText(R.string.disagree)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                successfulrequest.child(String.valueOf(request.getMobilenumber())).setValue(request);
+
+                                deletetherequest(request);
+                                Toast.makeText(getActivity(), "Get Well Soon ", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .show();
+            }
+        });
 
     }
 

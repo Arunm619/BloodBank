@@ -123,6 +123,16 @@
     <string name="type_here_for_autocomplete">Type here for AutoComplete</string>
     <string name="Locationauto">Enter Location</string>
     <string name="openwithbrowser">Open browser</string>
+    <string name="postdetails">Post Details</string>
+    <string name="total_posts_count">Total Posts Count</string>
+    <string name="pending_request_count">Pending Requests Count</string>
+    <string name="requestsdetails">Requests details</string>
+    <string name="Successful_request_count">Success Requests Count</string>
+    <string name="Gottheblood">Have you received the blood?</string>
+    <string name="gottheblooddesc">Have you received the blood?</string>
+    <string name="totalnumberofusers">Active Users Count</string>
+    <string name="Userdetails">User Details</string>
+    <string name="blood_groups">Blood Groups</string>
 
 
 </resources>

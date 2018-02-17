@@ -42,27 +42,20 @@
 
         <activity android:name=".IntroSlider" />
 
-
-        <!--ADMIN MAIN ACTIVITY PASTE HERE-->
+        <!-- ADMIN MAIN ACTIVITY PASTE HERE -->
         <activity android:name=".AdminPackage.ADMIN">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
-
-        <!--User Main Activity Paste Here-->
-        <activity android:name=".SignUp">
-
-        </activity>
-
-
+        <!-- User Main Activity Paste Here -->
+        <activity android:name=".SignUp"></activity>
         <activity android:name=".AdminPackage.AdminCheckDetails" />
         <activity android:name=".NoInternet" />
-        <activity android:name=".PlacesAutoComplete" />
+        <activity android:name=".AdminPackage.AdminDashboard"></activity>
     </application>
 
 </manifest>

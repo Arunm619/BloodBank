@@ -1,4 +1,4 @@
-package com.atribus.bloodbankyrc;
+package com.atribus.bloodbankyrc.AdminPackage;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Model.post;
+import com.atribus.bloodbankyrc.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

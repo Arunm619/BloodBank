@@ -363,17 +363,22 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/et_location"
                     android:layout_width="match_parent"
-
-
                     android:layout_height="wrap_content"
                     android:layout_below="@id/et_mobilenumber"
-
+                    android:layout_centerHorizontal="true"
                     android:hint="@string/Location"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_location"
-                    app:met_iconPadding="0dp"
-                    app:met_maxCharacters="30" />
+                    app:met_iconPadding="0dp" />
+                <!--  <AutoCompleteTextView
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@id/et_mobilenumber"
+                      android:id="@+id/et_location"
 
+                      android:layout_centerHorizontal="true"
+                      android:hint="Enter Place Here"/>
+  -->
                 <!--et_message -->
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/et_message"

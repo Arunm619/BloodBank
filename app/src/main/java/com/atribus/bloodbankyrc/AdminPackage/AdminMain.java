@@ -1,4 +1,4 @@
-package com.atribus.bloodbankyrc;
+package com.atribus.bloodbankyrc.AdminPackage;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.atribus.bloodbankyrc.Adapters.RVAdapter;
 import com.atribus.bloodbankyrc.Model.User;
 import com.atribus.bloodbankyrc.Model.UserDistanceDetails;
+import com.atribus.bloodbankyrc.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

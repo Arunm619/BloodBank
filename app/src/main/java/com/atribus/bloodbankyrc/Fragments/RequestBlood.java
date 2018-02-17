@@ -133,6 +133,14 @@ public class RequestBlood extends Fragment {
 
         bloodgroupsetter();
 
+/*
+        et_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            //    startActivity(new Intent(getActivity(),PlacesAutoComplete.class));
+            }
+        });*/
         et_mobilenumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -279,6 +287,7 @@ public class RequestBlood extends Fragment {
         et_location.setText(request.getLocation());
         et_bloodunits.setText(String.valueOf(request.getRequiredunits()));
         et_message.setText(request.getMessage());
+
         et_bloodgroup.setText(request.getRequiredbloodgroup());
         et_mobilenumber.setText(String.valueOf(request.getMobilenumber()));
 

@@ -137,6 +137,12 @@ public class Register extends AppCompatActivity {
             Snackbar.make(ll, "Check Mobile Number", Snackbar.LENGTH_LONG).show();
             return -1;
         }
+        if (TextUtils.isEmpty(dob))
+        {
+            Snackbar.make(ll, "Choose DOB", Snackbar.LENGTH_LONG).show();
+            return -1;
+
+        }
 
         if (bloodgroup.length() < 1) {
             Snackbar.make(ll, "Choose Blood Group", Snackbar.LENGTH_LONG).show();

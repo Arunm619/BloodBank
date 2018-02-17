@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -19,6 +20,12 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDxQzzN3cYIatP6A7wDc8KcMI4WxmCLdsI" />
 
         <activity android:name=".SignUp">
             <intent-filter>
@@ -28,12 +35,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".AdminMain" />
+        <activity android:name=".AdminPackage.AdminMain" />
         <activity android:name=".UserActivity" />
         <activity android:name=".Settings" />
         <activity android:name=".EditProfile" />
         <activity android:name=".AppInfo" />
-        <activity android:name=".AdminAddPost" />
+        <activity android:name=".AdminPackage.AdminAddPost" />
         <activity android:name=".PostDetailed" />
         <activity android:name=".RecentBloodDonationsActivity" />
         <activity android:name=".MainActivity" />
@@ -41,9 +48,10 @@
         <service android:name=".Utils.FCMService" />
 
         <activity android:name=".IntroSlider" />
-        <activity android:name=".ADMIN"></activity>
-        <activity android:name=".AdminCheckDetails" />
-        <activity android:name=".NoInternet"></activity>
+        <activity android:name=".AdminPackage.ADMIN"></activity>
+        <activity android:name=".AdminPackage.AdminCheckDetails" />
+        <activity android:name=".NoInternet" />
+        <activity android:name=".PlacesAutoComplete"></activity>
     </application>
 
 </manifest>

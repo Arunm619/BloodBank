@@ -1,5 +1,6 @@
 package com.atribus.bloodbankyrc;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import com.atribus.bloodbankyrc.Fragments.HelperFragment;
 import com.atribus.bloodbankyrc.Fragments.HomeFragment;
 import com.atribus.bloodbankyrc.Fragments.RequestBlood;
 import com.atribus.bloodbankyrc.Model.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 public class UserActivity extends AppCompatActivity {
@@ -166,14 +168,27 @@ public class UserActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(UserActivity.this, Settings.class));
+                break;
+
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+
+                //delete SharedPref
+                prefs.edit().clear().apply();
+                startActivity(new Intent(this, SignUp.class));
+                finish();
+
+                break;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 }

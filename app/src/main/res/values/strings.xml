@@ -118,6 +118,8 @@
     <string name="about">About</string>
     <string name="try_again">TRY AGAIN</string>
     <string name="nointernetmessage">No Internet Check your Connection and Try Again</string>
+    <string name="logout">Logout</string>
+    <string name="applink">https://www.wwe.com</string>
 
 
 </resources>

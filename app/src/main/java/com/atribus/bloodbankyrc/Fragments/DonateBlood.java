@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -12,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atribus.bloodbankyrc.Model.Request;
 import com.atribus.bloodbankyrc.R;
@@ -83,7 +84,7 @@ public class DonateBlood extends Fragment {
         Donatebloodfeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView <?> adapterView, View view, int i, long l) {
-                Request request = (Request) adapterView.getItemAtPosition(i);
+                final Request request = (Request) adapterView.getItemAtPosition(i);
 //                Gson gson = new Gson();
 //                String objstring = gson.toJson(post);
 //                Toast.makeText(getActivity(), objstring, Toast.LENGTH_SHORT).show();
@@ -98,37 +99,72 @@ public class DonateBlood extends Fragment {
                 //String[] Title = {"Name", "Phone", "College", "Dept"};
                 String[] Details = {"Name : " + request.getName()
                         , "Phone : " + request.getMobilenumber(),
-                        "Hospital Name   : " + request.getLocation(),
-                        "Message  : " + request.getMessage()};
+                        "Location  : " + request.getLocation(),
+                        "Message  : " + request.getMessage()
+
+                };
 
 
                 new MaterialDialog.Builder(getActivity())
                         .title("Details of " + request.getName())
                         .items(Details)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
+                        .positiveText("Share")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
-                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                String Text = request.getName() + " Requires "
+                                        + request.getRequiredunits() + " Units of "
+                                        + request.getRequiredbloodgroup() + " Blood At "
+                                        + request.getLocation()
+                                        + "\n Contact : " + request.getMobilenumber();
 
-                                switch (which) {
-                                    case 1:
-                                        Toast.makeText(getActivity(), "" + dialog.getItems().get(which).toString(), Toast.LENGTH_SHORT).show();
+                                String installapp = "\n \nSave lives, By installing " + getString(R.string.applink);
 
-                                        String textPhone = dialog.getItems().get(which).toString();
-                                        String splits[] = textPhone.split(":");
-                                        String phoneNumber = splits[1].trim();
+                                String message = Text + installapp;
 
-                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
-                                        startActivity(intent);
-                                        break;
+                                Intent sendIntent = new Intent();
+                                sendIntent.setAction(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                                sendIntent.setType("text/plain");
+                                startActivity(sendIntent);
 
-                                    default:
-                                        Toast.makeText(getActivity(), dialog.getItems().get(which).toString(), Toast.LENGTH_SHORT).show();
-
-
-                                }
 
                             }
                         })
+                        .negativeText("Call")
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + String.valueOf(request.getMobilenumber())));
+                                startActivity(intent);
+
+                            }
+                        })
+//                        .itemsCallback(new MaterialDialog.ListCallback() {
+//                            @Override
+//                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+//
+//                                switch (which) {
+//                                    case 1:
+//                                        Toast.makeText(getActivity(), "" + dialog.getItems().get(which).toString(), Toast.LENGTH_SHORT).show();
+//                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + String.valueOf(request.getMobilenumber())));
+//                                        startActivity(intent);
+//                                        break;
+//
+//                                    case 4:
+//
+//                                        break;
+//
+//
+//                                    default:
+//                                        //   Toast.makeText(getActivity(), dialog.getItems().get(which).toString(), Toast.LENGTH_SHORT).show();
+//
+//
+//                                }
+//
+//                            }
+//                        })
+
                         .show();
 
 

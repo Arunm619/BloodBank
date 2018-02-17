@@ -1,10 +1,12 @@
-package com.atribus.bloodbankyrc;
+package com.atribus.bloodbankyrc.AdminPackage;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.atribus.bloodbankyrc.R;
 
 public class ADMIN extends AppCompatActivity {
     Button btn_search, btn_addapost,btn_checkdetails;

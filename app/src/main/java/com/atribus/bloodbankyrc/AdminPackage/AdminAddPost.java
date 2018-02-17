@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Model.post;
 import com.atribus.bloodbankyrc.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,7 +30,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
-public class AdminAddPost extends AppCompatActivity {
+public class AdminAddPost extends AppCompatActivity  {
     private static final int PICK_IMAGE_REQUEST = 1;
     EditText et_desc, et_title, et_con;
     // DatabaseReference db;
@@ -151,4 +155,6 @@ public class AdminAddPost extends AppCompatActivity {
         finish();
         //  startActivity(new Intent(this, AdminMain.class));
     }
+
+
 }

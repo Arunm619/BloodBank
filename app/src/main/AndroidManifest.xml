@@ -27,13 +27,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDxQzzN3cYIatP6A7wDc8KcMI4WxmCLdsI" />
 
-        <activity android:name=".SignUp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".Register" />
         <activity android:name=".AdminPackage.AdminMain" />
         <activity android:name=".UserActivity" />
@@ -48,10 +41,28 @@
         <service android:name=".Utils.FCMService" />
 
         <activity android:name=".IntroSlider" />
-        <activity android:name=".AdminPackage.ADMIN"></activity>
+
+
+        <!--ADMIN MAIN ACTIVITY PASTE HERE-->
+        <activity android:name=".AdminPackage.ADMIN">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+
+        <!--User Main Activity Paste Here-->
+        <activity android:name=".SignUp">
+
+        </activity>
+
+
         <activity android:name=".AdminPackage.AdminCheckDetails" />
         <activity android:name=".NoInternet" />
-        <activity android:name=".PlacesAutoComplete"></activity>
+        <activity android:name=".PlacesAutoComplete" />
     </application>
 
 </manifest>

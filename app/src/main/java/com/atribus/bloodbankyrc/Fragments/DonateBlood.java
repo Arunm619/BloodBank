@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -49,7 +50,7 @@ public class DonateBlood extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_donate_blood, container, false);
+        final View v = inflater.inflate(R.layout.fragment_donate_blood, container, false);
 
         Donatebloodfeed = v.findViewById(R.id.lvDonatebloodfeed);
 
@@ -135,36 +136,43 @@ public class DonateBlood extends Fragment {
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
                                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + String.valueOf(request.getMobilenumber())));
                                 startActivity(intent);
 
                             }
                         })
-//                        .itemsCallback(new MaterialDialog.ListCallback() {
-//                            @Override
-//                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-//
-//                                switch (which) {
-//                                    case 1:
-//                                        Toast.makeText(getActivity(), "" + dialog.getItems().get(which).toString(), Toast.LENGTH_SHORT).show();
-//                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + String.valueOf(request.getMobilenumber())));
-//                                        startActivity(intent);
-//                                        break;
-//
-//                                    case 4:
-//
-//                                        break;
-//
-//
-//                                    default:
-//                                        //   Toast.makeText(getActivity(), dialog.getItems().get(which).toString(), Toast.LENGTH_SHORT).show();
-//
-//
-//                                }
-//
-//                            }
-//                        })
+                        .neutralText("Show On Map")
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                Double lat = request.getLattitude();
+                                Double lon = request.getLongitude();
+                                String Locationname = request.getName() + "'s Here!";
+                                Uri gmmIntentUri = Uri.parse("geo:" + lat + "," + lon + "?q=" + Uri.encode(Locationname));
+                                final String BrowserURI = "https://www.google.co.in/maps?" + gmmIntentUri.toString();
 
+
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                    startActivity(mapIntent);
+                                } else {
+                                    Snackbar
+                                            .make(v, "Maps Not Found! Want to open on Browser?", Snackbar.LENGTH_LONG)
+                                            .setAction("Open", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Intent i = new Intent(Intent.ACTION_VIEW);
+                                                    i.setData(Uri.parse(BrowserURI));
+                                                    startActivity(i);
+                                                }
+                                            })
+                                            .show();
+
+                                }
+                            }
+                        })
                         .show();
 
 

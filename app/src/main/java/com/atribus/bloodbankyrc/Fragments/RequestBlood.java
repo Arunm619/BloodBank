@@ -58,9 +58,7 @@ public class RequestBlood extends Fragment implements
 
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
-    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
-            new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
-
+    private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466));
 
     FirebaseDatabase database;
     DatabaseReference requestNode;
@@ -136,7 +134,7 @@ public class RequestBlood extends Fragment implements
 
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
         mPlaceArrayAdapter = new PlaceArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
-                BOUNDS_MOUNTAIN_VIEW, null);
+                BOUNDS_INDIA, null);
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
 
         rlbloodrequest = v.findViewById(R.id.rlrequestblood);
@@ -568,5 +566,13 @@ public class RequestBlood extends Fragment implements
 
         mGoogleApiClient.stopAutoManage(getActivity());
         mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+
+
     }
 }

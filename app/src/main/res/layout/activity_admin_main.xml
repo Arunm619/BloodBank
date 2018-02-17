@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/rl_adminmain"
     android:layout_height="match_parent"
     tools:context="com.atribus.bloodbankyrc.AdminPackage.AdminMain">
 
@@ -14,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:text="Admin panel" />
         <!-- Blood Group-->
@@ -32,11 +33,38 @@
             android:id="@+id/et_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:hint="@string/Location"
+            android:visibility="gone"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/ic_address"
             app:met_iconPadding="0dp" />
+
+        <LinearLayout
+            android:id="@+id/llforautocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_location"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_weight="0.1"
+                android:src="@drawable/ic_location" />
+
+            <AutoCompleteTextView
+                android:id="@+id/et_autocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="10dp"
+                android:layout_weight="0.9"
+                android:hint="@string/Locationauto" />
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/btn_search"
@@ -44,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:text="@string/btn_search" />
 
         <android.support.v7.widget.RecyclerView

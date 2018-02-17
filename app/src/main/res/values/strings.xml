@@ -122,6 +122,7 @@
     <string name="applink">https://www.wwe.com</string>
     <string name="type_here_for_autocomplete">Type here for AutoComplete</string>
     <string name="Locationauto">Enter Location</string>
+    <string name="openwithbrowser">Open browser</string>
 
 
 </resources>

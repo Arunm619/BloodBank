@@ -1,24 +1,43 @@
 package com.atribus.bloodbankyrc.AdminPackage;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atribus.bloodbankyrc.Adapters.RVAdapter;
 import com.atribus.bloodbankyrc.Model.User;
 import com.atribus.bloodbankyrc.Model.UserDistanceDetails;
 import com.atribus.bloodbankyrc.R;
+import com.atribus.bloodbankyrc.Utils.PlaceArrayAdapter;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +51,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class AdminMain extends AppCompatActivity {
+public class AdminMain extends AppCompatActivity implements
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks {
+
+
+    private static final String LOG_TAG = "Arun checks";
+    private static final int GOOGLE_API_CLIENT_ID = 0;
+    private AutoCompleteTextView mAutocompleteTextView;
+
+    private GoogleApiClient mGoogleApiClient;
+    private PlaceArrayAdapter mPlaceArrayAdapter;
+    private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466));
+
+
     MaterialEditText et_bloodgroup, et_location;
     Button btn_search;
     String location, requiredbloodgroup;
@@ -44,7 +76,7 @@ public class AdminMain extends AppCompatActivity {
     List <UserDistanceDetails> nearbyDonors;
     private String TaG = "ArMa checks";
 
-
+    private RelativeLayout rl_adminmain;
     private RecyclerView recyclerView;
     private RVAdapter rAdapter;
 
@@ -59,28 +91,156 @@ public class AdminMain extends AppCompatActivity {
 
         nearbyDonors = new ArrayList <>();
 
-
+        rl_adminmain = findViewById(R.id.rl_adminmain);
         et_bloodgroup = findViewById(R.id.et_bloodgroup);
         et_location = findViewById(R.id.et_location);
         btn_search = findViewById(R.id.btn_search);
         bloodgroupsetter();
 
 
+        //Autocomplete
+        mGoogleApiClient = new GoogleApiClient.Builder(AdminMain.this)
+                .addApi(Places.GEO_DATA_API)
+                .enableAutoManage(AdminMain.this, GOOGLE_API_CLIENT_ID, this)
+                .addConnectionCallbacks(this)
+                .build();
+        mAutocompleteTextView = findViewById(R.id
+                .et_autocomplete);
+        mAutocompleteTextView.setThreshold(3);
+
+        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
+        mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
+                BOUNDS_INDIA, null);
+        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
+
+
         recyclerView = findViewById(R.id.rv_donordetails);
 
         rAdapter = new RVAdapter(nearbyDonors);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
+
         recyclerView.setAdapter(rAdapter);
 
+        rAdapter.setOnItemClickListener(new RVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //     Toast.makeText(AdminMain.this, "" + nearbyDonors.get(position).getUser().getName(), Toast.LENGTH_SHORT).show();
+
+                UserDistanceDetails details = nearbyDonors.get(position);
+
+                float kmsaway = details.getDistance();
+                User user = details.getUser();
+                final String name = user.getName();
+                final String phonenumber = user.getMobilenumber().toString();
+                final String bloodgroup = user.getBloodgroup();
+                final String Address = user.getAddress();
+                final String Gender = user.getGender();
+                final String dateofbirth = user.getDateofbirth();
+                final String age = String.valueOf(user.getAge());
+                final Double lat = user.getLattitude();
+                final Double lon = user.getLongitude();
+                final String dateofregistration = user.getDateofregistration();
+
+
+                String[] Details = {"Name : " + name
+                        , "Phone : " + phonenumber,
+                        "Blood group  : " + bloodgroup,
+                        "Location  : " + Address,
+                        "Gender : " + Gender,
+                        "Age : " + age,
+                        "D.O.B  : " + dateofbirth,
+
+
+                };
+
+
+                new MaterialDialog.Builder(AdminMain.this)
+                        .title("Details of " + name)
+                        .items(Details)
+                        .positiveText("Share")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                                String Text =
+                                        "Details of " + name + "\n \n " +
+                                                "Name : " + name + "\n " +
+                                                "Phone : " + phonenumber + "\n " +
+                                                "Blood group : " + bloodgroup + "\n " +
+                                                "Location : " + Address + "\n " +
+                                                "Gender : " + Gender + "\n " +
+                                                "Age : " + age + "\n " +
+                                                "D.O.B : " + dateofbirth + "\n \n \n ";
+
+
+                                String installapp = "\n \nSave lives, By installing " + getString(R.string.applink);
+
+                                String message = Text;
+
+                                Intent sendIntent = new Intent();
+                                sendIntent.setAction(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                                sendIntent.setType("text/plain");
+                                startActivity(sendIntent);
+
+
+                            }
+                        })
+                        .negativeText("Call")
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phonenumber));
+                                startActivity(intent);
+
+                            }
+                        })
+                        .neutralText("Show On Map")
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                                String Locationname = name + "'s Here!";
+                                Uri gmmIntentUri = Uri.parse("geo:" + lat + "," + lon + "?q=" + Uri.encode(Locationname));
+                                final String BrowserURI = "https://www.google.co.in/maps?" + gmmIntentUri.toString();
+
+
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(mapIntent);
+                                } else {
+                                    Snackbar
+                                            .make(rl_adminmain, "Maps Not Found! Want to open on Browser?", Snackbar.LENGTH_LONG)
+                                            .setAction("Open", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Intent i = new Intent(Intent.ACTION_VIEW);
+                                                    i.setData(Uri.parse(BrowserURI));
+                                                    startActivity(i);
+                                                }
+                                            })
+                                            .show();
+
+                                }
+                            }
+                        })
+                        .show();
+
+
+            }
+        });
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 nearbyDonors.clear();
+                rAdapter.notifyDataSetChanged();
 
                 searchusers();
 
@@ -89,6 +249,7 @@ public class AdminMain extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -262,4 +423,110 @@ public class AdminMain extends AppCompatActivity {
 
     }
 
+
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView <?> parent, View view, int position, long id) {
+            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            Log.i(LOG_TAG, "Selected: " + item.description);
+            PendingResult <PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
+        }
+    };
+
+    private ResultCallback <PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback <PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.e(LOG_TAG, "Place query did not complete. Error: " +
+                        places.getStatus().toString());
+                return;
+            }
+            // Selecting the first object buffer.
+            final Place place = places.get(0);
+            CharSequence attributions = places.getAttributions();
+
+            et_location.setText(Html.fromHtml(place.getAddress() + ""));
+
+        }
+    };
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
+        Log.i(LOG_TAG, "Google Places API connected.");
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
+                + connectionResult.getErrorCode());
+
+        Toast.makeText(this,
+                "Google Places API connection failed with error code:" +
+                        connectionResult.getErrorCode(),
+                Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mPlaceArrayAdapter.setGoogleApiClient(null);
+        Log.e(LOG_TAG, "Google Places API connection suspended.");
+    }
+   /* private void getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(c, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(getActivity(), new OnCompleteListener <Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task <Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            mLastLocation = task.getResult();
+                            xlat = mLastLocation.getLatitude();
+                            xlon = mLastLocation.getLongitude();
+                            Toast.makeText(getActivity(), "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            //Toast.makeText(getActivity(), "Failed to track location", Toast.LENGTH_SHORT).show();
+
+                            xlat = 0.0;
+                            xlon = 0.0;
+                            getlatlongfromplacename(location);
+                        }
+                    }
+                });
+    }
+
+*/
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mGoogleApiClient.stopAutoManage(this);
+        mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+
+
+    }
 }

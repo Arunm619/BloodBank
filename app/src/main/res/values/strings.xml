@@ -120,6 +120,8 @@
     <string name="nointernetmessage">No Internet Check your Connection and Try Again</string>
     <string name="logout">Logout</string>
     <string name="applink">https://www.wwe.com</string>
+    <string name="type_here_for_autocomplete">Type here for AutoComplete</string>
+    <string name="Locationauto">Enter Location</string>
 
 
 </resources>

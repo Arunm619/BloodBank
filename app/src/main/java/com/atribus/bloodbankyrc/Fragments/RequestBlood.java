@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,7 +28,16 @@ import com.atribus.bloodbankyrc.Model.Message;
 import com.atribus.bloodbankyrc.Model.Request;
 import com.atribus.bloodbankyrc.Model.User;
 import com.atribus.bloodbankyrc.R;
+import com.atribus.bloodbankyrc.Utils.PlaceArrayAdapter;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -36,7 +49,18 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RequestBlood extends Fragment {
+public class RequestBlood extends Fragment implements
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks {
+    private static final String LOG_TAG = "Arun checks";
+    private static final int GOOGLE_API_CLIENT_ID = 0;
+    private AutoCompleteTextView mAutocompleteTextView;
+
+    private GoogleApiClient mGoogleApiClient;
+    private PlaceArrayAdapter mPlaceArrayAdapter;
+    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
+            new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
+
 
     FirebaseDatabase database;
     DatabaseReference requestNode;
@@ -69,8 +93,8 @@ public class RequestBlood extends Fragment {
     DatabaseReference myRef;
 
 
-  //  private FusedLocationProviderClient mFusedLocationClient;
-   // protected Location mLastLocation;
+    //  private FusedLocationProviderClient mFusedLocationClient;
+    // protected Location mLastLocation;
     Context c;
 
 
@@ -84,7 +108,7 @@ public class RequestBlood extends Fragment {
         c = container.getContext();
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_request_blood, container, false);
-      //  mFusedLocationClient = LocationServices.getFusedLocationProviderClient(c);
+        //  mFusedLocationClient = LocationServices.getFusedLocationProviderClient(c);
 
 
         // String MY_PREFS_NAME = "MYDB";
@@ -94,10 +118,26 @@ public class RequestBlood extends Fragment {
         // editor.clear();
 
         getmobilenumberfromUserObj();
-       // getLastLocation();
+        // getLastLocation();
 
         database = FirebaseDatabase.getInstance();
         requestNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Request");
+
+
+        //autocomplete
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(Places.GEO_DATA_API)
+                .enableAutoManage(getActivity(), GOOGLE_API_CLIENT_ID, this)
+                .addConnectionCallbacks(this)
+                .build();
+        mAutocompleteTextView = v.findViewById(R.id
+                .et_autocomplete);
+        mAutocompleteTextView.setThreshold(3);
+
+        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
+        mPlaceArrayAdapter = new PlaceArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
+                BOUNDS_MOUNTAIN_VIEW, null);
+        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
 
         rlbloodrequest = v.findViewById(R.id.rlrequestblood);
         rlbloodrequested = v.findViewById(R.id.rlrequestedblood);
@@ -299,7 +339,7 @@ public class RequestBlood extends Fragment {
         name = et_name.getText().toString().trim();
         mobilenumber = et_mobilenumber.getText().toString().trim();
         location = et_location.getText().toString().trim();
-         getlatlongfromplacename(location);
+        getlatlongfromplacename(location);
         message = et_message.getText().toString().trim();
 
         if (TextUtils.isEmpty(bloodgroup)) {
@@ -365,7 +405,7 @@ public class RequestBlood extends Fragment {
         }
 
         if (xlat == 0.0 && xlon == 0.0) {
-           // getlatlongfromplacename(location);
+            // getlatlongfromplacename(location);
 
             snackbar = Snackbar
                     .make(v, "Unable to detect location,be more specific. \n" +
@@ -432,6 +472,61 @@ public class RequestBlood extends Fragment {
 
     }
 
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView <?> parent, View view, int position, long id) {
+            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            Log.i(LOG_TAG, "Selected: " + item.description);
+            PendingResult <PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
+        }
+    };
+
+    private ResultCallback <PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback <PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.e(LOG_TAG, "Place query did not complete. Error: " +
+                        places.getStatus().toString());
+                return;
+            }
+            // Selecting the first object buffer.
+            final Place place = places.get(0);
+            CharSequence attributions = places.getAttributions();
+
+            et_location.setText(Html.fromHtml(place.getAddress() + ""));
+
+        }
+    };
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
+        Log.i(LOG_TAG, "Google Places API connected.");
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
+                + connectionResult.getErrorCode());
+
+        Toast.makeText(getActivity(),
+                "Google Places API connection failed with error code:" +
+                        connectionResult.getErrorCode(),
+                Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mPlaceArrayAdapter.setGoogleApiClient(null);
+        Log.e(LOG_TAG, "Google Places API connection suspended.");
+    }
    /* private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(c, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -466,4 +561,12 @@ public class RequestBlood extends Fragment {
     }
 
 */
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
+    }
 }

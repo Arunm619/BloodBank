@@ -367,18 +367,36 @@
                     android:layout_below="@id/et_mobilenumber"
                     android:layout_centerHorizontal="true"
                     android:hint="@string/Location"
+                    android:visibility="gone"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_location"
                     app:met_iconPadding="0dp" />
-                <!--  <AutoCompleteTextView
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_below="@id/et_mobilenumber"
-                      android:id="@+id/et_location"
 
-                      android:layout_centerHorizontal="true"
-                      android:hint="Enter Place Here"/>
-  -->
+                <LinearLayout
+                    android:id="@+id/llforautocomplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/et_location"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/ic_location" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/et_autocomplete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_margin="10dp"
+                        android:layout_weight="0.9"
+                        android:hint="@string/Locationauto" />
+                </LinearLayout>
                 <!--et_message -->
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/et_message"
@@ -386,7 +404,7 @@
 
 
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/et_location"
+                    android:layout_below="@id/llforautocomplete"
 
                     android:hint="@string/message"
                     app:met_floatingLabel="highlight"

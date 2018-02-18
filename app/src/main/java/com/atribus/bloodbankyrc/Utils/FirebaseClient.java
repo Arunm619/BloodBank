@@ -1,21 +1,17 @@
 package com.atribus.bloodbankyrc.Utils;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Adapters.CustomAdapter;
-import com.google.firebase.database.ChildEventListener;
+import com.atribus.bloodbankyrc.Model.post;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.atribus.bloodbankyrc.Model.post;
 import com.google.firebase.database.ValueEventListener;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,18 +22,18 @@ public class FirebaseClient {
     String DB_URL;
     ListView listView;
     ProgressBar pb;
-    CardView cv_empty;
+    View emptyView;
     ArrayList <post> postslist = new ArrayList <>();
     CustomAdapter customAdapter;
     DatabaseReference db;
     String order;
 
-    public FirebaseClient(Context c, String DB_URL, ListView listView, String order, CardView cv_empty, ProgressBar pb) {
+    public FirebaseClient(Context c, String DB_URL, ListView listView, String order, View emptyView, ProgressBar pb) {
         this.c = c;
         this.DB_URL = DB_URL;
         this.listView = listView;
         this.order = order;
-        this.cv_empty = cv_empty;
+        this.emptyView = emptyView;
         this.pb = pb;
 
 
@@ -68,7 +64,7 @@ public class FirebaseClient {
             post d = dataSnapshot1.getValue(post.class);
 
 
-            cv_empty.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
             postslist.add(d);
         }
 
@@ -85,7 +81,7 @@ public class FirebaseClient {
 
         } else {
             pb.setVisibility(View.GONE);
-            cv_empty.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.VISIBLE);
          //   Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
         }
     }

@@ -328,7 +328,7 @@ public class RequestBlood extends Fragment implements
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                successfulrequest.child(String.valueOf(request.getMobilenumber())).setValue(request);
+                                successfulrequest.child(String.valueOf(request.getMobilenumber())).push().setValue(request);
 
                                 deletetherequest(request);
                                 Toast.makeText(getActivity(), "Get Well Soon ", Toast.LENGTH_SHORT).show();

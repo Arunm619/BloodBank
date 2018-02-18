@@ -23,11 +23,11 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter {
     Context c;
-    ArrayList<post> posts;
+    ArrayList <post> posts;
     LayoutInflater inflater;
 
 
-    public CustomAdapter(Context c, ArrayList<post> posts) {
+    public CustomAdapter(Context c, ArrayList <post> posts) {
         this.c = c;
         this.posts = posts;
     }
@@ -57,14 +57,16 @@ public class CustomAdapter extends BaseAdapter {
         if (convertview == null) {
             convertview = inflater.inflate(R.layout.postrow, viewGroup, false);
 
-           }
+        }
 
         MyHolder holder = new MyHolder(convertview);
-        holder.tvtitle.setText(posts.get(i).getPost_title());
-        holder.tvdescription.setText(posts.get(i).getPost_description());
+        if (!posts.isEmpty()) {
+            holder.tvtitle.setText(posts.get(i).getPost_title());
+            holder.tvdescription.setText(posts.get(i).getPost_description());
 
-        PicassoClient.downloadimg(c, posts.get(i).getImg_path(), holder.img);
+            PicassoClient.downloadimg(c, posts.get(i).getImg_path(), holder.img);
 
+        }
 
         return convertview;
     }

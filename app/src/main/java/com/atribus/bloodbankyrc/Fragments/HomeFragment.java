@@ -4,7 +4,6 @@ package com.atribus.bloodbankyrc.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    CardView cvempty;
+    View emptyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,14 +40,14 @@ public class HomeFragment extends Fragment {
         Homefeed = v.findViewById(R.id.lvHomefeed);
 
         //cardview of empty is not shown at first
-        cvempty = v.findViewById(R.id.cvempty);
-        cvempty.setVisibility(View.INVISIBLE);
+        emptyView = v.findViewById(R.id.emptyview);
+        emptyView.setVisibility(View.INVISIBLE);
 
         //progress bar is loading...
         prgbar_home = v.findViewById(R.id.prgbar_home);
         prgbar_home.setVisibility(View.VISIBLE);
 
-        firebaseClient = new FirebaseClient(getActivity(), DB_URL, Homefeed, "reverse", cvempty,prgbar_home);
+        firebaseClient = new FirebaseClient(getActivity(), DB_URL, Homefeed, "reverse", emptyView,prgbar_home);
         firebaseClient.refreshdata();
 
         Homefeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {

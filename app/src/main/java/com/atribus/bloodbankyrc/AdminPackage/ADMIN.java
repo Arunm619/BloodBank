@@ -5,17 +5,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import com.atribus.bloodbankyrc.R;
 
 public class ADMIN extends AppCompatActivity {
-    Button btn_search, btn_addapost, btn_checkdetails,btn_appdashboard;
+    Button btn_search, btn_addapost, btn_checkdetails, btn_appdashboard;
+    RelativeLayout rl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +25,11 @@ public class ADMIN extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         getSupportActionBar().setTitle("Admin Panel ");
 
-
+        rl = findViewById(R.id.rl);
         btn_search = findViewById(R.id.btn_search);
         btn_addapost = findViewById(R.id.btn_addapost);
         btn_checkdetails = findViewById(R.id.btn_checkdetails);
-        btn_appdashboard=findViewById(R.id.btn_appdashboard);
+        btn_appdashboard = findViewById(R.id.btn_appdashboard);
 
         //seeting all buttons hidden
         btn_addapost.setEnabled(false);
@@ -76,14 +78,17 @@ public class ADMIN extends AppCompatActivity {
                 String password = edittext.getText().toString();
                 if (password.equals("123")) {
 
-                    Toast.makeText(ADMIN.this, "Welcome Back, Admin!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ADMIN.this, "Welcome Back, Admin!", Toast.LENGTH_SHORT).show();
 
+                    Snackbar.make(rl, "Welcome Back, Admin!", Snackbar.LENGTH_LONG).show();
                     btn_addapost.setEnabled(true);
                     btn_checkdetails.setEnabled(true);
                     btn_search.setEnabled(true);
                     btn_appdashboard.setEnabled(true);
                 } else {
-                    Toast.makeText(ADMIN.this, "Wrong Password! Closing App", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(rl, "Wrong Password! Closing App!", Snackbar.LENGTH_LONG).show();
+
+                    //Toast.makeText(ADMIN.this, "Wrong Password! Closing App", Toast.LENGTH_SHORT).show();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

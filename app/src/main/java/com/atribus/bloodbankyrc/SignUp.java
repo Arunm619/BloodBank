@@ -74,9 +74,9 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        getSupportActionBar().hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-         signInButton = findViewById(R.id.btn_signin);
+        signInButton = findViewById(R.id.btn_signin);
         lt_signup = findViewById(R.id.lt_signin);
 
 
@@ -98,7 +98,6 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
 
-
                 if (firebaseAuth.getCurrentUser() != null) {
                     ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
                     NetworkInfo info = null;
@@ -111,11 +110,9 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
-return;
+                        return;
 
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getApplicationContext(), "Stable Internet is Available.", Toast.LENGTH_SHORT).show();
                     }
 

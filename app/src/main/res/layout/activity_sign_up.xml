@@ -25,10 +25,15 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="@string/app_name"
+
             android:textColor="@android:color/white"
             android:textSize="36sp" />
 
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
 
+            android:src="@drawable/mobile" />
     </LinearLayout>
 
 
@@ -46,6 +51,15 @@
             android:visibility="visible"
             tools:visibility="visible" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_signin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Sign Using Google Account"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
 </LinearLayout>

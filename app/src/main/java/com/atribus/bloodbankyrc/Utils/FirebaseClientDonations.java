@@ -2,18 +2,13 @@ package com.atribus.bloodbankyrc.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.atribus.bloodbankyrc.Adapters.CustomAdapter;
 import com.atribus.bloodbankyrc.Adapters.DonationAdapter;
 import com.atribus.bloodbankyrc.Model.Request;
 import com.atribus.bloodbankyrc.Model.User;
-import com.atribus.bloodbankyrc.Model.post;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.view.View.GONE;
 
 /**
  * Created by root on 11/2/18.
@@ -36,7 +30,7 @@ public class FirebaseClientDonations {
     private ListView listView;
     private ArrayList <Request> requestArrayList = new ArrayList <>();
     private DatabaseReference db;
-    private CardView cv_empty;
+    private View emptyview;
     private String order;
     private String userblood;
     private String Currmobilenumber;
@@ -45,11 +39,11 @@ public class FirebaseClientDonations {
     private Rules rules = new Rules();
 
 
-    public FirebaseClientDonations(Context c, String DB_URL, ListView listView, String order, CardView cv_empty, ProgressBar pb) {
+    public FirebaseClientDonations(Context c, String DB_URL, ListView listView, String order, View emptyview, ProgressBar pb) {
         this.c = c;
         this.listView = listView;
         this.order = order;
-        this.cv_empty = cv_empty;
+        this.emptyview = emptyview;
         this.pb = pb;
 
 
@@ -150,27 +144,27 @@ public class FirebaseClientDonations {
 
 
             }
-            cv_empty.setVisibility(View.GONE);
+            emptyview.setVisibility(View.GONE);
         }
-            if (requestArrayList.size() > 0) {
-                pb.setVisibility(View.GONE);
+        if (requestArrayList.size() > 0) {
+            pb.setVisibility(View.GONE);
 
-                if (order.equals("reverse"))
-                    Collections.reverse(requestArrayList);
-                DonationAdapter donationAdapter = new DonationAdapter(c, requestArrayList);
-                listView.setAdapter(donationAdapter);
+            if (order.equals("reverse"))
+                Collections.reverse(requestArrayList);
+            DonationAdapter donationAdapter = new DonationAdapter(c, requestArrayList);
+            listView.setAdapter(donationAdapter);
 
-                donationAdapter.notifyDataSetChanged();
-                Utility.setDynamicHeight(listView);
+            donationAdapter.notifyDataSetChanged();
+            Utility.setDynamicHeight(listView);
 
-            } else {
+        } else {
 
-                pb.setVisibility(View.GONE);
-             //   Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
-                cv_empty.setVisibility(View.VISIBLE);
-            }
-
+            pb.setVisibility(View.GONE);
+            //   Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
+            emptyview.setVisibility(View.VISIBLE);
         }
 
     }
+
+}
 

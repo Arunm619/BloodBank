@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class DonateBlood extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference Requestsnode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Request");
-    CardView cvempty;
+    View emptyview;
     ProgressBar prgbar_donations;
 
     public DonateBlood() {
@@ -55,8 +54,8 @@ public class DonateBlood extends Fragment {
         Donatebloodfeed = v.findViewById(R.id.lvDonatebloodfeed);
 
         //cardview of empty is not shown at first
-        cvempty = v.findViewById(R.id.cvempty);
-        cvempty.setVisibility(View.GONE);
+        emptyview = v.findViewById(R.id.emptyview);
+        emptyview.setVisibility(View.GONE);
 
         //progress bar is loading...
         prgbar_donations = v.findViewById(R.id.prgbar_donations);
@@ -78,7 +77,7 @@ public class DonateBlood extends Fragment {
         //O+
 
 
-        firebaseClientDonations = new FirebaseClientDonations(getActivity(), temp, Donatebloodfeed, "reverse", cvempty, prgbar_donations);
+        firebaseClientDonations = new FirebaseClientDonations(getActivity(), temp, Donatebloodfeed, "reverse", emptyview, prgbar_donations);
         firebaseClientDonations.refreshdata();
 
 

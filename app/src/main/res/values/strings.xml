@@ -103,7 +103,7 @@
     <string name="share">Share</string>
     <string name="NoDonations">No Requests Available.</string>
     <string name="NoPosts">No posts Found</string>
-    <string name="recentDonation">Recent Donation on</string>
+    <string name="recentDonation">You donated on</string>
     <string name="search_for_people">Search For People</string>
     <string name="admin_panel">ADMIN PANEL</string>
     <string name="AddaPost">Add a post</string>
@@ -133,6 +133,11 @@
     <string name="totalnumberofusers">Active Users Count</string>
     <string name="Userdetails">User Details</string>
     <string name="blood_groups">Blood Groups</string>
+    <string name="imgdesc_nopostowl">No Post Image</string>
+    <string name="you_can_donate_again_in">You can donate again in:</string>
+    <string name="_18_02_2018">18/02/2018</string>
+    <string name="last_donated_on">Last Donated On:</string>
+    <string name="thanks_for_donation">Thanks for Donation!</string>
 
 
 </resources>

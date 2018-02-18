@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bgcolor">#FFCDD2</color>
-    <color name="colorPrimary">#00AA8D</color>
-    <color name="colorPrimaryDark">#008975</color>
-    <color name="colorAccent">#00BF9A</color>
+    <color name="colorPrimary">#1976d2</color>
+    <color name="colorPrimaryDark">#004ba0</color>
+    <color name="colorAccent">#dd2c00</color>
     <color name="Red">#FF0000</color>
+    <color name="primarytextcolor">#ffffff</color>
 
 
     <color name="white">#ffffff</color>
@@ -13,6 +14,7 @@
     <color name="feed_item_border">#c2c3c8</color>
     <color name="link">#0a80d1</color>
     <color name="timestamp">#a0a3a7</color>
+    <color name="black">#000</color>
 
 
     <!--

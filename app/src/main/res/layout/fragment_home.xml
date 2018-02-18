@@ -26,7 +26,7 @@
                 android:id="@+id/nopostsfoundtv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="25dp"
                 android:gravity="center"
                 android:text="@string/NoPosts"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
@@ -37,8 +37,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/nopostsfoundtv"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="8dp"
-                android:src="@drawable/mobile" />
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginStart="30dp"
+                android:contentDescription="@string/imgdesc_nopostowl"
+                android:padding="1dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/no_post" />
 
 
         </RelativeLayout>

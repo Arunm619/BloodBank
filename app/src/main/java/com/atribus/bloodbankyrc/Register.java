@@ -41,8 +41,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -59,7 +62,7 @@ import java.util.List;
 
 public class Register extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks{
+        GoogleApiClient.ConnectionCallbacks {
 
 
     private static final String LOG_TAG = "Arun checks";
@@ -69,10 +72,6 @@ public class Register extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
     private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466));
-
-
-
-
 
 
     SharedPreferences.Editor editor;
@@ -112,7 +111,7 @@ public class Register extends AppCompatActivity implements
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         FirebaseMessaging.getInstance().subscribeToTopic("notifications");
-       // Toast.makeText(this, "Registered to Notifications...", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Registered to Notifications...", Toast.LENGTH_SHORT).show();
         ll = findViewById(R.id.ll);
         et_name = findViewById(R.id.et_name);
         et_address = findViewById(R.id.et_address);
@@ -123,9 +122,31 @@ public class Register extends AppCompatActivity implements
         btn_register = findViewById(R.id.btn_register);
 
         //setting mobile number from firebase user
-      if (currentUser!=null)
-        et_mobilenumber.setText(currentUser.getPhoneNumber());
+        if (currentUser != null)
+            et_mobilenumber.setText(currentUser.getPhoneNumber());
 
+        FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    User u = dataSnapshot.getValue(User.class);
+                    et_name.setText(u.getName());
+                    et_mobilenumber.setText(String.valueOf(u.getMobilenumber()));
+                    //et_dob.setText(u.getDateofbirth());
+                    et_gender.setText(u.getGender());
+
+                    et_bloodgroup.setText(u.getBloodgroup());
+                    et_address.setText(u.getAddress());
+                    mAutocompleteTextView.setText(u.getAddress());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         dobsetter();
         bloodgroupsetter();
         gendersetter();
@@ -158,7 +179,6 @@ public class Register extends AppCompatActivity implements
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
 
 
-
     }
 
     private int nullcheck() {
@@ -168,8 +188,12 @@ public class Register extends AppCompatActivity implements
         mobilenumber = et_mobilenumber.getText().toString().trim();
         address = et_address.getText().toString().trim();
         gender = et_gender.getText().toString().trim();
+        if (TextUtils.isDigitsOnly(name)) {
+            Snackbar.make(ll, "Enter Name ", Snackbar.LENGTH_LONG).show();
+            return -1;
+        }
 
-        if (name.length() < 1) {
+        if (TextUtils.isEmpty(name)) {
             Snackbar.make(ll, "Enter Name", Snackbar.LENGTH_LONG).show();
             return -1;
         }
@@ -184,8 +208,7 @@ public class Register extends AppCompatActivity implements
             Snackbar.make(ll, "Check Mobile Number", Snackbar.LENGTH_LONG).show();
             return -1;
         }
-        if (TextUtils.isEmpty(dob))
-        {
+        if (TextUtils.isEmpty(dob)) {
             Snackbar.make(ll, "Choose DOB", Snackbar.LENGTH_LONG).show();
             return -1;
 
@@ -459,7 +482,7 @@ public class Register extends AppCompatActivity implements
                             mLastLocation = task.getResult();
                             mlat = mLastLocation.getLatitude();
                             mlon = mLastLocation.getLongitude();
-                          //  Toast.makeText(Register.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
+                            //  Toast.makeText(Register.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
 
                         } else {
                             //Toast.makeText(Register.this, "Failed to track location", Toast.LENGTH_SHORT).show();
@@ -506,7 +529,6 @@ public class Register extends AppCompatActivity implements
     }
 
 
-
     private AdapterView.OnItemClickListener mAutocompleteClickListener
             = new AdapterView.OnItemClickListener() {
         @Override
@@ -514,14 +536,14 @@ public class Register extends AppCompatActivity implements
             final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
             final String placeId = String.valueOf(item.placeId);
             Log.i(LOG_TAG, "Selected: " + item.description);
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+            PendingResult <PlaceBuffer> placeResult = Places.GeoDataApi
                     .getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
             Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
         }
     };
 
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+    private ResultCallback <PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback <PlaceBuffer>() {
         @Override
         public void onResult(PlaceBuffer places) {
@@ -596,7 +618,6 @@ public class Register extends AppCompatActivity implements
     }
 
 */
-
 
 
 }

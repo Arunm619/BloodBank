@@ -2,8 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     tools:context="com.atribus.bloodbankyrc.Fragments.HelperFragment">
 
@@ -12,7 +12,8 @@
 
         android:id="@+id/RLDonatedDetails"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
         <!--cv_donatedblood-->
         <android.support.v7.widget.CardView
             android:id="@+id/cv_donatedblood"
@@ -43,13 +44,13 @@
 
                 <ImageView
                     android:id="@+id/imgviewdonatedbloodq"
-                    android:layout_width="200dp"
-                    android:layout_height="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="250dp"
                     android:layout_below="@id/donatedbloodrecentlytv"
                     android:layout_centerInParent="true"
                     android:layout_margin="5dp"
                     android:foregroundGravity="center"
-                    android:src="@drawable/mobile" />
+                    android:src="@drawable/donated_blood_yet" />
 
                 <Button
                     android:id="@+id/btn_donatedbloodq"
@@ -178,7 +179,7 @@
                     android:layout_marginBottom="16dp"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Recent Donation!"
+                    android:text="@string/thanks_for_donation"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold" />
@@ -188,71 +189,105 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_person" />
+                    android:contentDescription="z"
+                    android:src="@drawable/donated_blood_yet" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:paddingLeft="60dp"
+                    android:paddingStart="60dp"
+                    android:text="@string/last_donated_on"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textSize="20sp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
 
                 <TextView
                     android:id="@+id/daysuntilnextdonation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:paddingLeft="60dp"
+                    android:paddingStart="60dp"
+                    android:text="@string/_18_02_2018"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
 
-                    android:layout_gravity="center"
-                    android:text="DATE"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                    android:textStyle="bold" />
 
-                <cn.iwgang.countdownview.CountdownView
-                    android:id="@+id/cv_countdownViewTest4"
+                <TextView
+                    android:id="@+id/donateagaintv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:visibility="visible"
-                    app:isShowDay="true"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="60dp"
+                    android:paddingStart="60dp"
+                    android:text="@string/you_can_donate_again_in"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textSize="20sp"
+                    tools:ignore="RtlHardcoded" />
 
-                    app:isShowHour="true"
+                <cn.iwgang.countdownview.CountdownView
+                    android:id="@+id/cdvtimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="60dp"
+                    android:paddingStart="60dp"
+                    app:isHideTimeBackground="true"
+
+                    app:isShowDay="true"
+                    app:isShowHour="false"
                     app:isShowMillisecond="false"
+
                     app:isShowMinute="false"
+
                     app:isShowSecond="false"
+
                     app:isTimeTextBold="true"
+
                     app:suffixDay="Days"
                     app:suffixGravity="bottom"
-                    app:suffixHour="Hours"
-                    app:suffixMinute="Mins"
+                    app:suffixHour="Hr"
+                    app:suffixMillisecond="ms"
+                    app:suffixMinute="Min"
                     app:suffixSecond="Sec"
                     app:suffixTextColor="#000000"
                     app:suffixTextSize="12sp"
                     app:timeTextColor="#000000"
-                    app:timeTextSize="22sp" />
+                    app:timeTextSize="22sp"
+                    tools:ignore="RtlHardcoded" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/btndonatedetails"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="6dp"
+                    android:layout_weight="1"
+                    android:text="Can I donate again?"
+                    android:visibility="gone" />
 
-                    <Button
-                        android:id="@+id/btndonatedetails"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="6dp"
-                        android:layout_weight="1"
-                        android:text="Can I donate again?" />
+                <Button
+                    android:id="@+id/btnshowdetails"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
 
-                    <Button
-                        android:id="@+id/btnshowdetails"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="6dp"
-                        android:layout_weight="1"
-                        android:text="Show Details" />
 
-                </LinearLayout>
+                    android:text="Show Details" />
+
             </LinearLayout>
+
 
         </android.support.v7.widget.CardView>
 

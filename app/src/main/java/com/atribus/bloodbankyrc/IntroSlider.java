@@ -23,7 +23,7 @@ public class IntroSlider extends IntroActivity {
     /**
      * Colors to use for the blended background: blue, pink, purple.
      */
-    private static final int[] BACKGROUND_COLORS = {0xff00997E, 0xff00aa8d, 0xff008971};
+    private static final int[] BACKGROUND_COLORS = {0xff1976d2,0xff1976d2,0xff1976d2,0xff1976d2};
 
     public static final String DISPLAY_ONCE_PREFS = "display_only_once_spfile";
 
@@ -55,17 +55,18 @@ public class IntroSlider extends IntroActivity {
         final ArrayList <Fragment> pages = new ArrayList <>();
 
 
-        List <String> x = new ArrayList <>(Arrays.asList("Welcome to Blood Donations",
-                "Instant Availablity", "Notification", "Blood Donations App",
+        List <String> x = new ArrayList <>(Arrays.asList("Welcome to Blood Donations!",
+                "Be a Hero!", "Instant Availablity", "Every Drop Counts!",
                 "Instant Availablity", "Notification"
         ));
 
 
-        List <String> y = new ArrayList <>(Arrays.asList("Ready to Save Lives?",
-                "Save Blood!", "Be a hero!", "Save Life",
+        List <String> y = new ArrayList <>(Arrays.asList("Thanks for Installing! Ready to Save Lives?",
+                "Donate your blood at ease!", "Receive the elixir of life at one touch",
+                "Give Blood Give Life",
                 "Save Blood!", "Be a hero!"));
 
-        ArrayList <Integer> z = new ArrayList <>(Arrays.asList(R.drawable.ic_address, R.drawable.ic_blood, R.drawable.ic_dob, R.drawable.ic_address, R.drawable.ic_blood, R.drawable.ic_dob));
+        ArrayList <Integer> z = new ArrayList <>(Arrays.asList(R.drawable.mobile, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile));
         // Create as many pages as there are background colors
         for (int i = 0; i < BACKGROUND_COLORS.length; i++) {
             final IntroFragment fragment = new IntroFragment();

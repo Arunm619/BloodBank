@@ -180,9 +180,21 @@ public class UserActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
 
                 //delete SharedPref
-                prefs.edit().clear().apply();
-                startActivity(new Intent(this, SignUp.class));
-                finish();
+                prefs.edit().clear().commit();
+                //clearing App data
+                deleteAppData();
+               // ClearData.getInstance().clearApplicationData();
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                if (i != null) {
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                }
+                startActivity(i);
+
+                /*
+                        startActivity(new Intent(this, SignUp.class));
+                        finish();
+*/
 
                 break;
 
@@ -191,4 +203,15 @@ public class UserActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private void deleteAppData() {
+        try {
+            // clearing app data
+            String packageName = getApplicationContext().getPackageName();
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec("pm clear "+packageName);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } }
 }

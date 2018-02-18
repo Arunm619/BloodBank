@@ -15,12 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Main Text"
+            android:padding="10dp"
+
+            android:text="Welcome to Blood Donations"
 
             android:textColor="@android:color/black"
-            android:textSize="@dimen/slide_title"
-            android:textStyle="bold" />
+            android:textSize="@dimen/slide_title" />
 
         <ImageView
             android:id="@+id/imgview"
@@ -30,21 +32,22 @@
             android:layout_below="@id/titleda"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="80dp"
 
             android:src="@drawable/ic_blood" />
 
 
         <TextView
             android:id="@+id/desc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/imgview"
             android:layout_marginTop="100dp"
+            android:gravity="center"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
 
-            android:text="Description In About 20 Words"
+            android:text="Thanks for Installing! \n Ready to Save Lives?"
             android:textAlignment="center"
             android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@android:color/black"

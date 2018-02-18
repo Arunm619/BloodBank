@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Model.BloodDonations;
 import com.atribus.bloodbankyrc.R;
@@ -92,8 +91,8 @@ public class HelperFragment extends Fragment {
         btnshowdetails = v.findViewById(R.id.btnshowdetails);
         btndonatedetails = v.findViewById(R.id.btndonatedetails);
 
-        cdvtimer = v.findViewById(R.id.cv_countdownViewTest4);
-        cdvtimer.setVisibility(View.GONE);
+        cdvtimer = v.findViewById(R.id.cdvtimer);
+        //cdvtimer.setVisibility(View.GONE);
 
         prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         editor = prefs.edit();
@@ -125,6 +124,7 @@ public class HelperFragment extends Fragment {
                         "Yeah! You can donate blood after " + addfortytwodays(dateoflastdonation[0]), Snackbar.LENGTH_LONG).show();
             }
         });
+        // Toast.makeText(getActivity(), "dateoflastlocation" + dateoflastdonation[0], Toast.LENGTH_SHORT).show();
         if (dateoflastdonation[0] != null && dateoflastdonation[0].length() != 0) {
             cv_countdowntonextdonation.setVisibility(View.VISIBLE);
             cv_donatedbloodquestion.setVisibility(View.GONE);
@@ -132,7 +132,7 @@ public class HelperFragment extends Fragment {
 
 
             calculatedays(dateoflastdonation[0]);
-            tv_daysuntilnextdonation.setText(String.format("%s %s", getString(R.string.recentDonation), dateoflastdonation[0]));
+            tv_daysuntilnextdonation.setText(String.format("%s", dateoflastdonation[0]));
 
 
         } else {
@@ -181,10 +181,16 @@ public class HelperFragment extends Fragment {
 
     }
 
+    private static long daysBetween(Date one, Date two) {
+        long difference = (one.getTime() - two.getTime()) / 86400000;
+        return Math.abs(difference);
+    }
+
+
     private void calculatedays(String dateoflastdonation) {
 
 
-        Date donationdate = parsedate(dateoflastdonation);
+        // Date donationdate = parsedate(dateoflastdonation);
 
 
         Date donateddate = parsedate(dateoflastdonation);
@@ -194,11 +200,16 @@ public class HelperFragment extends Fragment {
         c.add(Calendar.DATE, 42);
         Date d = c.getTime();
 
-        int days = donateddate.compareTo(d);
+        long days = /*donateddate.compareTo(d)*/
+                daysBetween(d, donateddate);
+        //Toast.makeText(getActivity(), "Days left :" + days, Toast.LENGTH_SHORT).show();
 
         if (days > 0) {
-            //Toast.makeText(getActivity(), "Days left :" + daysleft, Toast.LENGTH_SHORT).show();
 
+            //  Toast.makeText(getActivity(), "Days left :" + days, Toast.LENGTH_SHORT).show();
+            cdvtimer.start(TimeUnit.DAYS.toMillis(days));
+            // Toast.makeText(getActivity(), "In Milliseconds  "+TimeUnit.DAYS.toMillis(days), Toast.LENGTH_SHORT).show();
+            //  Snackbar.make(ll, "You can donate blood in another " + days, Snackbar.LENGTH_LONG).show();
         } else {
             cv_donatedbloodquestion.setVisibility(View.VISIBLE);
             cv_formdonationdetails.setVisibility(View.GONE);
@@ -269,10 +280,10 @@ public class HelperFragment extends Fragment {
         editor.putString(getString(R.string.keylastdonateddate), date);
         editor.commit();
         tv_daysuntilnextdonation.setText("Date " + date);
-        Toast.makeText(getActivity(), "DATE :" + date, Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(getActivity(), "DATE :" + date, Toast.LENGTH_SHORT).show();
         cv_formdonationdetails.setVisibility(View.GONE);
         cv_countdowntonextdonation.setVisibility(View.VISIBLE);
-
+        calculatedays(date);
 
     }
 
@@ -323,7 +334,7 @@ public class HelperFragment extends Fragment {
 
 
                         if (validatedate(mydonationdate)) {
-                            Snackbar.make(ll, ddate + " is not possible", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(ll, "Please donate blood first! " + ddate + " is yet to come.", Snackbar.LENGTH_LONG).show();
                             et_dodonation.setText("");
                             return;
                         }

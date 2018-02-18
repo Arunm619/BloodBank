@@ -9,6 +9,7 @@ public class post {
     private String post_content;
     private String post_description;
     private String img_path;
+    private String datecreated;
 
     //object -> json object-> string
 
@@ -16,11 +17,12 @@ public class post {
     // String body
 
 
-    public post(String post_title, String post_content, String post_description, String img_path) {
+    public post(String post_title, String post_content, String post_description, String img_path, String datecreated) {
         this.post_title = post_title;
         this.post_content = post_content;
         this.post_description = post_description;
         this.img_path = img_path;
+        this.datecreated = datecreated;
     }
 
     public post() {
@@ -56,5 +58,13 @@ public class post {
 
     public void setImg_path(String img_path) {
         this.img_path = img_path;
+    }
+
+    public String getDatecreated() {
+        return datecreated;
+    }
+
+    public void setDatecreated(String datecreated) {
+        this.datecreated = datecreated;
     }
 }

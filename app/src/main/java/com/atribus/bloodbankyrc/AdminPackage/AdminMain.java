@@ -7,7 +7,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -205,7 +204,7 @@ public class AdminMain extends AppCompatActivity implements
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-                                String Locationname = name + "'s Here!";
+                         /*       String Locationname = name + "'s Here!";
                                 Uri gmmIntentUri = Uri.parse("geo:" + lat + "," + lon + "?q=" + Uri.encode(Locationname));
                                 final String BrowserURI = "https://www.google.co.in/maps?" + gmmIntentUri.toString();
 
@@ -228,6 +227,10 @@ public class AdminMain extends AppCompatActivity implements
                                             .show();
 
                                 }
+                   */
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" + lat + "," + lon + "?q=" + lat + "," + lon + "(" + name + ")"));
+                                startActivity(intent);
+
                             }
                         })
                         .show();

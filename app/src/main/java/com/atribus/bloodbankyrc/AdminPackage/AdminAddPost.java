@@ -4,11 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +17,6 @@ import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Model.post;
 import com.atribus.bloodbankyrc.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,8 +25,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.Date;
 
-public class AdminAddPost extends AppCompatActivity  {
+public class AdminAddPost extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     EditText et_desc, et_title, et_con;
     // DatabaseReference db;
@@ -113,7 +110,8 @@ public class AdminAddPost extends AppCompatActivity  {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downoaduri = taskSnapshot.getDownloadUrl();
-                PostsNode.child(id).setValue(new post(title, content, description, downoaduri.toString()));
+                String datecreated = new Date().toString();
+                PostsNode.child(id).setValue(new post(title, content, description, downoaduri.toString(), datecreated));
                 Toast.makeText(getApplicationContext(), "Successfully uploaded.", Toast.LENGTH_SHORT).show();
                 pd.dismiss();
                 finish();

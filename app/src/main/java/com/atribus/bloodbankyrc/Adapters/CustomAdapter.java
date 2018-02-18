@@ -64,6 +64,8 @@ public class CustomAdapter extends BaseAdapter {
             holder.tvtitle.setText(posts.get(i).getPost_title());
             holder.tvdescription.setText(posts.get(i).getPost_description());
 
+
+            holder.timestamp.setText(posts.get(i).getDatecreated());
             PicassoClient.downloadimg(c, posts.get(i).getImg_path(), holder.img);
 
         }

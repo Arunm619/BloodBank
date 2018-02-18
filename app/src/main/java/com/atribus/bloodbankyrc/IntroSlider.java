@@ -23,7 +23,7 @@ public class IntroSlider extends IntroActivity {
     /**
      * Colors to use for the blended background: blue, pink, purple.
      */
-    private static final int[] BACKGROUND_COLORS = {0xff1976d2,0xff1976d2,0xff1976d2,0xff1976d2};
+    private static final int[] BACKGROUND_COLORS = {0xff44A89C,0xff50A8E8,0xff1976d2,0xff1976d2};
 
     public static final String DISPLAY_ONCE_PREFS = "display_only_once_spfile";
 
@@ -66,7 +66,7 @@ public class IntroSlider extends IntroActivity {
                 "Give Blood Give Life",
                 "Save Blood!", "Be a hero!"));
 
-        ArrayList <Integer> z = new ArrayList <>(Arrays.asList(R.drawable.mobile, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile));
+        ArrayList <Integer> z = new ArrayList <>(Arrays.asList(R.drawable.intro, R.drawable.intro_2, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile));
         // Create as many pages as there are background colors
         for (int i = 0; i < BACKGROUND_COLORS.length; i++) {
             final IntroFragment fragment = new IntroFragment();

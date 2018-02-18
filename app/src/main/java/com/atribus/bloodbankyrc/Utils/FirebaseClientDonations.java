@@ -35,6 +35,7 @@ public class FirebaseClientDonations {
     private String userblood;
     private String Currmobilenumber;
     private ProgressBar pb;
+    private DonationAdapter donationAdapter;
 
     private Rules rules = new Rules();
 
@@ -130,7 +131,9 @@ public class FirebaseClientDonations {
 
 
         requestArrayList.clear();
+        donationAdapter = new DonationAdapter(c, requestArrayList);
 
+        listView.invalidateViews();
 
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
@@ -151,7 +154,6 @@ public class FirebaseClientDonations {
 
             if (order.equals("reverse"))
                 Collections.reverse(requestArrayList);
-            DonationAdapter donationAdapter = new DonationAdapter(c, requestArrayList);
             listView.setAdapter(donationAdapter);
 
             donationAdapter.notifyDataSetChanged();

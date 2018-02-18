@@ -21,7 +21,7 @@
                 android:id="@+id/rlrequestedblood"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
@@ -32,215 +32,88 @@
                     card_view:cardCornerRadius="2dp"
                     card_view:contentPadding="10dp">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/reqtv"
                             android:layout_width="wrap_content"
+
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+
                             android:text="@string/details_of_request"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                             android:textStyle="bold" />
 
-                        <!--LL name-->
-                        <LinearLayout
-                            android:id="@+id/llname"
 
+                        <TextView
+                            android:id="@+id/tvName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/reqtv"
-                            android:layout_margin="5dp"
-                            android:orientation="horizontal"
+                            android:layout_weight="1"
+                            android:text="Test"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
-                            android:weightSum="2">
+                            />
 
-                            <TextView
-                                android:id="@+id/Nametv"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Name"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
-
-
-                                />
-
-                            <TextView
-                                android:id="@+id/tvName"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Test"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-
-                                />
-
-                        </LinearLayout>
-
-                        <!-- LL Mobile number-->
-                        <LinearLayout
-                            android:id="@+id/llmobilenumber"
-
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/tvmobile"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/llname"
-                            android:layout_margin="5dp"
-                            android:orientation="horizontal"
+                            android:layout_weight="1"
+                            android:text="1234567890"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
-                            android:weightSum="2">
-
-                            <TextView
-                                android:id="@+id/Mobiletv"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Contact Number"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
+                            />
 
 
-                                />
-
-                            <TextView
-                                android:id="@+id/tvmobile"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="1234567890"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-
-                                />
-
-                        </LinearLayout>
-
-                        <!-- LL Blood -->
-                        <LinearLayout
-                            android:id="@+id/llblood"
-
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/tvblood"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/llmobilenumber"
-                            android:layout_margin="5dp"
-                            android:orientation="horizontal"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="O+"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
-                            android:weightSum="3">
+                        <TextView
+                            android:id="@+id/tvbloodunits"
 
-                            <TextView
-                                android:id="@+id/bloodtv"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Blood Group"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
-
-
-                                />
-
-                            <TextView
-                                android:id="@+id/tvblood"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:text="O+"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-
-                            <TextView
-                                android:id="@+id/tvbloodunits"
-
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:text="2 units"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-
-                        </LinearLayout>
-
-                        <!-- LL Location -->
-                        <LinearLayout
-
-                            android:id="@+id/lllocation"
-
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/llblood"
-                            android:layout_margin="5dp"
-                            android:orientation="horizontal"
-
-                            android:weightSum="2">
-
-                            <TextView
-                                android:id="@+id/locationtv"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Location"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="2 units"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
 
-                                />
-
-                            <TextView
-                                android:id="@+id/tvlocation"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Malar Fortis"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-
-                                />
-
-                        </LinearLayout>
-
-                        <!-- LL Message -->
-                        <LinearLayout
-                            android:id="@+id/llmessage"
-
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/tvlocation"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/lllocation"
-                            android:layout_margin="5dp"
-                            android:orientation="horizontal"
+                            android:layout_weight="1"
+                            android:text="Malar Fortis"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
-                            android:weightSum="2">
+                            />
 
-                            <TextView
-                                android:id="@+id/messagetv"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Message"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
+                        <TextView
+                            android:id="@+id/tvmessage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Urgent in 2 hours"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
-
-                                />
-
-                            <TextView
-                                android:id="@+id/tvmessage"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Urgent in 2 hours"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-
-                                />
-
-                        </LinearLayout>
-
+                            />
 
                         <LinearLayout
                             android:id="@+id/llbtns"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/llmessage"
                             android:layout_margin="5dp"
                             android:orientation="horizontal"
                             android:weightSum="2">
@@ -272,9 +145,13 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/llbtns"
                             android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
                             android:gravity="center"
                             android:text="Complete" />
-                    </RelativeLayout>
+
+
+                    </LinearLayout>
+
                 </android.support.v7.widget.CardView>
 
             </RelativeLayout>
@@ -284,7 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/llblooddetails"

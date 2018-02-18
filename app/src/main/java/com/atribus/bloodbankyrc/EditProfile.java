@@ -471,10 +471,10 @@ public class EditProfile extends AppCompatActivity {
                             mLastLocation = task.getResult();
                             mlat = mLastLocation.getLatitude();
                             mlon = mLastLocation.getLongitude();
-                            Toast.makeText(EditProfile.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
+                            //   Toast.makeText(EditProfile.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
 
                         } else {
-                            Toast.makeText(EditProfile.this, "Failed to track location", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(EditProfile.this, "Failed to track location", Toast.LENGTH_SHORT).show();
 
 
                         }

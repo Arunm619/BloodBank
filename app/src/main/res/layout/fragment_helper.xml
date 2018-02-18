@@ -202,7 +202,8 @@
                     android:paddingStart="60dp"
                     android:text="@string/last_donated_on"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textSize="20sp"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
                     tools:ignore="RtlHardcoded,RtlSymmetry" />
 
                 <TextView
@@ -229,7 +230,8 @@
                     android:paddingStart="60dp"
                     android:text="@string/you_can_donate_again_in"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textSize="20sp"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
                     tools:ignore="RtlHardcoded" />
 
                 <cn.iwgang.countdownview.CountdownView

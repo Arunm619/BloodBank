@@ -3,6 +3,7 @@ package com.atribus.bloodbankyrc.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -10,7 +11,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -274,15 +278,20 @@ public class RequestBlood extends Fragment implements
     }
 
     private void setrequestedscreenon(final Request request) {
+
         rlbloodrequest.setVisibility(View.GONE);
 
+        //Split the Bolded Strings And Requests Strings
+
         rlbloodrequested.setVisibility(View.VISIBLE);
-        tvmobile.setText(String.valueOf(request.getMobilenumber()));
-        tvname.setText(request.getName());
-        tvlocation.setText(request.getLocation());
-        tvbloodunits.setText(String.valueOf(request.getRequiredunits()) + " units");
-        tvbloodgroup.setText(request.getRequiredbloodgroup());
-        tvmessage.setText(request.getMessage());
+
+
+        tvmobile.setText(makebold("Mobile : ", String.valueOf(request.getMobilenumber())));
+        tvname.setText(makebold("Name : ", request.getName()));
+        tvlocation.setText(makebold("Location : ", request.getLocation()));
+        tvbloodunits.setText(makebold("Units : ", String.valueOf(request.getRequiredunits())));
+        tvbloodgroup.setText(makebold("Blood Group : ", request.getRequiredbloodgroup()));
+        tvmessage.setText(makebold("Message : ", request.getMessage()));
 
         btnedit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -320,7 +329,7 @@ public class RequestBlood extends Fragment implements
             public void onClick(View v) {
                 //delete the node from RequestsPending
 
-                  new MaterialDialog.Builder(getActivity())
+                new MaterialDialog.Builder(getActivity())
                         .title(R.string.Gottheblood)
                         .content(R.string.gottheblooddesc)
                         .positiveText(R.string.agree)
@@ -339,6 +348,13 @@ public class RequestBlood extends Fragment implements
             }
         });
 
+    }
+
+    private SpannableString makebold(String Title, String Result) {
+
+        SpannableString str = new SpannableString(Title + Result);
+        str.setSpan(new StyleSpan(Typeface.BOLD), 0, Title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return str;
     }
 
     private void openeditscreen(Request request) {

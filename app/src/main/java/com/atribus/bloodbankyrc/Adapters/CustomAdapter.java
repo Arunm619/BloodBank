@@ -70,4 +70,5 @@ public class CustomAdapter extends BaseAdapter {
 
         return convertview;
     }
+
 }

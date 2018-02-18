@@ -59,6 +59,8 @@ public class FirebaseClient {
 
     private void getupdates(DataSnapshot dataSnapshot) {
         postslist.clear();
+        customAdapter = new CustomAdapter(c, postslist);
+        listView.invalidateViews();
 
         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
             post d = dataSnapshot1.getValue(post.class);
@@ -73,16 +75,16 @@ public class FirebaseClient {
 
             if (order.equals("reverse"))
                 Collections.reverse(postslist);
-            customAdapter = new CustomAdapter(c, postslist);
 
             listView.setAdapter(customAdapter);
+            customAdapter.notifyDataSetChanged();
             pb.setVisibility(View.GONE);
             Utility.setDynamicHeight(listView);
 
         } else {
             pb.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
-         //   Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(c, "No data", Toast.LENGTH_SHORT).show();
         }
     }
 }

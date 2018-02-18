@@ -34,7 +34,7 @@ public class PostDetailed extends AppCompatActivity {
         tvmdesc = findViewById(R.id.mdesc);
         tvmtitle = findViewById(R.id.mtitle);
         iv = findViewById(R.id.imgview);
-      //  btn_share = findViewById(R.id.share);
+        //  btn_share = findViewById(R.id.share);
 
 
         if (data != null) {

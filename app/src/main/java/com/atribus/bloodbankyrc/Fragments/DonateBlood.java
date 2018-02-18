@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -147,7 +146,7 @@ public class DonateBlood extends Fragment {
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 Double lat = request.getLattitude();
                                 Double lon = request.getLongitude();
-                                String Locationname = request.getName() + "'s Here!";
+                              /*  String Locationname = request.getName() + "'s Here!";
                                 Uri gmmIntentUri = Uri.parse("geo:" + lat + "," + lon + "?q=" + Uri.encode(Locationname));
                                 final String BrowserURI = "https://www.google.co.in/maps?" + gmmIntentUri.toString();
 
@@ -169,7 +168,10 @@ public class DonateBlood extends Fragment {
                                             })
                                             .show();
 
-                                }
+                                }*/
+
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" + lat + "," + lon + "?q=" + lat + "," + lon + "(Arun)"));
+                                startActivity(intent);
                             }
                         })
                         .show();

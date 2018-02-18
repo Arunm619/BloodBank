@@ -78,11 +78,22 @@ public class AdminDashboard extends AppCompatActivity {
             }
         });
 
+        //            tvtotalnumberofrequestssuccess.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+
+        final long[] totalcountofSuccessRequests = {0};
         //Setting Number of Successful Requets
         SuccessRequest.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                tvtotalnumberofrequestssuccess.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    totalcountofSuccessRequests[0] += ds.getChildrenCount();
+
+
+                }
+                tvtotalnumberofrequestssuccess.setText(String.valueOf(totalcountofSuccessRequests[0]));
+
+
             }
 
             @Override

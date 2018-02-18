@@ -331,7 +331,7 @@ public class RequestBlood extends Fragment implements
 
                 new MaterialDialog.Builder(getActivity())
                         .title(R.string.Gottheblood)
-                        .content(R.string.gottheblooddesc)
+                        // .content(R.string.gottheblooddesc)
                         .positiveText(R.string.agree)
                         .negativeText(R.string.disagree)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {

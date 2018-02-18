@@ -1,13 +1,19 @@
 package com.atribus.bloodbankyrc;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class RecentBloodDonationsActivity extends AppCompatActivity {
     FirebaseUser currentUser;
@@ -24,6 +32,10 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
     TextView tvnumberoftimes;
     Button btn_share;
     int countvarforshare = 0;
+    PieChart pieChart;
+    DatabaseReference BloodNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Blood");
+
+    long ABpositive = 0, ABnegative = 0, Apositive = 0, Anegative = 0, Bpositive = 0, Bnegative = 0, Opositive = 0, Onegative = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +56,47 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
                 sharemessage();
             }
         });
+        pieChart = findViewById(R.id.piechart);
+        pieChart.setUsePercentValues(true);
+        getdata();
+
+        ArrayList<Entry> yvalues = new ArrayList <>();
+        yvalues.add(new Entry(ABpositive, 0));
+        yvalues.add(new Entry(ABnegative, 1));
+        yvalues.add(new Entry(Apositive, 2));
+        yvalues.add(new Entry(Anegative, 3));
+        yvalues.add(new Entry(Bpositive, 4));
+        yvalues.add(new Entry(Bnegative, 5));
+        yvalues.add(new Entry(Opositive, 6));
+        yvalues.add(new Entry(Onegative, 7));
+        ArrayList <String> xVals = new ArrayList <>();
+
+        xVals.add("AB+");
+        xVals.add("AB-");
+        xVals.add("A+");
+        xVals.add("A-");
+        xVals.add("B+");
+        xVals.add("B-");
+        xVals.add("O+");
+        xVals.add("O-");
+
+        PieDataSet dataSet = new PieDataSet(yvalues, "Total Users");
+
+        PieData data = new PieData(xVals, dataSet);
+        data.setValueFormatter(new PercentFormatter());
+
+        pieChart.setData(data);
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setTransparentCircleRadius(30f);
+        pieChart.setHoleRadius(30f);
+
+
 
         DonationsNode.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long count = dataSnapshot.getChildrenCount();
@@ -67,6 +118,15 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void getdata() {
+
+
+     }
+
+    private void doit() {
 
     }
 

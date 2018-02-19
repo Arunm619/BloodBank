@@ -38,6 +38,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_blood" />
+        app:srcCompat="@drawable/ic_mood_black_24dp" />
 
 </RelativeLayout>

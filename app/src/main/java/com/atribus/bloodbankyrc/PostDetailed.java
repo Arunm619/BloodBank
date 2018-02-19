@@ -1,10 +1,14 @@
 package com.atribus.bloodbankyrc;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Model.post;
 import com.google.gson.Gson;
@@ -15,13 +19,14 @@ public class PostDetailed extends AppCompatActivity {
     TextView tvmtitle, tvmcon, tvmdesc;
     ImageView iv;
     FloatingActionButton btn_share;
-    String pt, pc, pd, pi;
+    String pt, pc, pd, pi, url;
     post pfb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detailed);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Post");
@@ -34,7 +39,7 @@ public class PostDetailed extends AppCompatActivity {
         tvmdesc = findViewById(R.id.mdesc);
         tvmtitle = findViewById(R.id.mtitle);
         iv = findViewById(R.id.imgview);
-        //  btn_share = findViewById(R.id.share);
+        btn_share = findViewById(R.id.btn_share);
 
 
         if (data != null) {
@@ -50,15 +55,28 @@ public class PostDetailed extends AppCompatActivity {
             tvmcon.setText(pc);
             pi = post.getImg_path();
 
+            url = post.getUrl();
+            Toast.makeText(this, "URL " + post.getUrl(), Toast.LENGTH_SHORT).show();
             drawimg(pi);
         }
-       /* btn_share.setOnClickListener(new View.OnClickListener() {
+        btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  sharelink();
+                sharelink();
             }
-        });*/
+        });
 
+    }
+
+    private void sharelink() {
+
+        if (url != null) {
+            if (!url.startsWith("http://") && !url.startsWith("https://")) url = "http://" + url;
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+
+        }
     }
 
     private void drawimg(String url) {
@@ -82,4 +100,5 @@ public class PostDetailed extends AppCompatActivity {
         finish();
         //  startActivity(new Intent(this, Home.class));
     }
+
 }

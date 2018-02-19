@@ -25,11 +25,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AdminAddPost extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    EditText et_desc, et_title, et_con;
+    EditText et_desc, et_title, et_con, et_url;
     // DatabaseReference db;
     //   private static final String DB_URL = "https://bloodbank-3c1dd.firebaseio.com/PostDetails";
 
@@ -39,7 +41,7 @@ public class AdminAddPost extends AppCompatActivity {
     Button btn_submit;
     ImageButton btn_choosepic;
     Uri uri;
-    String title, content, description;
+    String title, content, description, url;
     private StorageReference mStorageRef;
 
     @Override
@@ -55,7 +57,7 @@ public class AdminAddPost extends AppCompatActivity {
 
         PostsNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/PostDetails");
 
-
+        et_url = findViewById(R.id.et_posturl);
         et_con = findViewById(R.id.postcontent);
         et_desc = findViewById(R.id.postdescription);
         et_title = findViewById(R.id.posttitle);
@@ -90,8 +92,9 @@ public class AdminAddPost extends AppCompatActivity {
         title = et_title.getText().toString().trim();
         content = et_con.getText().toString().trim();
         description = et_desc.getText().toString().trim();
+        url = et_url.getText().toString().trim();
 
-        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content) || TextUtils.isEmpty(description)) {
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content) || TextUtils.isEmpty(url) || TextUtils.isEmpty(description)) {
             Toast.makeText(this, "Enter All the fields. Dont forget to choose Image.", Toast.LENGTH_SHORT).show();
 
             return;
@@ -110,8 +113,11 @@ public class AdminAddPost extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downoaduri = taskSnapshot.getDownloadUrl();
-                String datecreated = new Date().toString();
-                PostsNode.child(id).setValue(new post(title, content, description, downoaduri.toString(), datecreated));
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                //get current date time with Date()
+
+                String datecreated = dateFormat.format(new Date());
+                PostsNode.child(id).setValue(new post(title, content, description, downoaduri.toString(), datecreated,url));
                 Toast.makeText(getApplicationContext(), "Successfully uploaded.", Toast.LENGTH_SHORT).show();
                 pd.dismiss();
                 finish();

@@ -183,14 +183,8 @@ public class UserActivity extends AppCompatActivity {
                 prefs.edit().clear().commit();
                 //clearing App data
                 deleteAppData();
-               // ClearData.getInstance().clearApplicationData();
-                Intent i = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
-                if (i != null) {
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                }
-                startActivity(i);
-
+                // ClearData.getInstance().clearApplicationData();
+                startActivity(new Intent(UserActivity.this, SignUp.class));
                 /*
                         startActivity(new Intent(this, SignUp.class));
                         finish();
@@ -209,9 +203,10 @@ public class UserActivity extends AppCompatActivity {
             // clearing app data
             String packageName = getApplicationContext().getPackageName();
             Runtime runtime = Runtime.getRuntime();
-            runtime.exec("pm clear "+packageName);
+            runtime.exec("pm clear " + packageName);
 
         } catch (Exception e) {
             e.printStackTrace();
-        } }
+        }
+    }
 }

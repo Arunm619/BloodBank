@@ -139,6 +139,16 @@
     <string name="last_donated_on">Last Donated On:</string>
     <string name="thanks_for_donation">Thanks for Donation!</string>
     <string name="LeaderBoard">Leader Board</string>
+    <string name="posturl">Enter Post URL</string>
+    <string name="i_agree_to_terms_and_conditions">I agree to Terms And Conditions</string>
+    <string name="terms_and_conditions"><u><b><i>Terms And Conditions</i></b></u></string>
+    <string name="imageforsignup">imageforsignup</string>
+    <string name="TermsandPolicies"><![CDATA[Terms & Policies]]></string>
+    <string name="TermsandPoliciesLongtext">For a better experience, while using our Service, I may require you
+    to    provide us with certain personally
+     identifiable information, including but not limited to Name
+     ,Email Address, Age, Date Of Birth, Location,Blood Group, Gender.
+      The information that I request are used for good and will not be sold or used in a bad way.</string>
 
 
 </resources>

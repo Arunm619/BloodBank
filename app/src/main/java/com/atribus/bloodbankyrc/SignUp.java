@@ -2,8 +2,10 @@ package com.atribus.bloodbankyrc;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -20,7 +22,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -63,11 +67,13 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
     private ProgressDialog dialog;
     private GoogleApiClient mGoogleApiClient;
     private GoogleApiClient googleApiClient;
+    TextView tv_termsandconditions;
 
     public static final String DISPLAY_ONCE_PREFS = "display_only_once_spfile";
 
     public static final String DISPLAY_ONCE_KEY = "display_only_once_spkey";
 
+    CheckBox cb_agree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +84,8 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         signInButton = findViewById(R.id.btn_signin);
         lt_signup = findViewById(R.id.lt_signin);
-
-
+        cb_agree = findViewById(R.id.cb_agree);
+        tv_termsandconditions = findViewById(R.id.tv_termsandconditions);
         dialog = new ProgressDialog(SignUp.this);
         // dialog.setTitle("Google Sign-In");
         dialog.setMessage("Validating Credentials...");
@@ -171,11 +177,20 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
             @Override
             public void onClick(View view) {
 
+                if (cb_agree.isChecked()) {
+                    signIn();
+                    dialog.show();
 
-                signIn();
-                dialog.show();
+                } else {
+                    Snackbar.make(lt_signup, "Agree to Terms And Conditions", Snackbar.LENGTH_SHORT).show();
+                }
 
-
+            }
+        });
+        tv_termsandconditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callLongDisclaimerwith();
             }
         });
 
@@ -201,6 +216,31 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
             startActivity(new Intent(this, IntroSlider.class));
             finish();
         }
+    }
+
+    private void callLongDisclaimerwith() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(R.string.TermsandPolicies);
+        alertDialog.setMessage(R.string.TermsandPoliciesLongtext);
+        alertDialog.setPositiveButton("OK", null);
+        alertDialog.setNegativeButton("See More", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                taketoterms();
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+
+
+    }
+
+    private void taketoterms() {
+        String url = "http://www.blooddonation.com/termsandpolicies";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
     private void turngpson() {

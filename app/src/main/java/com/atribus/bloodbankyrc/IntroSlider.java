@@ -23,7 +23,8 @@ public class IntroSlider extends IntroActivity {
     /**
      * Colors to use for the blended background: blue, pink, purple.
      */
-    private static final int[] BACKGROUND_COLORS = {0xff44A89C,0xff50A8E8,0xff1976d2,0xff1976d2};
+    private static final int[] BACKGROUND_COLORS = {0xff44A89C, 0xff50A8E8,
+            0xffA9CAB9, 0xff06070B};
 
     public static final String DISPLAY_ONCE_PREFS = "display_only_once_spfile";
 
@@ -55,18 +56,30 @@ public class IntroSlider extends IntroActivity {
         final ArrayList <Fragment> pages = new ArrayList <>();
 
 
-        List <String> x = new ArrayList <>(Arrays.asList("Welcome to Blood Donations!",
-                "Be a Hero!", "Instant Availablity", "Every Drop Counts!",
-                "Instant Availablity", "Notification"
+        List <String> x = new ArrayList <>(Arrays.asList(
+                "Welcome to Blood Donations!",
+
+                "Instant Availablity",
+                "You are being monitored",
+                  "Be a Hero!",
+                "Instant Availablity"
         ));
 
 
-        List <String> y = new ArrayList <>(Arrays.asList("Thanks for Installing! Ready to Save Lives?",
-                "Donate your blood at ease!", "Receive the elixir of life at one touch",
-                "Give Blood Give Life",
-                "Save Blood!", "Be a hero!"));
+        List <String> y = new ArrayList <>(Arrays.asList(
+                "Thanks for Installing! Ready to Save Lives?",
 
-        ArrayList <Integer> z = new ArrayList <>(Arrays.asList(R.drawable.intro, R.drawable.intro_2, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile, R.drawable.mobile));
+                "Receive the elixir of life at one touch",
+                "Disclaimer: Misuse of data in any way is prohibited. Save Lives.",
+                 "Donate your blood at ease! \n Give Blood Give Life",
+                "Save Blood!",
+                "Be a hero!"));
+
+        ArrayList <Integer> z = new ArrayList <>(Arrays.asList(
+                R.drawable.intro,
+                R.drawable.intro_2,
+                R.drawable.thief,
+                R.drawable.superman));
         // Create as many pages as there are background colors
         for (int i = 0; i < BACKGROUND_COLORS.length; i++) {
             final IntroFragment fragment = new IntroFragment();

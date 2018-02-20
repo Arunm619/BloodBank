@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -119,7 +118,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
                         return;
 
                     } else {
-                        Toast.makeText(getApplicationContext(), "Stable Internet is Available.", Toast.LENGTH_SHORT).show();
+                        //  Toast.makeText(getApplicationContext(), "Stable Internet is Available.", Toast.LENGTH_SHORT).show();
                     }
 
                     startActivity(new Intent(SignUp.this, UserActivity.class));

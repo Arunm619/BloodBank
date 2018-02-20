@@ -64,42 +64,50 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/mtitle"
-                            android:layout_width="fill_parent"
-                            android:layout_height="70dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:background="#F44336"
-                            android:gravity="center"
-                            android:text="TextView 1"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="#FAFAFA" />
-
-                        <TextView
-                            android:id="@+id/mdesc"
-                            android:layout_width="fill_parent"
-                            android:layout_height="70dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:background="#E91E63"
-                            android:gravity="center"
-                            android:text="TextView 2"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="#FAFAFA" />
-
-                        <TextView
-                            android:id="@+id/mcon"
-                            android:layout_width="fill_parent"
+                        <android.support.v7.widget.CardView
+                            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/card_view"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:background="#2196F3"
-                            android:gravity="center"
-                            android:text="TextView 3"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="#FAFAFA" />
+                            android:layout_gravity="center"
+                            card_view:cardCornerRadius="4dp">
 
+                            <TextView
+                                android:id="@+id/mtitle"
+                                android:layout_width="fill_parent"
+                                android:layout_height="70dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:background="#F44336"
+                                android:gravity="center"
+                                android:text="TextView 1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="#FAFAFA" />
+
+                            <TextView
+                                android:id="@+id/mdesc"
+                                android:layout_width="fill_parent"
+                                android:layout_height="70dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:background="#E91E63"
+                                android:gravity="center"
+                                android:text="TextView 2"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="#FAFAFA" />
+
+                            <TextView
+                                android:id="@+id/mcon"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:background="#2196F3"
+                                android:gravity="center"
+                                android:text="TextView 3"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="#FAFAFA" />
+                        </android.support.v7.widget.CardView>
 
                     </LinearLayout>
                 </RelativeLayout>

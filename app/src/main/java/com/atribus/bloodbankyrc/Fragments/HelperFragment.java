@@ -24,6 +24,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,6 +62,7 @@ public class HelperFragment extends Fragment {
 
     public HelperFragment() {
         // Required empty public constructor
+
     }
 
     DatabaseReference DonationsNode;
@@ -72,7 +78,7 @@ public class HelperFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_helper, container, false);
-
+        JodaTimeAndroid.init(getActivity());
 
         ll = v.findViewById(R.id.RLDonatedDetails);
 
@@ -189,24 +195,26 @@ public class HelperFragment extends Fragment {
 
     private void calculatedays(String dateoflastdonation) {
 
-
-        // Date donationdate = parsedate(dateoflastdonation);
-
-
         Date donateddate = parsedate(dateoflastdonation);
 
-        Calendar c = new GregorianCalendar();
-        c.setTime(donateddate);
-        c.add(Calendar.DATE, 42);
-        Date d = c.getTime();
+        //DATETIME in JODA FOR DONATED DATE
+        DateTime DonatedDateTime = new DateTime(donateddate);
 
-        long days = /*donateddate.compareTo(d)*/
+        //CURRENT DATE TIME
+        DateTime now = DateTime.now();
+        //RECOVERY DATE
+        DateTime oneMonthAfterDonation = DonatedDateTime.plusMonths(1);
+
+
+        long days = Days.daysBetween(now.toLocalDate(), oneMonthAfterDonation.toLocalDate()).getDays();
+
+      /*  long days = *//*donateddate.compareTo(d)*//*
                 daysBetween(d, donateddate);
-        //Toast.makeText(getActivity(), "Days left :" + days, Toast.LENGTH_SHORT).show();
+     */   //Toast.makeText(getActivity(), "Days left :" + days, Toast.LENGTH_SHORT).show();
 
         if (days > 0) {
 
-            //  Toast.makeText(getActivity(), "Days left :" + days, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getActivity(), "Days left :" + days, Toast.LENGTH_SHORT).show();
             cdvtimer.start(TimeUnit.DAYS.toMillis(days));
             // Toast.makeText(getActivity(), "In Milliseconds  "+TimeUnit.DAYS.toMillis(days), Toast.LENGTH_SHORT).show();
             //  Snackbar.make(ll, "You can donate blood in another " + days, Snackbar.LENGTH_LONG).show();

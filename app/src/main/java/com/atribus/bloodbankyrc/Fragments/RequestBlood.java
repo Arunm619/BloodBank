@@ -2,10 +2,13 @@ package com.atribus.bloodbankyrc.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -31,6 +34,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.atribus.bloodbankyrc.Model.Message;
 import com.atribus.bloodbankyrc.Model.Request;
 import com.atribus.bloodbankyrc.Model.User;
+import com.atribus.bloodbankyrc.NoInternet;
 import com.atribus.bloodbankyrc.R;
 import com.atribus.bloodbankyrc.Utils.PlaceArrayAdapter;
 import com.google.android.gms.common.ConnectionResult;
@@ -112,6 +116,13 @@ public class RequestBlood extends Fragment implements
         v = inflater.inflate(R.layout.fragment_request_blood, container, false);
         //  mFusedLocationClient = LocationServices.getFusedLocationProviderClient(c);
 
+        if (!isNetworkAvailable()) {
+            Intent intent = new Intent(getActivity(), NoInternet.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+        }
 
         // String MY_PREFS_NAME = "MYDB";
 
@@ -213,6 +224,13 @@ public class RequestBlood extends Fragment implements
         openeditscreen();
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
     void openeditscreen() {
         rlbloodrequested.setVisibility(View.GONE);
         rlbloodrequest.setVisibility(View.VISIBLE);
@@ -241,7 +259,11 @@ public class RequestBlood extends Fragment implements
         int a = nullcheck();
         if (a == -1)
             return;
-        dorequest();
+        if (isNetworkAvailable())
+            dorequest();
+        else {
+            Toast.makeText(c, "Check Internet", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void dorequest() {
@@ -326,7 +348,7 @@ public class RequestBlood extends Fragment implements
 
         btnSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 //delete the node from RequestsPending
 
                 new MaterialDialog.Builder(getActivity())
@@ -340,8 +362,9 @@ public class RequestBlood extends Fragment implements
                                 successfulrequest.child(String.valueOf(request.getMobilenumber())).push().setValue(request);
 
                                 deletetherequest(request);
-                                Toast.makeText(getActivity(), "Get Well Soon ", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getActivity(), "Get Well Soon ", Toast.LENGTH_SHORT).show();
 
+                                Snackbar.make(v,"Get Well Soon",Snackbar.LENGTH_LONG).show();
                             }
                         })
                         .show();

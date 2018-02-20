@@ -2,8 +2,11 @@ package com.atribus.bloodbankyrc;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -57,6 +60,14 @@ public class UserActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Blood Bank");
         getSupportActionBar().setElevation(0);
         prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+        if (!isNetworkAvailable()) {
+            Intent intent = new Intent(UserActivity.this, NoInternet.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+        }
 
         // Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
@@ -139,6 +150,13 @@ public class UserActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     private void showAlertDialog() {

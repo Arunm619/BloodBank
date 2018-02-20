@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -24,48 +25,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/ivpost"
 
+            <LinearLayout
+                android:id="@+id/llpost"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/no_post" />
-
-
-            <TextView
-                android:id="@+id/tvTitle"
-
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ivpost"
-                android:maxLines="3"
-                android:padding="8dp"
-                android:text="Title"
-                android:textColor="#222"
-                android:textSize="22sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvTitle"
-                android:maxLines="3"
-                android:padding="8dp"
-                android:text="Description"
-                android:textColor="#666"
-                android:textSize="14sp" />
+                android:gravity="left"
+                android:orientation="vertical"
+                tools:ignore="RtlHardcoded">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:padding="8dp"
+                    android:text="@string/title"
+                    android:textColor="#222"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:padding="8dp"
+                    android:text="@string/description"
+                    android:textColor="#666"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/ivpost"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_below="@id/llpost"
+                    android:layout_margin="8dp"
+                    android:contentDescription="@string/postlayoutimg"
+
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/no_post" />
+
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/timestamp"
-                android:layout_width="wrap_content"
+
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvDescription"
+                android:layout_alignParentBottom="false"
+
+                android:layout_below="@id/llpost"
+                android:layout_centerHorizontal="false"
+                android:gravity="right"
                 android:padding="8dp"
-                android:text="arun hours ago" />
+                android:text="@string/arun_hours_ago"
+                tools:ignore="RtlHardcoded" />
 
         </RelativeLayout>
         <!--  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

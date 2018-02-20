@@ -149,6 +149,10 @@
      identifiable information, including but not limited to Name
      ,Email Address, Age, Date Of Birth, Location,Blood Group, Gender.
       The information that I request are used for good and will not be sold or used in a bad way.</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="postlayoutimg">postlayoutimg</string>
+    <string name="arun_hours_ago">arun hours ago</string>
 
 
 </resources>

@@ -181,7 +181,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
                     dialog.show();
 
                 } else {
-                    Snackbar.make(lt_signup, "Agree to Terms And Conditions", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(lt_signup, " Read and Agree to Terms And Conditions", Snackbar.LENGTH_SHORT).show();
                 }
 
             }
@@ -208,7 +208,6 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
 
         if (introductionCompletedPreviously()) {
-            return;
         } else {
             final SharedPreferences sp = getSharedPreferences(DISPLAY_ONCE_PREFS, MODE_PRIVATE);
             @SuppressLint("CommitPrefEdits") final SharedPreferences.Editor pendingEdits = sp.edit().putBoolean(DISPLAY_ONCE_KEY, true);

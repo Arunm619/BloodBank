@@ -95,10 +95,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/addr"
+                android:visibility="gone"
                 app:met_floatingLabel="highlight"
                 app:met_iconLeft="@drawable/ic_address"
                 app:met_iconPadding="0dp"
                 app:met_maxCharacters="100" />
+
+            <LinearLayout
+                android:id="@+id/llforautocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.1"
+                    android:contentDescription="@string/Location"
+                    android:src="@drawable/ic_location" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_autocomplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.9"
+                    android:hint="@string/Locationauto" />
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/btn_update"

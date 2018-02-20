@@ -1,6 +1,8 @@
 package com.atribus.bloodbankyrc;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -34,6 +36,10 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
     int countvarforshare = 0;
     PieChart pieChart;
     DatabaseReference BloodNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Blood");
+    DatabaseReference UsersNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Users");
+
+    String userblood;
+    String MY_PREFS_NAME = "MYDB";
 
     long ABpositive = 0, ABnegative = 0, Apositive = 0, Anegative = 0, Bpositive = 0, Bnegative = 0, Opositive = 0, Onegative = 0;
 
@@ -44,6 +50,11 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Achievements");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+        userblood = prefs.getString("blood", "else");
+
 
         //getting firebase auth instance
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -58,51 +69,17 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
         });
         pieChart = findViewById(R.id.piechart);
         pieChart.setUsePercentValues(true);
-        getdata();
-
-        ArrayList<Entry> yvalues = new ArrayList <>();
-        yvalues.add(new Entry(ABpositive, 0));
-        yvalues.add(new Entry(ABnegative, 1));
-        yvalues.add(new Entry(Apositive, 2));
-        yvalues.add(new Entry(Anegative, 3));
-        yvalues.add(new Entry(Bpositive, 4));
-        yvalues.add(new Entry(Bnegative, 5));
-        yvalues.add(new Entry(Opositive, 6));
-        yvalues.add(new Entry(Onegative, 7));
-        ArrayList <String> xVals = new ArrayList <>();
-
-        xVals.add("AB+");
-        xVals.add("AB-");
-        xVals.add("A+");
-        xVals.add("A-");
-        xVals.add("B+");
-        xVals.add("B-");
-        xVals.add("O+");
-        xVals.add("O-");
-
-        PieDataSet dataSet = new PieDataSet(yvalues, "Total Users");
-
-        PieData data = new PieData(xVals, dataSet);
-        data.setValueFormatter(new PercentFormatter());
-
-        pieChart.setData(data);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-
-
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setTransparentCircleRadius(30f);
-        pieChart.setHoleRadius(30f);
-
 
 
         DonationsNode.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long count = dataSnapshot.getChildrenCount();
 
                 if (count < 1) {
-                    tvnumberoftimes.setText("Yet to begin.");
+                    tvnumberoftimes.setText(R.string.YettoBegin);
                     btn_share.setEnabled(false);
                 } else {
                     tvnumberoftimes.setText(String.valueOf(dataSnapshot.getChildrenCount()));
@@ -118,15 +95,61 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
             }
         });
 
+        BloodNode.child(userblood).addValueEventListener(new ValueEventListener() {
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long count = dataSnapshot.getChildrenCount();
+                makepiechart(count);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
-    private void getdata() {
+    private void makepiechart(long count) {
+        ArrayList <Entry> yvalues = new ArrayList <>();
+
+        yvalues.add(new Entry(count, 0));
+/*
+        yvalues.add(new Entry(ABpositive, 0));
+        yvalues.add(new Entry(ABnegative, 1));
+        yvalues.add(new Entry(Apositive, 2));
+        yvalues.add(new Entry(Anegative, 3));
+        yvalues.add(new Entry(Bpositive, 4));
+        yvalues.add(new Entry(Bnegative, 5));
+        yvalues.add(new Entry(Opositive, 6));
+        yvalues.add(new Entry(Onegative, 7));*/
+        ArrayList <String> xVals = new ArrayList <>();
+
+        xVals.add(userblood);
+        /*xVals.add("AB-");
+        xVals.add("A+");
+        xVals.add("A-");
+        xVals.add("B+");
+        xVals.add("B-");
+        xVals.add("O+");
+        xVals.add("O-");
+*/
+        PieDataSet dataSet = new PieDataSet(yvalues, "Total No of Users of type " + userblood);
+
+        final PieData data = new PieData(xVals, dataSet);
+        data.setValueFormatter(new PercentFormatter());
+
+        pieChart.setData(data);
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
 
-     }
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setTransparentCircleRadius(30f);
+        pieChart.setHoleRadius(30f);
 
-    private void doit() {
 
     }
 

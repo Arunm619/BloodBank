@@ -12,9 +12,13 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -22,9 +26,18 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atribus.bloodbankyrc.Model.User;
+import com.atribus.bloodbankyrc.Utils.PlaceArrayAdapter;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,7 +57,18 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class EditProfile extends AppCompatActivity {
+public class EditProfile extends AppCompatActivity implements
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks {
+
+
+    private static final String LOG_TAG = "Arun checks";
+    private static final int GOOGLE_API_CLIENT_ID = 120;
+    private AutoCompleteTextView mAutocompleteTextView;
+
+    private GoogleApiClient mGoogleApiClient;
+    private PlaceArrayAdapter mPlaceArrayAdapter;
+    private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466));
 
     MaterialEditText et_name, et_mobilenumber, et_dob, et_bloodgroup, et_address, et_gender;
 
@@ -65,6 +89,7 @@ public class EditProfile extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     private Location mLastLocation;
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +139,7 @@ public class EditProfile extends AppCompatActivity {
             et_mobilenumber.setText(mobilenumber);
             et_dob.setText(dob);
             et_gender.setText(gender);
+            mAutocompleteTextView.setText(obj.getAddress());
 
 
             //  Toast.makeText(getActivity(), "Mobile :" + mobilenumber, Toast.LENGTH_SHORT).show();
@@ -137,6 +163,23 @@ public class EditProfile extends AppCompatActivity {
 
         //setting mobile number from firebase user
 
+
+        //Autocomplete
+        mGoogleApiClient = new GoogleApiClient.Builder(EditProfile.this)
+                .addApi(Places.GEO_DATA_API)
+                .enableAutoManage(EditProfile.this, GOOGLE_API_CLIENT_ID, this)
+                .addConnectionCallbacks(this)
+                .build();
+        mAutocompleteTextView = findViewById(R.id
+                .et_autocomplete);
+        mAutocompleteTextView.setThreshold(3);
+
+        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
+        mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
+                BOUNDS_INDIA, null);
+        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
+
+
     }
 
     private int nullcheck() {
@@ -146,7 +189,7 @@ public class EditProfile extends AppCompatActivity {
         mobilenumber = et_mobilenumber.getText().toString().trim();
         address = et_address.getText().toString().trim();
         gender = et_gender.getText().toString().trim();
-
+        getlatlongfromplacename(address);
         if (name.length() < 1) {
             Snackbar.make(ll, "Enter Name", Snackbar.LENGTH_LONG).show();
             return -1;
@@ -338,7 +381,7 @@ public class EditProfile extends AppCompatActivity {
 
     public static int getAge(Date date) {
 
-        int age = 0;
+        int age;
         //DateFormat dateFormat = null;
         Calendar now = Calendar.getInstance();
         Calendar dob = Calendar.getInstance();
@@ -433,11 +476,11 @@ public class EditProfile extends AppCompatActivity {
         mlon = 0.0;
         if (Geocoder.isPresent()) {
             try {
-                ;
+
                 Geocoder gc = new Geocoder(this);
                 List <Address> addresses = gc.getFromLocationName(location, 5); // get the found Address Objects
 
-                List <LatLng> ll = new ArrayList <LatLng>(addresses.size()); // A list to save the coordinates if they are available
+                List <LatLng> ll = new ArrayList <>(addresses.size()); // A list to save the coordinates if they are available
                 for (Address a : addresses) {
                     if (a.hasLatitude() && a.hasLongitude()) {
                         ll.add(new LatLng(a.getLatitude(), a.getLongitude()));
@@ -475,11 +518,67 @@ public class EditProfile extends AppCompatActivity {
 
                         } else {
                             // Toast.makeText(EditProfile.this, "Failed to track location", Toast.LENGTH_SHORT).show();
-
+                            Log.d("Failed", "hey");
 
                         }
                     }
                 });
+    }
+
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView <?> parent, View view, int position, long id) {
+            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            Log.i(LOG_TAG, "Selected: " + item.description);
+            PendingResult <PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
+        }
+    };
+
+    private ResultCallback <PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback <PlaceBuffer>() {
+        @Override
+        public void onResult(@NonNull PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.e(LOG_TAG, "Place query did not complete. Error: " +
+                        places.getStatus().toString());
+                return;
+            }
+            // Selecting the first object buffer.
+            final Place place = places.get(0);
+            CharSequence attributions = places.getAttributions();
+
+            et_address.setText(Html.fromHtml(place.getAddress() + ""));
+
+        }
+    };
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
+        Log.i(LOG_TAG, "Google Places API connected.");
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
+                + connectionResult.getErrorCode());
+
+        Toast.makeText(this,
+                "Google Places API connection failed with error code:" +
+                        connectionResult.getErrorCode(),
+                Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mPlaceArrayAdapter.setGoogleApiClient(null);
+        Log.e(LOG_TAG, "Google Places API connection suspended.");
     }
 
 

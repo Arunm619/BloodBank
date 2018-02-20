@@ -89,7 +89,7 @@
     <string name="update">Update</string>
 
 
-    <string name="copyrights_u00a9">copyrights ©</string>
+    <string name="copyrights_u00a9">copyrights © 2018</string>
     <string name="t_amp_amp_c"><![CDATA[t&c]]></string>
     <string name="_5_kms">5 kms</string>
     <string name="donatedbloodrecently">Donated Blood ?</string>
@@ -153,6 +153,8 @@
     <string name="title">Title</string>
     <string name="postlayoutimg">postlayoutimg</string>
     <string name="arun_hours_ago">arun hours ago</string>
+    <string name="YettoBegin">Yet to begin.</string>
+    <string name="dbfieldbloodgroup">bloodgroup</string>
 
 
 </resources>

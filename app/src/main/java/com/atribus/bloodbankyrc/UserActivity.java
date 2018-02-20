@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -57,7 +58,8 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        getSupportActionBar().setTitle("Blood Bank");
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle("Blood Bank");
         getSupportActionBar().setElevation(0);
         prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 
@@ -137,11 +139,14 @@ public class UserActivity extends AppCompatActivity {
                         fab.setVisibility(View.GONE);
                         break;
                     case PAGE_FACTS:
-                        fab.setVisibility(View.GONE);
+                        fab.setVisibility(View.VISIBLE);
+                        fab.setImageResource(R.drawable.ic_trophy);
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(UserActivity.this, "SHow details", Toast.LENGTH_SHORT).show();
+                                //    Toast.makeText(UserActivity.this, "SHow details", Toast.LENGTH_SHORT).show();
+
+                                startActivity(new Intent(UserActivity.this, RecentBloodDonationsActivity.class));
                             }
                         });
                 }
@@ -152,11 +157,35 @@ public class UserActivity extends AppCompatActivity {
 
     }
 
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click Back again to Exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+        }
+        return false;
     }
 
     private void showAlertDialog() {
@@ -170,11 +199,16 @@ public class UserActivity extends AppCompatActivity {
 
 
     private void setuptabicons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
+        if (tabLayout != null) {
+            try {
+                tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+                tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+                tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+                tabLayout.getTabAt(3).setIcon(tabIcons[3]);
 
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     @Override
@@ -198,9 +232,9 @@ public class UserActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
 
                 //delete SharedPref
-                prefs.edit().clear().commit();
+                prefs.edit().clear().apply();
                 //clearing App data
-                deleteAppData();
+                //deleteAppData();
                 // ClearData.getInstance().clearApplicationData();
                 startActivity(new Intent(UserActivity.this, SignUp.class));
                 /*

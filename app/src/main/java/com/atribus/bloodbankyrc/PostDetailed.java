@@ -1,14 +1,12 @@
 package com.atribus.bloodbankyrc;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Model.post;
 import com.google.gson.Gson;
@@ -56,7 +54,7 @@ public class PostDetailed extends AppCompatActivity {
             pi = post.getImg_path();
 
             url = post.getUrl();
-            Toast.makeText(this, "URL " + post.getUrl(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "URL " + post.getUrl(), Toast.LENGTH_SHORT).show();
             drawimg(pi);
         }
         btn_share.setOnClickListener(new View.OnClickListener() {
@@ -72,9 +70,18 @@ public class PostDetailed extends AppCompatActivity {
 
         if (url != null) {
             if (!url.startsWith("http://") && !url.startsWith("https://")) url = "http://" + url;
-            Intent i = new Intent(Intent.ACTION_VIEW);
+           /* Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
+*/
+            String message = "Read about " + pt + " At this link:\n" + url + "\n For more contents , Install App";
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
 
         }
     }

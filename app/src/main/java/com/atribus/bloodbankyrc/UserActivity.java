@@ -123,6 +123,7 @@ public class UserActivity extends AppCompatActivity {
                 switch (position) {
 
                     case PAGE_HOME:
+                        fab.setImageResource(R.drawable.ic_mood_black_24dp);
                         fab.setVisibility(View.VISIBLE);
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -139,8 +140,8 @@ public class UserActivity extends AppCompatActivity {
                         fab.setVisibility(View.GONE);
                         break;
                     case PAGE_FACTS:
-                        fab.setVisibility(View.VISIBLE);
                         fab.setImageResource(R.drawable.ic_trophy);
+                        fab.setVisibility(View.VISIBLE);
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

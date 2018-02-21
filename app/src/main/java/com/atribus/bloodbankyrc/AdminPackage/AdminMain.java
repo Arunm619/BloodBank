@@ -243,6 +243,7 @@ public class AdminMain extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 nearbyDonors.clear();
+                recyclerView.invalidate();
                 rAdapter.notifyDataSetChanged();
 
                 searchusers();

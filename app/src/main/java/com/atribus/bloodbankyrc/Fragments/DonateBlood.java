@@ -117,7 +117,8 @@ public class DonateBlood extends Fragment {
                                         + request.getLocation()
                                         + "\n Contact : " + request.getMobilenumber();
 
-                                String installapp = "\n \nSave lives, By installing " + getString(R.string.applink);
+                                String installapp = "\n \n Give Blood! Become a Hero! \n" +
+                                        "Install this app to save lives " + getString(R.string.applink);
 
                                 String message = Text + installapp;
 

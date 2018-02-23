@@ -109,6 +109,9 @@ public class EditProfile extends AppCompatActivity implements
         et_gender = findViewById(R.id.et_gender);
         btn_update = findViewById(R.id.btn_update);
 
+        mAutocompleteTextView = findViewById(R.id
+                .et_autocomplete);
+
         //getting firebase auth instance
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -170,9 +173,7 @@ public class EditProfile extends AppCompatActivity implements
                 .enableAutoManage(EditProfile.this, GOOGLE_API_CLIENT_ID, this)
                 .addConnectionCallbacks(this)
                 .build();
-        mAutocompleteTextView = findViewById(R.id
-                .et_autocomplete);
-        mAutocompleteTextView.setThreshold(3);
+         mAutocompleteTextView.setThreshold(3);
 
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
         mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,

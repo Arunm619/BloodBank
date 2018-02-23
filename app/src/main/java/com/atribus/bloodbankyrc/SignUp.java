@@ -74,6 +74,16 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
     CheckBox cb_agree;
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+        }
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +114,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
 
                 if (firebaseAuth.getCurrentUser() != null) {
-                    ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                    /*ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
                     NetworkInfo info = null;
                     if (manager != null) {
                         info = manager.getActiveNetworkInfo();
@@ -119,6 +129,15 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
                     } else {
                         //  Toast.makeText(getApplicationContext(), "Stable Internet is Available.", Toast.LENGTH_SHORT).show();
+                    }
+*/
+                    if (!isNetworkAvailable()) {
+                        Intent intent = new Intent(SignUp.this, NoInternet.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        return;
+
                     }
 
                     startActivity(new Intent(SignUp.this, UserActivity.class));

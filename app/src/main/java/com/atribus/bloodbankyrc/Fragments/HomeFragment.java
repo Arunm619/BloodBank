@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
         prgbar_home = v.findViewById(R.id.prgbar_home);
         prgbar_home.setVisibility(View.VISIBLE);
 
-        firebaseClient = new FirebaseClient(getActivity(), DB_URL, Homefeed, "reverse", emptyView,prgbar_home);
+        firebaseClient = new FirebaseClient(getActivity(), DB_URL, Homefeed, "reverse", emptyView, prgbar_home);
         firebaseClient.refreshdata();
 
         Homefeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {

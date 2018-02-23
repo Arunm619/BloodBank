@@ -47,9 +47,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/noodtimestv"
                     android:layout_centerHorizontal="true"
-                    android:text="0"
+                    android:gravity="center"
+                    android:text="1\n You have saved 3 people."
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textStyle="bold" />
+
 
                 <Button
                     android:id="@+id/btn_share"

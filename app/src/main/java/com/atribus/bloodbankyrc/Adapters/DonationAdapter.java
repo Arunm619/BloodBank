@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.atribus.bloodbankyrc.Model.Request;
 import com.atribus.bloodbankyrc.Model.User;
-import com.atribus.bloodbankyrc.Model.post;
 import com.atribus.bloodbankyrc.R;
 import com.atribus.bloodbankyrc.Utils.DonateHolder;
 import com.google.gson.Gson;
@@ -73,14 +72,12 @@ public class DonationAdapter extends BaseAdapter {
                 " at " + requests.get(i).getLocation() + " ";
         donateHolder.tvdescription.setText(message);
 
-        Double xlat=0.0,xlon=0.0;
+        Double xlat = 0.0, xlon = 0.0;
         try {
             xlat = requests.get(i).getLattitude();
             xlon = requests.get(i).getLongitude();
-        }
-        catch (Exception e )
-        {
-            Toast.makeText(c, "msg: " +e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(c, "msg: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         Double userlat;
@@ -102,13 +99,11 @@ public class DonationAdapter extends BaseAdapter {
 
             float dis = finddistance(userlat, userlon, xlat, xlon);
 
-            if (dis>1) {
+            if (dis > 1) {
                 @SuppressLint("DefaultLocale") String s = String.format("%.2f", dis);
                 donateHolder.tvneardistance.setText(s + " kms away");
-            }
-            else
-            {
-            float metres = dis*1000;
+            } else {
+                float metres = dis * 1000;
                 @SuppressLint("DefaultLocale") String s = String.format("%f", metres);
 
                 donateHolder.tvneardistance.setText(s + " meters away");

@@ -99,7 +99,7 @@
     <string name="dateofdonation">Donated Date</string>
     <string name="keylastdonateddate">lastdonateddate</string>
     <string name="admin">Admin</string>
-    <string name="Nooftimesdonated">No of times Donates</string>
+    <string name="Nooftimesdonated">No of times Donated</string>
     <string name="share">Share</string>
     <string name="NoDonations">No Requests Available.</string>
     <string name="NoPosts">No posts Found</string>
@@ -119,7 +119,7 @@
     <string name="try_again">TRY AGAIN</string>
     <string name="nointernetmessage">No Internet Check your Connection and Try Again</string>
     <string name="logout">Logout</string>
-    <string name="applink">https://www.wwe.com</string>
+    <string name="applink">https://play.google.com/store/apps/details?id=com.atribus.bloodbankyrc</string>
     <string name="type_here_for_autocomplete">Type here for AutoComplete</string>
     <string name="Locationauto">Enter Location</string>
     <string name="openwithbrowser">Open browser</string>

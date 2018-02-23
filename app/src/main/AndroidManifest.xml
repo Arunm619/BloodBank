@@ -44,7 +44,6 @@
         <!-- ADMIN MAIN ACTIVITY PASTE HERE -->
         <activity android:name=".AdminPackage.ADMIN">
 
-
         </activity>
 
         <!-- User Main Activity Paste Here -->
@@ -54,6 +53,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
 
         </activity>
         <activity android:name=".AdminPackage.AdminCheckDetails" />

@@ -84,7 +84,7 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
                     tvnumberoftimes.setText(R.string.YettoBegin);
                     btn_share.setEnabled(false);
                 } else {
-                    tvnumberoftimes.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                    tvnumberoftimes.setText(String.valueOf(count) + "\n You have saved " + (count * 3) + " People. ");
                     btn_share.setEnabled(true);
                     countvarforshare = (int) count;
                 }
@@ -96,7 +96,6 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
 
             }
         });
-
 
 
         //Setting blood Count
@@ -224,7 +223,10 @@ public class RecentBloodDonationsActivity extends AppCompatActivity {
     private void sharemessage() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey guys I have saved " + countvarforshare + " people using this app! ");
+        String text;
+        text = "Hey guys I have saved " + (countvarforshare * 3) + " People by donating blood using this App!\n" +
+                " You can become a hero too. \n Check this out. \n  " + getString(R.string.applink);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }

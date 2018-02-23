@@ -14,10 +14,10 @@ public class PicassoClient {
 
     public static void downloadimg(Context c, String url, ImageView img) {
         if (url != null && url.length() > 0) {
-            Picasso.with(c).load(url).placeholder(R.drawable.ic_placeholder).into(img);
+            Picasso.with(c).load(url).placeholder(R.drawable.no_post).into(img);
 
         } else {
-            Picasso.with(c).load(R.drawable.ic_placeholder).into(img);
+            Picasso.with(c).load(R.drawable.no_post).into(img);
         }
     }
 

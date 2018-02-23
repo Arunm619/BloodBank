@@ -65,7 +65,8 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="@string/i_agree_to_terms_and_conditions"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:id="@+id/tv_termsandconditions"

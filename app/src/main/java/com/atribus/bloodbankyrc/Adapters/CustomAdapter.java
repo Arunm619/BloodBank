@@ -71,6 +71,7 @@ public class CustomAdapter extends BaseAdapter {
 
 
             holder.timestamp.setText(findhours(posts.get(i).getDatecreated()));
+
             PicassoClient.downloadimg(c, posts.get(i).getImg_path(), holder.img);
 
         }
@@ -96,7 +97,7 @@ public class CustomAdapter extends BaseAdapter {
                 return hours;
             } else {
                 int days = hoursbefore / 24;
-                return String.valueOf(days) + "days ago";
+                return String.valueOf(days) + " days ago";
 
             }
 

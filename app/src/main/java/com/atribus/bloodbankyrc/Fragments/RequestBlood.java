@@ -362,9 +362,9 @@ public class RequestBlood extends Fragment implements
                                 successfulrequest.child(String.valueOf(request.getMobilenumber())).push().setValue(request);
 
                                 deletetherequest(request);
-                               // Toast.makeText(getActivity(), "Get Well Soon ", Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(getActivity(), "Get Well Soon ", Toast.LENGTH_SHORT).show();
 
-                                Snackbar.make(v,"Get Well Soon",Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(v, "Get Well Soon :)", Snackbar.LENGTH_LONG).show();
                             }
                         })
                         .show();
@@ -391,7 +391,7 @@ public class RequestBlood extends Fragment implements
 
         et_bloodgroup.setText(request.getRequiredbloodgroup());
         et_mobilenumber.setText(String.valueOf(request.getMobilenumber()));
-
+        mAutocompleteTextView.setText(request.getLocation());
     }
 
     private int nullcheck() {
@@ -577,10 +577,11 @@ public class RequestBlood extends Fragment implements
         Log.e(LOG_TAG, "Google Places API connection failed with error code: "
                 + connectionResult.getErrorCode());
 
-        Toast.makeText(getActivity(),
+      /*  Toast.makeText(getActivity(),
                 "Google Places API connection failed with error code:" +
                         connectionResult.getErrorCode(),
                 Toast.LENGTH_LONG).show();
+  */
     }
 
     @Override

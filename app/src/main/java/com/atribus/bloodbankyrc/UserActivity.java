@@ -245,6 +245,29 @@ public class UserActivity extends AppCompatActivity {
 
                 break;
 
+
+            case R.id.share:
+                String textlong = "Through this digital platform," +
+                        " we urge you to fulfill your supreme duty as a human being" +
+                        " to save a life, by becoming a proud registered volunteer." +
+                        "\n" +
+                        "\n" +
+                        "You may register as blood donor (Your 1 unit of blood can save 3 lives)\n" +
+                        "Share opportunity with others – Build blood donors network in your city/town by sharing the app with your friends\n";
+                String message =
+                        "\n \n Give Blood! Become a Hero! \n" +
+                                "Install this app to save lives " + getString(R.string.applink);
+
+
+                // String message =  installapp;
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, textlong+ message);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                break;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

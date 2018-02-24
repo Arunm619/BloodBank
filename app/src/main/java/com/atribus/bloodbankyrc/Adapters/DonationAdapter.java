@@ -26,14 +26,14 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class DonationAdapter extends BaseAdapter {
-    String MY_PREFS_NAME = "MYDB";
-    SharedPreferences prefs;
+    private String MY_PREFS_NAME = "MYDB";
+    private SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-
-    Context c;
-    ArrayList <Request> requests;
-    LayoutInflater inflater;
+    private DonateHolder donateHolder;
+    private Context c;
+    private ArrayList <Request> requests;
+    private LayoutInflater inflater;
 
     public DonationAdapter(Context c, ArrayList <Request> requests) {
         this.c = c;
@@ -55,6 +55,7 @@ public class DonationAdapter extends BaseAdapter {
         return i;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
@@ -66,7 +67,7 @@ public class DonationAdapter extends BaseAdapter {
                 view = inflater.inflate(R.layout.donaterequest_row, viewGroup, false);
             }
 
-        DonateHolder donateHolder = new DonateHolder(view);
+         donateHolder = new DonateHolder(view);
         String message = " " + requests.get(i).getName() + " " + "Requires " +
                 requests.get(i).getRequiredunits() + " Unit of " + requests.get(i).getRequiredbloodgroup() +
                 " at " + requests.get(i).getLocation() + " ";
@@ -92,6 +93,7 @@ public class DonationAdapter extends BaseAdapter {
         String json = prefs.getString("UserObj", "");
 
         User obj = gson.fromJson(json, User.class);
+
         if (obj != null) {
 
             userlat = obj.getLattitude();
@@ -110,6 +112,7 @@ public class DonationAdapter extends BaseAdapter {
 
 
             }
+         //  setimage(requests.get(i).getRequiredbloodgroup());
             //  Toast.makeText(getActivity(), "Mobile :" + mobilenumber, Toast.LENGTH_SHORT).show();
         } else {
 
@@ -120,6 +123,41 @@ public class DonationAdapter extends BaseAdapter {
 
         return view;
     }
+
+   /* private void setimage(String bloodgroup) {
+        switch (bloodgroup)
+        {
+            case "AB+":
+                donateHolder.img.setImageResource(R.drawable.abpos);
+                break;
+            case "AB-":
+                donateHolder.img.setImageResource(R.drawable.abneg);
+                break;
+
+            case "A+":
+                donateHolder.img.setImageResource(R.drawable.apos);
+                break;
+            case "A-":
+                donateHolder.img.setImageResource(R.drawable.aneg);
+                break;
+
+            case "B+":
+                donateHolder.img.setImageResource(R.drawable.bpos);
+                break;
+            case "B-":
+                donateHolder.img.setImageResource(R.drawable.bneg);
+                break;
+
+            case "O+":
+                donateHolder.img.setImageResource(R.drawable.opos);
+                break;
+            case "O-":
+                donateHolder.img.setImageResource(R.drawable.oneg);
+                break;
+
+        }
+        donateHolder.img.setImageResource(R.drawable.abpos);
+    }*/
 
     @Nullable
     @Override
@@ -132,7 +170,7 @@ public class DonationAdapter extends BaseAdapter {
         double latitude = userlat;
         double longitude = userlong;
 
-        float distance = 0;
+        float distance;
         //this is the location of Mr.X donors address with curlat,currlon
         Location Donor = new Location("crntlocation");
         Donor.setLatitude(latitude);

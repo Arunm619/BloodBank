@@ -24,11 +24,11 @@ public class PostDetailed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detailed);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Post");
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Post");
+        }
         Gson gson = new Gson();
         String data;
         data = getIntent().getExtras().getString("obj", null);
@@ -74,7 +74,7 @@ public class PostDetailed extends AppCompatActivity {
             i.setData(Uri.parse(url));
             startActivity(i);
 */
-            String message = "Read about " + pt + " At this link:\n" + url + "\n For more contents , Install App";
+            String message = pt + "Read more at this link:\n" + url + "\n For more contents , Install App at " + getString(R.string.applink);
 
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);

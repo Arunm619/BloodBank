@@ -66,6 +66,8 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     //joda time
     compile 'net.danlew:android.joda:2.9.9.2'
+    //chrome cusom tabs
+    compile 'com.android.support:customtabs:27.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

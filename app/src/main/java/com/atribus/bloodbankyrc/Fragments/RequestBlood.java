@@ -87,6 +87,7 @@ public class RequestBlood extends Fragment implements
     String bloodgroup, bloodunits, name, location, message, hospitalname;
     Button btn_request;
     Snackbar snackbar;
+    String placeId;
     View v;
     Double xlat = 0.0, xlon = 0.0;
 
@@ -106,7 +107,7 @@ public class RequestBlood extends Fragment implements
 
     @SuppressLint("CommitPrefEdits")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         databasenotifications = FirebaseDatabase.getInstance();
@@ -323,7 +324,14 @@ public class RequestBlood extends Fragment implements
                 //thats all
 
                 // requestobject
-                openeditscreen(request);
+
+
+                if (isNetworkAvailable()) {
+                    openeditscreen(request);
+
+                } else {
+                    Snackbar.make(rlbloodrequest, "Check Internet ", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -331,18 +339,22 @@ public class RequestBlood extends Fragment implements
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialDialog.Builder(getActivity())
-                        .title(R.string.Cancel)
-                        .content(R.string.cancelcontent)
-                        .positiveText(R.string.agree)
-                        .negativeText(R.string.disagree)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                deletetherequest(request);
-                            }
-                        })
-                        .show();
+                if (isNetworkAvailable()) {
+                    new MaterialDialog.Builder(getActivity())
+                            .title(R.string.Cancel)
+                            .content(R.string.cancelcontent)
+                            .positiveText(R.string.agree)
+                            .negativeText(R.string.disagree)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    deletetherequest(request);
+                                }
+                            })
+                            .show();
+                } else {
+                    Snackbar.make(rlbloodrequest, "Check Internet ", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -351,23 +363,32 @@ public class RequestBlood extends Fragment implements
             public void onClick(final View v) {
                 //delete the node from RequestsPending
 
-                new MaterialDialog.Builder(getActivity())
-                        .title(R.string.Gottheblood)
-                        // .content(R.string.gottheblooddesc)
-                        .positiveText(R.string.agree)
-                        .negativeText(R.string.disagree)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                successfulrequest.child(String.valueOf(request.getMobilenumber())).push().setValue(request);
 
-                                deletetherequest(request);
-                                // Toast.makeText(getActivity(), "Get Well Soon ", Toast.LENGTH_SHORT).show();
+                if (isNetworkAvailable()) {
 
-                                Snackbar.make(v, "Get Well Soon :)", Snackbar.LENGTH_LONG).show();
-                            }
-                        })
-                        .show();
+                    new MaterialDialog.Builder(getActivity())
+                            .title(R.string.Gottheblood)
+                            .content(R.string.gottheblooddesc)
+                            .positiveText(R.string.agree)
+                            .negativeText(R.string.disagree)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    successfulrequest.child(String.valueOf(request.getMobilenumber())).push().setValue(request);
+
+                                    deletetherequest(request);
+                                    // Toast.makeText(getActivity(), "Get Well Soon ", Toast.LENGTH_SHORT).show();
+
+                                    Snackbar.make(v, "Get Well Soon :)", Snackbar.LENGTH_LONG).show();
+                                }
+                            })
+                            .show();
+
+
+                } else {
+                    Snackbar.make(rlbloodrequest, "Check Internet ", Snackbar.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -467,13 +488,27 @@ public class RequestBlood extends Fragment implements
 
         if (xlat == 0.0 && xlon == 0.0) {
             // getlatlongfromplacename(location);
-
-            snackbar = Snackbar
-                    .make(v, "Unable to detect location,be more specific. \n" +
-                            "Appolo hospitals chennai, Malar Fortis chennai.", Snackbar.LENGTH_LONG);
-
-            snackbar.show();
-            return -1;
+            Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId)
+                    .setResultCallback(new ResultCallback <PlaceBuffer>() {
+                        @Override
+                        public void onResult(@NonNull PlaceBuffer places) {
+                            if (places.getStatus().isSuccess()) {
+                                final Place myPlace = places.get(0);
+                                LatLng queriedLocation = myPlace.getLatLng();
+                                xlat = queriedLocation.latitude;
+                                xlon = queriedLocation.longitude;
+//                                Log.v("Latitude is", "" + queriedLocation.latitude);
+//                                Log.v("Longitude is", "" + queriedLocation.longitude);
+                            }
+                            places.release();
+                        }
+                    });
+//            snackbar = Snackbar
+//                    .make(v, "Unable to detect location,be more specific. \n" +
+//                            "Appolo hospitals chennai, Malar Fortis chennai.", Snackbar.LENGTH_LONG);
+//
+//            snackbar.show();
+//            return -1;
 
         }
 
@@ -518,7 +553,7 @@ public class RequestBlood extends Fragment implements
                 Geocoder gc = new Geocoder(getActivity());
                 List <Address> addresses = gc.getFromLocationName(location, 5); // get the found Address Objects
 
-                List <LatLng> ll = new ArrayList <LatLng>(addresses.size()); // A list to save the coordinates if they are available
+                List <LatLng> ll = new ArrayList <>(addresses.size()); // A list to save the coordinates if they are available
                 for (Address a : addresses) {
                     if (a.hasLatitude() && a.hasLongitude()) {
                         ll.add(new LatLng(a.getLatitude(), a.getLongitude()));
@@ -550,7 +585,7 @@ public class RequestBlood extends Fragment implements
     private ResultCallback <PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback <PlaceBuffer>() {
         @Override
-        public void onResult(PlaceBuffer places) {
+        public void onResult(@NonNull PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
                 Log.e(LOG_TAG, "Place query did not complete. Error: " +
                         places.getStatus().toString());
@@ -559,6 +594,8 @@ public class RequestBlood extends Fragment implements
             // Selecting the first object buffer.
             final Place place = places.get(0);
             CharSequence attributions = places.getAttributions();
+            placeId = place.getId();
+            //Toast.makeText(c, "ID"+id, Toast.LENGTH_SHORT).show();
 
             et_location.setText(Html.fromHtml(place.getAddress() + ""));
 
@@ -573,7 +610,7 @@ public class RequestBlood extends Fragment implements
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e(LOG_TAG, "Google Places API connection failed with error code: "
                 + connectionResult.getErrorCode());
 

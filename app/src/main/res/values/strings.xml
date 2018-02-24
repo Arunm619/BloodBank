@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blood Bank YRC</string>
+    <string name="app_name">Blood Support - YRC</string>
 
 
     <!--Registration Section Strings -->
@@ -59,8 +59,9 @@
 
 
     <string name="choose_email_client">Choose Email Client</string>
-    <string name="summary_about">The Indian Red Cross Society (IRCS) is a voluntary humanitarian organization to protect human life.</string>
-
+    <string name="summary_about">
+    The Youth Red Cross of Easwari Engineering college aims to serve the society and encourage the youth community to actively participate in social service.
+    </string>
 
     <string name="keycontactus">Contact Us</string>
     <string name="contactusdesc">Questions? Need help?</string>
@@ -129,7 +130,7 @@
     <string name="requestsdetails">Requests details</string>
     <string name="Successful_request_count">Success Requests Count</string>
     <string name="Gottheblood">Have you received the blood?</string>
-    <string name="gottheblooddesc">Have you received the blood?</string>
+    <string name="gottheblooddesc">Is the blood donation successful?</string>
     <string name="totalnumberofusers">Active Users Count</string>
     <string name="Userdetails">User Details</string>
     <string name="blood_groups">Blood Groups</string>
@@ -150,11 +151,45 @@
      ,Email Address, Age, Date Of Birth, Location,Blood Group, Gender.
       The information that I request are used for good and will not be sold or used in a bad way.</string>
     <string name="description">Description</string>
-    <string name="title">Title</string>
+
     <string name="postlayoutimg">postlayoutimg</string>
     <string name="arun_hours_ago">arun hours ago</string>
     <string name="YettoBegin">Yet to begin.</string>
     <string name="dbfieldbloodgroup">bloodgroup</string>
+    <string name="aboutarun">It’s not about ideas. It’s about making ideas happen.</string>
+    <string name="arun_image">arun image</string>
+    <string name="appdevelopername">Arun Sudharsan</string>
+    <string name="githublink">https://github.com/Arunm619/</string>
+    <string name="fblink">https://www.facebook.com/Arunm619</string>
+    <string name="contactArun">Contact</string>
+    <string name="bloodbankwebsite">https://goo.gl/phWCYc</string>
+    <string name="supermanimgonappinfoact">supermanimg</string>
+    <string name="facebook">Facebook</string>
+    <string name="github">Github</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="nooftimesdonatedsampletextfiller">1  You have saved 3 people.</string>
+    <string name="users_analytics">Users Analytics</string>
+    <string name="abpos">AB+</string>
+    <string name="_0">0</string>
+    <string name="abneg">AB-</string>
+    <string name="bpos">B+</string>
+    <string name="bneg">B-</string>
+    <string name="apos">A+</string>
+    <string name="aneg">A-</string>
+    <string name="opos">O+</string>
+    <string name="oneg">O-</string>
+    <string name="imageforpostdetailed">imageforpostdetailed</string>
+    <string name="title">Title</string>
+    <string name="description_about_the_given_title">Description about the given title</string>
+    <string name="long_title">Long Title</string>
+    <string name="testdata">Test</string>
+    <string name="testdatamobile">1234567890</string>
+    <string name="testdatabloodgroup">O+</string>
+    <string name="testdataunits">2 units</string>
+    <string name="testdatahospitalname">Malar Fortis</string>
+    <string name="testdatamessage">Urgent in 2 hours</string>
+    <string name="testdatacomplete">Complete</string>
+    <string name="enter_location_hospital_name">Enter Location (Hospital name)</string>
 
 
 </resources>

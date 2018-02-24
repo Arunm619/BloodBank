@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-  android:id="@+id/rl"
     tools:context="com.atribus.bloodbankyrc.AdminPackage.ADMIN">
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -36,11 +36,11 @@
                     android:id="@+id/imgview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/image_of_the_user"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/superman"
-                    app:layout_collapseMode="pin"
-                    android:contentDescription="@string/image_of_the_user" />
+                    app:layout_collapseMode="pin" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/main.toolbar"
@@ -90,6 +90,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/title_dashboard" />
 
+                <Button
+                    android:id="@+id/btn_contact"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contactArun" />
             </LinearLayout>
 
 

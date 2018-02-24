@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +7,6 @@
     tools:context="com.atribus.bloodbankyrc.RecentBloodDonationsActivity">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -48,7 +46,7 @@
                     android:layout_below="@id/noodtimestv"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="1\n You have saved 3 people."
+                    android:text="@string/nooftimesdonatedsampletextfiller"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textStyle="bold" />
 
@@ -132,7 +130,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="@string/blood_groups"
+                    android:text="@string/users_analytics"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textStyle="bold" />
 
@@ -149,7 +147,7 @@
                         <TextView
                             android:layout_column="1"
                             android:padding="3dp"
-                            android:text="AB+"
+                            android:text="@string/abpos"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="#000" />
 
@@ -157,7 +155,8 @@
                             android:id="@+id/tvCountforABpositive"
                             android:gravity="right"
                             android:padding="3dip"
-                            android:text="0" />
+                            android:text="@string/_0"
+                            tools:ignore="RtlHardcoded" />
                     </TableRow>
 
                     <!--AB NEGATIVE-->
@@ -167,7 +166,7 @@
                             android:layout_column="1"
 
                             android:padding="3dp"
-                            android:text="AB-"
+                            android:text="@string/abneg"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="#000" />
 
@@ -175,7 +174,8 @@
                             android:id="@+id/tvCountforABnegative"
                             android:gravity="right"
                             android:padding="3dip"
-                            android:text="0" />
+                            android:text="@string/_0"
+                            tools:ignore="RtlHardcoded" />
                     </TableRow>
 
 
@@ -185,7 +185,7 @@
                         <TextView
                             android:layout_column="1"
                             android:padding="3dp"
-                            android:text="B+"
+                            android:text="@string/bpos"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="#000" />
 
@@ -193,7 +193,8 @@
                             android:id="@+id/tvCountforBpositive"
                             android:gravity="right"
                             android:padding="3dip"
-                            android:text="0" />
+                            android:text="@string/_0"
+                            tools:ignore="RtlHardcoded" />
                     </TableRow>
 
                     <!--B NEGATIVE-->
@@ -203,7 +204,7 @@
                             android:layout_column="1"
 
                             android:padding="3dp"
-                            android:text="B-"
+                            android:text="@string/bneg"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="#000" />
 
@@ -211,7 +212,8 @@
                             android:id="@+id/tvCountforBnegative"
                             android:gravity="right"
                             android:padding="3dip"
-                            android:text="0" />
+                            android:text="@string/_0"
+                            tools:ignore="RtlHardcoded" />
                     </TableRow>
 
 
@@ -221,7 +223,7 @@
                         <TextView
                             android:layout_column="1"
                             android:padding="3dp"
-                            android:text="A+"
+                            android:text="@string/apos"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="#000" />
 
@@ -229,7 +231,8 @@
                             android:id="@+id/tvCountforApositive"
                             android:gravity="right"
                             android:padding="3dip"
-                            android:text="0" />
+                            android:text="@string/_0"
+                            tools:ignore="RtlHardcoded" />
                     </TableRow>
 
                     <!--A NEGATIVE-->
@@ -239,15 +242,15 @@
                             android:layout_column="1"
 
                             android:padding="3dp"
-                            android:text="A-"
+                            android:text="@string/aneg"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="#000" />
 
                         <TextView
                             android:id="@+id/tvCountforAnegative"
-                            android:gravity="right"
+                            android:gravity="end"
                             android:padding="3dip"
-                            android:text="0" />
+                            android:text="@string/_0" />
                     </TableRow>
 
 
@@ -257,7 +260,7 @@
                         <TextView
                             android:layout_column="1"
                             android:padding="3dp"
-                            android:text="O+"
+                            android:text="@string/opos"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="#000" />
 
@@ -265,7 +268,8 @@
                             android:id="@+id/tvCountforOpositive"
                             android:gravity="right"
                             android:padding="3dip"
-                            android:text="0" />
+                            android:text="@string/_0"
+                            tools:ignore="RtlHardcoded" />
                     </TableRow>
 
                     <!--O NEGATIVE-->
@@ -275,7 +279,7 @@
                             android:layout_column="1"
 
                             android:padding="3dp"
-                            android:text="O-"
+                            android:text="@string/oneg"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                             android:textColor="#000" />
 
@@ -283,7 +287,8 @@
                             android:id="@+id/tvCountforOnegative"
                             android:gravity="right"
                             android:padding="3dip"
-                            android:text="0" />
+                            android:text="@string/_0"
+                            tools:ignore="RtlHardcoded" />
                     </TableRow>
 
 

@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,6 +17,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -88,9 +88,11 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().hide();
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().hide();
+        }
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         signInButton = findViewById(R.id.btn_signin);
         lt_signup = findViewById(R.id.lt_signin);
         cb_agree = findViewById(R.id.cb_agree);
@@ -213,7 +215,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
         });
 
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(SignUp.this);
+       /* GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(SignUp.this);
         if (acct != null) {
             String personName = acct.getDisplayName();
             String personGivenName = acct.getGivenName();
@@ -224,7 +226,7 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
 
             // Toast.makeText(this, ""+personEmail, Toast.LENGTH_SHORT).show();
         }
-
+*/
 
         if (introductionCompletedPreviously()) {
         } else {
@@ -254,10 +256,19 @@ public class SignUp extends AppCompatActivity implements GoogleApiClient.Connect
     }
 
     private void taketoterms() {
-        String url = "http://www.blooddonation.com/termsandpolicies";
+//TODO make the donation links
+        String url = getString(R.string.bloodbankwebsite);
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            builder.setToolbarColor(getColor(R.color.colorPrimary));
+        }
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(this, Uri.parse(url));
+  /*      String url = "http://www.blooddonation.com/termsandpolicies";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
+ */
     }
 
     private void turngpson() {

@@ -55,7 +55,7 @@ public class AdminMain extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks {
 
 
-    private static final String LOG_TAG = "Arun checks";
+    private static final String LOG_TAG = "arun checks";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private AutoCompleteTextView mAutocompleteTextView;
 
@@ -63,7 +63,7 @@ public class AdminMain extends AppCompatActivity implements
     private PlaceArrayAdapter mPlaceArrayAdapter;
     private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466));
 
-
+    String placeId;
     MaterialEditText et_bloodgroup, et_location;
     Button btn_search;
     String location, requiredbloodgroup;
@@ -83,17 +83,18 @@ public class AdminMain extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
-
-        getSupportActionBar().setTitle("Search Users");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Search Users");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         nearbyDonors = new ArrayList <>();
 
         rl_adminmain = findViewById(R.id.rl_adminmain);
         et_bloodgroup = findViewById(R.id.et_bloodgroup);
         et_location = findViewById(R.id.et_location);
         btn_search = findViewById(R.id.btn_search);
+        recyclerView = findViewById(R.id.rv_donordetails);
         bloodgroupsetter();
 
 
@@ -112,8 +113,6 @@ public class AdminMain extends AppCompatActivity implements
                 BOUNDS_INDIA, null);
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
 
-
-        recyclerView = findViewById(R.id.rv_donordetails);
 
         rAdapter = new RVAdapter(nearbyDonors);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -176,9 +175,9 @@ public class AdminMain extends AppCompatActivity implements
                                                 "D.O.B : " + dateofbirth + "\n \n \n ";
 
 
-                                String installapp = "\n \nSave lives, By installing " + getString(R.string.applink);
+                                String installapp = "\n \nSave lives! Install " + getString(R.string.app_name) + " \n" + getString(R.string.applink);
 
-                                String message = Text;
+                                String message = Text + installapp;
 
                                 Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -299,17 +298,19 @@ public class AdminMain extends AppCompatActivity implements
                     User user = childSnapshot.getValue(User.class);
 
                     //Toast.makeText(AdminMain.this, "User name"+user.getName(), Toast.LENGTH_SHORT).show();
-                    Double currlat = user.getLattitude();
-                    Double currlong = user.getLongitude();
+                    if (user != null) {
+                        Double currlat = user.getLattitude();
+                        Double currlong = user.getLongitude();
 
-                    //calculates the distance from xlat,xlon to currlat,curlon
-                    Distance = finddistance(currlat, currlong);
-                    //Toast.makeText(AdminMain.this, Distance+"", Toast.LENGTH_SHORT).show();
+                        //calculates the distance from xlat,xlon to currlat,curlon
+                        Distance = finddistance(currlat, currlong);
+                        //Toast.makeText(AdminMain.this, Distance+"", Toast.LENGTH_SHORT).show();
 
-                    if (user.getBloodgroup().equals(requiredbloodgroup)) {
-                        UserDistanceDetails details = new UserDistanceDetails(user, Distance);
-                        nearbyDonors.add(details);
+                        if (user.getBloodgroup().equals(requiredbloodgroup)) {
+                            UserDistanceDetails details = new UserDistanceDetails(user, Distance);
+                            nearbyDonors.add(details);
 
+                        }
                     }
                 }
 
@@ -359,7 +360,7 @@ public class AdminMain extends AppCompatActivity implements
         double latitude = currlat;
         double longitude = currlong;
 
-        float distance = 0;
+        float distance;
         //this is the location of Mr.X donors address with curlat,currlon
         Location Donor = new Location("crntlocation");
         Donor.setLatitude(latitude);
@@ -383,17 +384,37 @@ public class AdminMain extends AppCompatActivity implements
         xlon = 0.0;
         if (Geocoder.isPresent()) {
             try {
-                ;
+
                 Geocoder gc = new Geocoder(this);
                 List <Address> addresses = gc.getFromLocationName(location, 5); // get the found Address Objects
 
-                List <LatLng> ll = new ArrayList <LatLng>(addresses.size()); // A list to save the coordinates if they are available
+                List <LatLng> ll = new ArrayList <>(addresses.size()); // A list to save the coordinates if they are available
                 for (Address a : addresses) {
                     if (a.hasLatitude() && a.hasLongitude()) {
                         ll.add(new LatLng(a.getLatitude(), a.getLongitude()));
                         xlat = a.getLatitude();
                         xlon = a.getLongitude();
                     }
+                }
+
+
+                if (xlat == 0.0 && xlon == 0.0) {
+                    Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId)
+                            .setResultCallback(new ResultCallback <PlaceBuffer>() {
+                                @Override
+                                public void onResult(@NonNull PlaceBuffer places) {
+                                    if (places.getStatus().isSuccess()) {
+                                        final Place myPlace = places.get(0);
+                                        LatLng queriedLocation = myPlace.getLatLng();
+                                        xlat = queriedLocation.latitude;
+                                        xlon = queriedLocation.longitude;
+//                                Log.v("Latitude is", "" + queriedLocation.latitude);
+//                                Log.v("Longitude is", "" + queriedLocation.longitude);
+                                    }
+                                    places.release();
+                                }
+                            });
+
                 }
             } catch (IOException e) {
                 // handle the exception
@@ -445,7 +466,7 @@ public class AdminMain extends AppCompatActivity implements
     private ResultCallback <PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback <PlaceBuffer>() {
         @Override
-        public void onResult(PlaceBuffer places) {
+        public void onResult(@NonNull PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
                 Log.e(LOG_TAG, "Place query did not complete. Error: " +
                         places.getStatus().toString());
@@ -454,7 +475,7 @@ public class AdminMain extends AppCompatActivity implements
             // Selecting the first object buffer.
             final Place place = places.get(0);
             CharSequence attributions = places.getAttributions();
-
+            placeId = place.getId();
             et_location.setText(Html.fromHtml(place.getAddress() + ""));
 
         }
@@ -468,7 +489,7 @@ public class AdminMain extends AppCompatActivity implements
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e(LOG_TAG, "Google Places API connection failed with error code: "
                 + connectionResult.getErrorCode());
 

@@ -65,7 +65,7 @@ public class Register extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks {
 
 
-    private static final String LOG_TAG = "Arun checks";
+    private static final String LOG_TAG = "arun checks";
     private static final int GOOGLE_API_CLIENT_ID = 10;
     private AutoCompleteTextView mAutocompleteTextView;
 
@@ -99,7 +99,7 @@ public class Register extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        getSupportActionBar().setTitle("Register New Profile");
+       if ( getSupportActionBar()!= null)getSupportActionBar().setTitle("Register New Profile");
 
         //getting firebase auth instance
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -130,14 +130,17 @@ public class Register extends AppCompatActivity implements
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     User u = dataSnapshot.getValue(User.class);
-                    et_name.setText(u.getName());
-                    et_mobilenumber.setText(String.valueOf(u.getMobilenumber()));
-                    //et_dob.setText(u.getDateofbirth());
-                    et_gender.setText(u.getGender());
+                   if (u!=null)
+                   {
+                       et_name.setText(u.getName());
+                       et_mobilenumber.setText(String.valueOf(u.getMobilenumber()));
+                       //et_dob.setText(u.getDateofbirth());
+                       et_gender.setText(u.getGender());
 
-                    et_bloodgroup.setText(u.getBloodgroup());
-                    et_address.setText(u.getAddress());
-                    mAutocompleteTextView.setText(u.getAddress());
+                       et_bloodgroup.setText(u.getBloodgroup());
+                       et_address.setText(u.getAddress());
+                       mAutocompleteTextView.setText(u.getAddress());
+                   }
 
                 }
             }
@@ -321,6 +324,8 @@ public class Register extends AppCompatActivity implements
         //generating USER ID
         String UUID = currentUser.getUid();
 
+        user.setUUID(UUID);
+
         //Adding to Users Node in DB
         UsersNode.child(UUID).setValue(user);
 
@@ -375,7 +380,7 @@ public class Register extends AppCompatActivity implements
 
     public static int getAge(Date date) {
 
-        int age = 0;
+        int age;
         //DateFormat dateFormat = null;
         Calendar now = Calendar.getInstance();
         Calendar dob = Calendar.getInstance();
@@ -484,11 +489,11 @@ public class Register extends AppCompatActivity implements
                             mlon = mLastLocation.getLongitude();
                             //  Toast.makeText(Register.this, "" + mLastLocation.toString(), Toast.LENGTH_SHORT).show();
 
-                        } else {
+                        } /*else {
                             //Toast.makeText(Register.this, "Failed to track location", Toast.LENGTH_SHORT).show();
 
 
-                        }
+                        }*/
                     }
                 });
     }
@@ -509,11 +514,11 @@ public class Register extends AppCompatActivity implements
         mlon = 0.0;
         if (Geocoder.isPresent()) {
             try {
-                ;
+
                 Geocoder gc = new Geocoder(this);
                 List <Address> addresses = gc.getFromLocationName(location, 5); // get the found Address Objects
 
-                List <LatLng> ll = new ArrayList <LatLng>(addresses.size()); // A list to save the coordinates if they are available
+                List <LatLng> ll = new ArrayList <>(addresses.size()); // A list to save the coordinates if they are available
                 for (Address a : addresses) {
                     if (a.hasLatitude() && a.hasLongitude()) {
                         ll.add(new LatLng(a.getLatitude(), a.getLongitude()));
@@ -546,7 +551,7 @@ public class Register extends AppCompatActivity implements
     private ResultCallback <PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback <PlaceBuffer>() {
         @Override
-        public void onResult(PlaceBuffer places) {
+        public void onResult(@NonNull PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
                 Log.e(LOG_TAG, "Place query did not complete. Error: " +
                         places.getStatus().toString());
@@ -569,7 +574,7 @@ public class Register extends AppCompatActivity implements
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e(LOG_TAG, "Google Places API connection failed with error code: "
                 + connectionResult.getErrorCode());
 

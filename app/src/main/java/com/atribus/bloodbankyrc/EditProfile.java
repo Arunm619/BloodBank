@@ -8,10 +8,10 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -62,7 +62,7 @@ public class EditProfile extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks {
 
 
-    private static final String LOG_TAG = "Arun checks";
+    private static final String LOG_TAG = "arun checks";
     private static final int GOOGLE_API_CLIENT_ID = 120;
     private AutoCompleteTextView mAutocompleteTextView;
 
@@ -88,6 +88,7 @@ public class EditProfile extends AppCompatActivity implements
     private double mlat = 0.0, mlon = 0.0;
     private FusedLocationProviderClient mFusedLocationClient;
     private Location mLastLocation;
+    User obj;
 
     @SuppressLint("CommitPrefEdits")
     @Override
@@ -95,11 +96,14 @@ public class EditProfile extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        getSupportActionBar().setTitle("Update Profile");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Update Profile");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+
+        }
         ll = findViewById(R.id.ll);
         et_name = findViewById(R.id.et_name);
         et_address = findViewById(R.id.et_address);
@@ -127,7 +131,7 @@ public class EditProfile extends AppCompatActivity implements
         Gson gson = new Gson();
         String json = prefs.getString("UserObj", "");
 
-        User obj = gson.fromJson(json, User.class);
+        obj = gson.fromJson(json, User.class);
         if (obj != null) {
             mobilenumber = String.valueOf(obj.getMobilenumber());
             name = obj.getName();
@@ -173,7 +177,7 @@ public class EditProfile extends AppCompatActivity implements
                 .enableAutoManage(EditProfile.this, GOOGLE_API_CLIENT_ID, this)
                 .addConnectionCallbacks(this)
                 .build();
-         mAutocompleteTextView.setThreshold(3);
+        mAutocompleteTextView.setThreshold(3);
 
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
         mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
@@ -318,7 +322,7 @@ public class EditProfile extends AppCompatActivity implements
         UsersNode.child(UUID).setValue(user);
 
         //Adding to Blood Node in DB
-        BloodNode.child(user.getBloodgroup()).child(UUID).setValue(user);
+        //  BloodNode.child(user.getBloodgroup()).child(UUID).setValue(user);
 
         //storing offline copy of UserObject in sharedpred under MYDB
         Gson gson = new Gson();
@@ -427,6 +431,7 @@ public class EditProfile extends AppCompatActivity implements
             public void onClick(View view) {
 
                 //material dialog to show all the blood groups
+/*
 
                 new MaterialDialog.Builder(EditProfile.this)
                         .title(R.string.chooseblood)
@@ -439,10 +444,37 @@ public class EditProfile extends AppCompatActivity implements
                             }
                         })
                         .show();
+*/
+                Snackbar.make(ll, "Cannot Change Blood Group. Contact Admin.", Snackbar.LENGTH_LONG).setAction("Contact", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        contactadmin();
+                    }
+                }).show();
 
 
             }
         });
+
+    }
+
+    private void contactadmin() {
+        String body;
+
+        body = "\n\n-----------------------------\nPlease don't remove this information\n " +
+                "Name - " + obj.getName() + "\n " +
+                "Old Blood Group - " + obj.getBloodgroup() + "\n " +
+                "Phone Number - " + obj.getMobilenumber() + "\n " +
+                "Unique ID - " + obj.getUUID() + "\n " +
+                "Please add your new blood group here :\n";
+
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"arun.m.sudharsan@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Requesting of bloodgroup Change - Reg");
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+        startActivity(Intent.createChooser(intent, getString(R.string.choose_email_client)));
 
     }
 
@@ -566,7 +598,7 @@ public class EditProfile extends AppCompatActivity implements
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e(LOG_TAG, "Google Places API connection failed with error code: "
                 + connectionResult.getErrorCode());
 

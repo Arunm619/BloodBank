@@ -1,96 +1,220 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/supermanbg"
+
     android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/appnametitle"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="19dp"
-        android:gravity="center"
-        android:padding="5dp"
+        tools:ignore="UselessParent">
 
-        android:text="@string/app_name"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-
-        android:layout_below="@id/appnametitle"
-
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/superman" />
-
-
-    <!--    <TextView
-            android:id="@+id/tvlicense"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:background="@color/supermanbg"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/appnametitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="19dp"
+                android:gravity="center"
+                android:padding="5dp"
+
+                android:text="@string/app_name"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivsuperman"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+
+                android:layout_below="@id/appnametitle"
+
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/superman"
+                android:contentDescription="@string/supermanimgonappinfoact" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivsuperman"
+                android:layout_gravity="center"
+                android:layout_marginBottom="08dp"
+                android:layout_marginLeft="08dp"
+
+                android:layout_marginRight="08dp"
+                android:layout_marginTop="20dp"
+                android:visibility="visible"
+                card_view:cardCornerRadius="2dp"
+                card_view:contentPadding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
 
-            android:layout_above="@id/btn_privacypolicy"
-            android:layout_centerInParent="true"
-            android:padding="5dp"
-            android:text="Licenses"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />-->
+                    <TextView
 
-    <Button
-        android:id="@+id/btn_termsandconditions"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@id/btn_privacypolicy"
-        android:layout_centerInParent="true"
-
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:text="@string/t_amp_amp_c"
-        android:textColor="@android:color/white" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:padding="5dp"
+                        android:text="@string/TermsandPolicies"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold" />
 
 
-    <Button
-        android:id="@+id/btn_privacypolicy"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
 
-        android:gravity="center"
+                        <Button
+                            android:id="@+id/btn_termsandconditions"
+                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-        android:text="Privacy Policy"
+                            android:layout_weight="2.5"
+                            android:gravity="center"
+                            android:text="@string/t_amp_amp_c" />
 
-        android:textColor="@android:color/white" />
+
+                        <Button
+                            android:id="@+id/btn_privacypolicy"
+                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:gravity="center"
+
+                            android:text="@string/privacy_policy"
+
+                            />
+
+                    </LinearLayout>
 
 
-    <TextView
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        android:id="@+id/arun"
-        android:layout_width="wrap_content"
 
-        android:layout_height="wrap_content"
+            <!-- App dearunArun Sudharsan-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_aboutdev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_buttons"
+                android:layout_gravity="center"
+                android:layout_marginBottom="08dp"
+                android:layout_marginLeft="08dp"
+                android:layout_marginRight="08dp"
+                android:layout_marginTop="20dp"
+                android:visibility="visible"
+                card_view:cardCornerRadius="2dp"
+                card_view:contentPadding="10dp">
 
-        android:layout_below="@id/btn_termsandconditions"
-        android:layout_centerInParent="true"
-        android:padding="5dp"
-        android:text="@string/copyrights_u00a9"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#808080" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:padding="5dp"
+                        android:text="@string/appdevelopername"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="100dp"
+                            android:layout_weight="2"
+                            android:contentDescription="@string/arun_image"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/arun" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:lineSpacingMultiplier="1.2"
+                            android:padding="10dp"
+                            android:text="@string/aboutarun"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+
+                        android:weightSum="3">
+
+                        <Button
+                            android:id="@+id/btn_fb"
+                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/facebook" />
+
+
+                        <Button
+                            android:id="@+id/btn_github"
+                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/github" />
+
+
+                        <Button
+                            android:id="@+id/btn_whatsapp"
+                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/whatsapp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

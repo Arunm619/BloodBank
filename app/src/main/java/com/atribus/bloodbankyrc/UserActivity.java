@@ -199,7 +199,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
 
-    private void setuptabicons() {
+    /*private void setuptabicons() {
         if (tabLayout != null) {
             try {
                 tabLayout.getTabAt(0).setIcon(tabIcons[0]);
@@ -210,7 +210,7 @@ public class UserActivity extends AppCompatActivity {
             } catch (Exception ignored) {
             }
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -238,6 +238,7 @@ public class UserActivity extends AppCompatActivity {
                 //deleteAppData();
                 // ClearData.getInstance().clearApplicationData();
                 startActivity(new Intent(UserActivity.this, SignUp.class));
+                finish();
                 /*
                         startActivity(new Intent(this, SignUp.class));
                         finish();
@@ -263,7 +264,7 @@ public class UserActivity extends AppCompatActivity {
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, textlong+ message);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, textlong + message);
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
                 break;

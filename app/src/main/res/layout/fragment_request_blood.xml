@@ -54,7 +54,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:text="Test"
+                            android:text="@string/testdata"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
                             />
@@ -66,7 +66,7 @@
 
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:text="1234567890"
+                            android:text="@string/testdatamobile"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
                             />
@@ -79,7 +79,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="O+"
+                            android:text="@string/testdatabloodgroup"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
                         <TextView
@@ -90,7 +90,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="2 units"
+                            android:text="@string/testdataunits"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
 
@@ -100,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:text="Malar Fortis"
+                            android:text="@string/testdatahospitalname"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
                             />
@@ -111,7 +111,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:text="Urgent in 2 hours"
+                            android:text="@string/testdatamessage"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
                             />
@@ -155,7 +155,7 @@
 
                             android:layout_marginTop="5dp"
                             android:gravity="center"
-                            android:text="Complete" />
+                            android:text="@string/testdatacomplete" />
 
 
                     </LinearLayout>
@@ -280,7 +280,8 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:layout_weight="0.1"
-                        android:src="@drawable/ic_location" />
+                        android:src="@drawable/ic_location"
+                        android:contentDescription="@string/Location" />
 
                     <AutoCompleteTextView
                         android:id="@+id/et_autocomplete"
@@ -289,7 +290,7 @@
 
                         android:layout_margin="10dp"
                         android:layout_weight="0.9"
-                        android:hint="@string/Locationauto" />
+                        android:hint="@string/enter_location_hospital_name" />
                 </LinearLayout>
                 <!--et_message -->
                 <com.rengwuxian.materialedittext.MaterialEditText

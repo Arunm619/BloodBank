@@ -1,5 +1,6 @@
 package com.atribus.bloodbankyrc.AdminPackage;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -39,10 +40,11 @@ public class AdminCheckDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_check_details);
-        getSupportActionBar().setTitle("Details");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Details");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         database = FirebaseDatabase.getInstance();
         UserNode = database.getReferenceFromUrl("https://bloodbank-3c1dd.firebaseio.com/Users");
 
@@ -77,6 +79,11 @@ public class AdminCheckDetails extends AppCompatActivity {
                     Toast.makeText(AdminCheckDetails.this, "Enter 10 Digit Mobile Number", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (mobilenumber.length() != 10) {
+                    Toast.makeText(AdminCheckDetails.this, "Check Mobile Number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 //start loading the pd
                 pd.setMessage("Searching User with Mobile Number : " + mobilenumber);
@@ -95,10 +102,12 @@ public class AdminCheckDetails extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     User user = ds.getValue(User.class);
-                    if (String.valueOf(user.getMobilenumber()).equals(mobilenumber)) {
-                        getperson(ds.getKey());
-                        pd.dismiss();
-                        return;
+                    if (user != null) {
+                        if (String.valueOf(user.getMobilenumber()).equals(mobilenumber)) {
+                            getperson(ds.getKey());
+                            pd.dismiss();
+                            return;
+                        }
                     }
 
                 }
@@ -116,21 +125,22 @@ public class AdminCheckDetails extends AppCompatActivity {
 
     private void getperson(String key) {
         UserNode.child(key).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final User student = dataSnapshot.getValue(User.class);
 
                 cv_adminpanelsearch.setVisibility(View.GONE);
                 cv_adminpanelResult.setVisibility(View.VISIBLE);
-
-                tvName.setText(student.getName());
-                tvage.setText(student.getAge() + " years ");
-                tvblood.setText(student.getBloodgroup());
-                tvdob.setText(student.getDateofbirth());
-                tvgender.setText(student.getGender());
-                tvmobile.setText(String.valueOf(student.getMobilenumber()));
-                tvlocation.setText(student.getAddress());
-
+                if (student != null) {
+                    tvName.setText(student.getName());
+                    tvage.setText(student.getAge() + " years ");
+                    tvblood.setText(student.getBloodgroup());
+                    tvdob.setText(student.getDateofbirth());
+                    tvgender.setText(student.getGender());
+                    tvmobile.setText(String.valueOf(student.getMobilenumber()));
+                    tvlocation.setText(student.getAddress());
+                }
                 btn_sendmsg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
